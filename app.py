@@ -6,9 +6,11 @@ check_parse = parser.parser()
 
 print(check_parse.args)
 
-test_func = func.math_function(check_parse.args["args"]["function"])
+test_func = func.math_function(check_parse.args)
 
 print(test_func.run_func([2,1]))
+
+print(test_func.intersections)
 
 test_integrate = integrate.integral(test_func)
 

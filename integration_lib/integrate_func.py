@@ -13,7 +13,7 @@ class integral:
         print(self.func.func)
         x = Symbol('x')
         y= Symbol('y')
-        print(integrate(self.func.original_str, x, ))
+        print(integrate(self.func.original_str, x ))
         I = inte.quad(self.eval_func, 0, 1, args=self.func.vars)
         print(I)
 
