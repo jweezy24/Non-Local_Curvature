@@ -64,6 +64,33 @@ class integral:
             new_func = func.math_function(new_args)
             new_integral = integral(new_func)
             new_integral.integrate_basic([self.func.intersections[0], self.func.intersections[1]])
+        else:
+            holder = integrate(self.func.original_str, x)
+            print("Integration is " + str(holder))
+            str_holder = str(holder)
+            newIntegrals = []
+            newIntegrals.append( str_holder.replace("x", "(" + self.region["max"].original_str + ")"))
+            newIntegrals.append( str_holder.replace("x", "(" + self.region["min"].original_str + ")"))
+            int_check = False
+            for i in newIntegrals:
+                if int_check:
+                    tmp_list = list(i)
+                    for k in range(0, len(tmp_list)):
+                        if tmp_list[k] == '+':
+                            tmp_list[k] = '-'
+                        elif tmp_list[k] == '-':
+                            tmp_list[k] = '+'
+                    newIntegrals[newIntegrals.index(i)] = ''.join(tmp_list)
+                else:
+                    int_check = True
+                    continue
+            print(newIntegrals)
+            newIntegral_str = ' - '.join(newIntegrals)
+            print(newIntegral_str)
+            new_args = {"args" : {"function" : newIntegral_str, "domain": [self.func.intersections[0], self.func.intersections[1]]}}
+            new_func = func.math_function(new_args)
+            new_integral = integral(new_func)
+            new_integral.integrate_basic([self.func.intersections[0], self.func.intersections[1]])
 
     def eval_func(self, *arg):
         return self.func.run_func([arg[0]])
