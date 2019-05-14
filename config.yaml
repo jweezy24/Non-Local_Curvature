@@ -1,4 +1,17 @@
 args:
-  function: x**2 + y**2
+  function: x + 2*y
   with_respect: dx dy
-  domain: y=x**float(1/2), y=x**3 #could also be a file name
+  domain: y=2*x**2, y=1+x**2 #could also be a file name
+
+#Working double integrals
+
+# args:
+#   function: 4*x*y - y**3
+#   with_respect: dx dy
+#   domain: y=(x**float(1/2)) , y=x**3
+
+
+# args:
+#   function: x + 2*y
+#   with_respect: dx dy
+#   domain: y=2*x**2, y=1+x**2

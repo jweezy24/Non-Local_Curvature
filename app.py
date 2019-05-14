@@ -14,4 +14,4 @@ print(test_func.intersections)
 
 test_integrate = integrate.integral(test_func)
 
-print(test_integrate.integrate())
+print(test_integrate.integrate_region())

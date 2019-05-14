@@ -9,14 +9,25 @@ class math_function:
         if type(args) == type({}):
             self.vars = []
             self.original_str = args["args"]["function"]
+            checker = True
             for i in args["args"]["function"]:
-                if ord(i) >= 97 and ord(i) <= 122 and 'sqrt' not in args['args']['function']:
-                    self.vars.append(i)
+                if ord(i) >= 97 and ord(i) <= 122:
+                    if 'float' in args["args"]["function"]:
+                        for j in 'float':
+                            if i == j:
+                                checker = False
+                    if checker:
+                        if i not in self.vars:
+                            self.vars.append(i)
                 else:
                     continue
             self.func = parser.expr(args["args"]["function"]).compile()
-            self.domain = self.generate_functions_from_domain(args["args"]["domain"])
-            self.intersections = self.find_domain_intersections()
+            if '=' in args["args"]["domain"]:
+                self.domain = self.generate_functions_from_domain(args["args"]["domain"])
+                self.intersections = self.find_domain_intersections()
+            else:
+                self.domain = args["args"]["domain"]
+
         elif type(args) == type(''):
             self.vars = []
             self.original_str = args
@@ -75,8 +86,9 @@ class math_function:
                     avg += j.run_func([i])
 
                 for k in self.domain:
-                    if avg/3 == j.run_func([i]):
-                        intersections.append(i)
+                    if float(avg/len(self.domain)) == float(j.run_func([i])):
+                        if i not in intersections:
+                            intersections.append(i)
         else:
             for i in range(0, 10000):
                 avg = 0
