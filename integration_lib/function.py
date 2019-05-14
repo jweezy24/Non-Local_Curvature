@@ -7,6 +7,7 @@ class math_function:
 
     def __init__(self, str):
         self.vars = []
+        self.original_str = str
         for i in str:
             if ord(i) >= 97 and ord(i) <= 122:
                 self.vars.append(i)
