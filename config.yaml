@@ -1,0 +1,4 @@
+args:
+  function: x^2 + y^2
+  with_respect: dx dy
+  set: from {-1, 1} #could also be a file name
