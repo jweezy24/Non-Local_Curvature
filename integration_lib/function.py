@@ -1,5 +1,6 @@
 import parser
 import sys
+import integration_lib.function_parsing_utils as utils
 
 this_mod = sys.modules[__name__]
 
@@ -7,48 +8,31 @@ class math_function:
 
     def __init__(self, args):
         if type(args) == type({}):
-            self.vars = []
+            self.vars = utils.variable_parser(args)
             self.original_str = args["args"]["function"]
             checker = True
-            for i in args["args"]["function"]:
-                if ord(i) >= 97 and ord(i) <= 122:
-                    if 'float' in args["args"]["function"]:
-                        for j in 'float':
-                            if i == j:
-                                checker = False
-                    if checker:
-                        if i not in self.vars:
-                            self.vars.append(i)
-                else:
-                    continue
             self.func = parser.expr(args["args"]["function"]).compile()
-            if '=' in args["args"]["domain"]:
+            if 'None' != args["args"]["domain"]:
                 self.domain = self.generate_functions_from_domain(args["args"]["domain"])
-                self.intersections = self.find_domain_intersections()
+                if self.domain:
+                    self.intersections = self.find_domain_intersections()
+            elif 'None' != args["args"]["range"]:
+                self.domain_range = utils.range_parse(args["args"]["range"])
+                self.domain = None
             else:
                 self.domain = args["args"]["domain"]
 
         elif type(args) == type(''):
-            self.vars = []
+            self.vars = utils.variable_parser(args)
             self.original_str = args
             checker = True
-            for i in args:
-                checker = True
-                if ord(i) >= 97 and ord(i) <= 122:
-                    if 'float' in args:
-                        for j in 'float':
-                            if i == j:
-                                checker = False
-                    if checker:
-                        self.vars.append(i)
-                else:
-                    continue
             self.func = parser.expr(args).compile()
             self.domain = 0
 
     def run_func(self, args):
         if len(args) != len(self.vars):
-            print("need more args")
+            print("len(args): " + str(len(args)))
+            print("len(self.vars): " + str(len(self.vars)))
             return False
         else:
             template = '{0} = {1}\n'
@@ -61,16 +45,18 @@ class math_function:
             return eval(self.func)
 
     def generate_functions_from_domain(self, domainStr):
-        tmp_d = domainStr.split(',')
-        functions = []
-        for i in tmp_d:
-            if '=' in i:
-                holder = i.split('=')
-                functions.append(math_function(holder[1].strip()))
-        for i in functions:
-            print(i.run_func([1]))
+        print("DOMAIN STR: " + str(domainStr))
+        if type(domainStr) == type(''):
+            tmp_d = domainStr.split(',')
+            functions = []
+            for i in tmp_d:
+                if '=' in i:
+                    holder = i.split('=')
+                    functions.append(math_function(holder[1].strip()))
 
-        return functions
+            return functions
+        else:
+            return None
 
     def find_domain_intersections(self):
         negative = False

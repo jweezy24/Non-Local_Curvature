@@ -11,14 +11,15 @@ class integral:
         self.func = function
         check = False
         #checks to see which are functions and which are static ranges
-        for i in function.domain:
-            if type(i) == type(self.func):
-                check = True
-            else:
-                check = False
-        if check:
-            self.region = {}
-            self.region_def(self.func.domain)
+        if function.domain:
+            for i in function.domain:
+                if type(i) == type(self.func):
+                    check = True
+                else:
+                    check = False
+            if check:
+                self.region = {}
+                self.region_def(self.func.domain)
 
     def integrate_basic(self, range):
         I = inte.quad(self.eval_func, range[0], range[1], args=self.func.vars)
@@ -92,8 +93,57 @@ class integral:
             new_integral = integral(new_func)
             new_integral.integrate_basic([self.func.intersections[0], self.func.intersections[1]])
 
+    def integrate_range(self):
+        first = []
+        second = []
+        for i in self.func.domain_range:
+            if 'y' in str(i):
+                first = i
+            elif 'x' in str(i):
+                first = i
+            else:
+                second = i
+
+        x_bool = False
+        y_bool = False
+        for i in first:
+            if 'x' in i or 'y' in i:
+                if 'x' in i: x_bool = True
+                if 'y' in i: y_bool = True
+                tmp_func = i
+        f = (lambda x, y: eval(self.func.original_str))
+        print(first)
+        print(second)
+        print(f(2,1))
+        if y_bool:
+            if first[0] == tmp_func:
+                print("1")
+                holder = inte.dblquad(lambda x, y: eval(self.func.func) , float(second[0]), float(second[1]),
+                lambda y: eval(first[0].replace(" ", "")), lambda y: float(first[1]))
+            else:
+                print("2")
+                holder = inte.dblquad(lambda x, y: eval(self.func.func) , float(second[0]), float(second[1]),
+                lambda y: float(first[0]), lambda y: eval(first[1].replace(" ", "")))
+        if x_bool:
+            if first[0] == tmp_func:
+                print("3")
+                holder = inte.dblquad(lambda x, y: eval(self.func.func) , float(second[0]), float(second[1]),
+                lambda x: eval(first[0]), lambda x: float(first[1]))
+            else:
+                print("4")
+                holder = inte.dblquad(lambda x, y: eval(self.func.func), float(second[0]), float(second[1]),
+                lambda x: float(first[0]), lambda x: eval(first[1].replace(" ", "")))
+
+
+        print(holder)
+
+
+
     def eval_func(self, *arg):
         return self.func.run_func([arg[0]])
+
+    def eval_spec_func(self, func,*arg):
+        return func.run_func([arg[0]])
 
     def region_def(self, funcs):
 
