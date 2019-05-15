@@ -13,5 +13,5 @@ print(test_func.run_func([2,1]))
 
 test_integrate = integrate.integral(test_func)
 
-print(test_integrate.integrate_region())
-#print(test_integrate.integrate_range())
+#print(test_integrate.integrate_region())
+print(test_integrate.integrate_range())

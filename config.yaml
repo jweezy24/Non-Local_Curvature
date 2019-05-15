@@ -1,10 +1,10 @@
 args:
-  function: (2*y*x**2)+(9*y**3)
+  function: x*y
   with_respect: dx dy
   #if the domain is given in ranges
-  #range: 0<=x<=4,(x-2)**2<=y<=6
+  range: 0<=x<=(1-2*y),0<=y<=0.5
   #if the domain is given by functions
-  domain: y=float(2/3)*x, y=2*x**float(1/2) #could also be a file name
+  domain: None #could also be a file name
 
 #Working double integrals
 
