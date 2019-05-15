@@ -21,9 +21,9 @@ class integral:
             self.region_def(self.func.domain)
 
     def integrate_basic(self, range):
-        print("HERE: " + str(self.func.vars))
         I = inte.quad(self.eval_func, range[0], range[1], args=self.func.vars)
         print(I)
+
 
     def integrate_region(self):
         change_x = True
