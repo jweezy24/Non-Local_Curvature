@@ -12,15 +12,15 @@ class math_function:
             self.original_str = args["args"]["function"]
             checker = True
             self.func = parser.expr(args["args"]["function"]).compile()
-            if 'None' != args["args"]["domain"]:
-                self.domain = self.generate_functions_from_domain(args["args"]["domain"])
+            if 'None' != args["args"]["functions"]:
+                self.domain = self.generate_functions_from_domain(args["args"]["functions"])
                 if self.domain:
                     self.intersections = self.find_domain_intersections()
             elif 'None' != args["args"]["range"]:
                 self.domain_range = utils.range_parse(args["args"]["range"])
                 self.domain = None
             else:
-                self.domain = args["args"]["domain"]
+                self.domain = args["args"]["functions"]
 
         elif type(args) == type(''):
             self.vars = utils.variable_parser(args)

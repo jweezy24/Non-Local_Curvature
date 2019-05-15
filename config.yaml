@@ -1,44 +1,51 @@
+#problem t
 args:
-  function: (42*y**2)-(12*x)
+  function: y**2+(3*x)
   with_respect: dx dy
   #if the domain is given in ranges
-  range: 0<=x<=4,(x-2)**2<=y<=6
+  range: None
   #if the domain is given by functions
-  domain: None #could also be a file name
+  functions: None #could also be a file name
+  #if the domain is give by object
+  objects: x**2 + y**2=1, x**2+y**2=9
+
 
 #Working double integrals
 
 # args:
-#   function: 4*x*y - y**3
-#   with_respect: dx dy
-#   domain: y=(x**float(1/2)) , y=x**3
-
-# args:
 #   function: x + 2*y
 #   with_respect: dx dy
-#   domain: y=2*x**2, y=1+x**2
+#   functions: y=2*x**2, y=1+x**2
 
 # args:
 #   function: x**2 + y**2
 #   with_respect: dx dy
-#   domain: y=x**2, y=2*
+#   functions: y=x**2, y=2*
 
 # args:
 #   function: x**2 + y**2
 #   with_respect: dx dy
-#   domain: x=(float(1/2)*y), x=(y**float(1/2))
+#   functions: x=(float(1/2)*y), x=(y**float(1/2))
 
 # args:
 #   function: x**2 + y**2
 #   with_respect: dx dy
-#   domain: y=x**2, y=x
+#   functions: y=x**2, y=x
 
 # args:
 #   function: x**2 + y**2
 #   with_respect: dx dy
-#   domain: x=y, x=y**float(1/2)
+#   functions: x=y, x=y**float(1/2)
 
 # args:
 #   function: (2*y*x**2)+(9*y**3)
 #   with_respect: dx dy
-#   domain: y=float(2/3)*x, y=2*x**float(1/2)
+#   functions: y=float(2/3)*x, y=2*x**float(1/2)
+
+# args:
+#   function: (42*y**2)-(12*x)
+#   with_respect: dx dy
+#   #if the domain is given in ranges
+#   range: 0<=x<=4,(x-2)**2<=y<=6
+#   #if the domain is given by functions
+#   functions: None #could also be a file name

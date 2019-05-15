@@ -61,7 +61,7 @@ class integral:
             print(newIntegrals)
             newIntegral_str = ' - '.join(newIntegrals)
             print(newIntegral_str)
-            new_args = {"args" : {"function" : newIntegral_str, "domain": [self.func.intersections[0], self.func.intersections[1]]}}
+            new_args = {"args" : {"function" : newIntegral_str, "functions": [self.func.intersections[0], self.func.intersections[1]]}}
             new_func = func.math_function(new_args)
             new_integral = integral(new_func)
             new_integral.integrate_basic([self.func.intersections[0], self.func.intersections[1]])
@@ -88,7 +88,7 @@ class integral:
             print(newIntegrals)
             newIntegral_str = ' - '.join(newIntegrals)
             print(newIntegral_str)
-            new_args = {"args" : {"function" : newIntegral_str, "domain": [self.func.intersections[0], self.func.intersections[1]]}}
+            new_args = {"args" : {"function" : newIntegral_str, "functions": [self.func.intersections[0], self.func.intersections[1]]}}
             new_func = func.math_function(new_args)
             new_integral = integral(new_func)
             new_integral.integrate_basic([self.func.intersections[0], self.func.intersections[1]])
