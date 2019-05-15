@@ -127,11 +127,11 @@ class integral:
         if x_bool:
             if first[0] == tmp_func:
                 print("3")
-                holder = inte.dblquad(lambda x, y: eval(self.func.func) , float(second[0]), float(second[1]),
+                holder = inte.dblquad(lambda y, x: eval(self.func.func) , float(second[0]), float(second[1]),
                 lambda x: eval(first[0]), lambda x: float(first[1]))
             else:
                 print("4")
-                holder = inte.dblquad(lambda x, y: eval(self.func.func), float(second[0]), float(second[1]),
+                holder = inte.dblquad(lambda y, x: eval(self.func.func), float(second[0]), float(second[1]),
                 lambda x: float(first[0]), lambda x: eval(first[1].replace(" ", "")))
 
 

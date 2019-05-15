@@ -1,8 +1,8 @@
 args:
-  function: x*y
+  function: (42*y**2)-(12*x)
   with_respect: dx dy
   #if the domain is given in ranges
-  range: 0<=x<=(1-2*y),0<=y<=0.5
+  range: 0<=x<=4,(x-2)**2<=y<=6
   #if the domain is given by functions
   domain: None #could also be a file name
 
