@@ -8,8 +8,6 @@ print(check_parse.args)
 
 test_func = func.math_function(check_parse.args)
 
-print(test_func.run_func([2,1]))
-
 
 test_integrate = integrate.integral(test_func)
 

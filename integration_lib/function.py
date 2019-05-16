@@ -1,6 +1,10 @@
 import parser
 import sys
 import integration_lib.function_parsing_utils as utils
+import numpy as np
+import scipy
+from numpy import sqrt, sin, cos, pi
+import sympy
 
 this_mod = sys.modules[__name__]
 
@@ -14,6 +18,7 @@ class math_function:
             self.func = parser.expr(args["args"]["function"]).compile()
             if 'None' != args["args"]["functions"]:
                 self.domain = self.generate_functions_from_domain(args["args"]["functions"])
+                self.domain_range = None
                 if self.domain:
                     self.intersections = self.find_domain_intersections()
             elif 'None' != args["args"]["range"]:
@@ -31,11 +36,11 @@ class math_function:
 
     def run_func(self, args):
         if len(args) != len(self.vars):
-            print("len(args): " + str(len(args)))
-            print("len(self.vars): " + str(len(self.vars)))
+            #print("len(args): " + str(len(args)))
+            #print("len(self.vars): " + str(len(self.vars)))
             return False
         else:
-            template = '{0} = {1}\n'
+            template = '''from math import *\n{0} = {1}\n'''
             strng = ''
             filename = ''
             for i in range(0, len(self.vars)):
@@ -45,7 +50,7 @@ class math_function:
             return eval(self.func)
 
     def generate_functions_from_domain(self, domainStr):
-        print("DOMAIN STR: " + str(domainStr))
+        #print("DOMAIN STR: " + str(domainStr))
         if type(domainStr) == type(''):
             tmp_d = domainStr.split(',')
             functions = []
@@ -61,28 +66,42 @@ class math_function:
     def find_domain_intersections(self):
         negative = False
         intersections = []
-        for i in self.domain:
-            if '**float' in i.original_str:
-                negative = True
-                break
-        if not negative:
-            for i in range(-10001, 10000):
-                avg = 0
-                for j in self.domain:
-                    avg += j.run_func([i])
+        try:
+            x = sympy.Symbol('x')
+            y = sympy.Symbol('y')
+            tmp_test = sympy.solve(self.domain[0].original_str + ' - ' + self.domain[1].original_str, x,y)
+            print("FINISHED: " + str(tmp_test))
+            if 'x' in str(tmp_test):
+                inte_1 = scipy.optimize.fsolve(self.f, [float(tmp_test[0][1]), 0.0]).item(0)
+                inte_2 = scipy.optimize.fsolve(self.f, [float(tmp_test[1][1]), 0.0]).item(0)
+                intersections.append(inte_1)
+                intersections.append(inte_2)
+            else:
+                inte_1 = scipy.optimize.fsolve(self.f, [float(tmp_test[0][0]), 0.0]).item(0)
+                inte_2 = scipy.optimize.fsolve(self.f, [float(tmp_test[1][0]), 0.0]).item(0)
+                intersections.append(inte_1)
+                intersections.append(inte_2)
+        except Exception as e:
+            print(e)
 
-                for k in self.domain:
-                    if float(avg/len(self.domain)) == float(j.run_func([i])):
-                        if i not in intersections:
-                            intersections.append(i)
-        else:
-            for i in range(0, 10000):
-                avg = 0
-                for j in self.domain:
-                    avg += float(j.run_func([i]))
 
-                for k in self.domain:
-                    if float(avg/len(self.domain)) == float(j.run_func([i])):
-                        intersections.append(i)
-                        break
+
+        min = 'West'
+        max = 'Jack'
+        #print(intersections)
+        for i in intersections:
+            if min == 'West':
+                min = i
+            elif min < i:
+                min = i
+            if max == 'Jack':
+                max = i
+            elif max > i:
+                max = i
+        intersections = [min,max]
         return intersections
+
+    def f(self, xy):
+        x,y = xy
+        z = np.array([eval('y-(' + self.domain[0].original_str + ')'), eval('y-(' + self.domain[1].original_str + ')')])
+        return z

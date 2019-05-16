@@ -1,0 +1,5 @@
+args:
+  function: x*(y-1)
+  with_respect: dx dy
+  functions: y=1-x**2,y=x**2-3
+  

@@ -1,0 +1,4 @@
+args:
+  function: x + 2*y
+  with_respect: dx dy
+  functions: y=2*x**2, y=1+x**2

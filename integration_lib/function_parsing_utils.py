@@ -1,19 +1,19 @@
 import parser
 import sys
+from numpy import sqrt, sin, cos, pi
 
 def variable_parser(args):
-    checker = True
+    checker = False
     vars = []
     if type(args) != type(''):
         args = args["args"]["function"]
 
     for i in args:
         if ord(i) >= 97 and ord(i) <= 122:
-            checker = True
-            if 'float' in args:
-                for j in 'float':
-                    if i == j:
-                        checker = False
+            checker = False
+            if i == 'x' or i == 'y':
+                checker = True
+
             if checker:
                 if i not in vars:
                     vars.append(i)
