@@ -1,8 +1,9 @@
 #problem in progress
 args:
-  function: 7*x**2 + 14*y
+  function: x + 2*y
   with_respect: dx dy
-  functions: x=2*y**2, x=8 
+  functions: y=2*x**2, y=1+x**2
+
 
 
 #next phase

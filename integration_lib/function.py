@@ -40,7 +40,7 @@ class math_function:
             #print("len(self.vars): " + str(len(self.vars)))
             return False
         else:
-            template = '''from math import *\n{0} = {1}\n'''
+            template = '''{0} = {1}\n'''
             strng = ''
             filename = ''
             for i in range(0, len(self.vars)):
@@ -72,17 +72,39 @@ class math_function:
             tmp_test = sympy.solve(self.domain[0].original_str + ' - ' + self.domain[1].original_str, x,y)
             print("FINISHED: " + str(tmp_test))
             if 'x' in str(tmp_test):
-                inte_1 = scipy.optimize.fsolve(self.f, [float(tmp_test[0][1]), 0.0]).item(0)
-                inte_2 = scipy.optimize.fsolve(self.f, [float(tmp_test[1][1]), 0.0]).item(0)
-                intersections.append(float(tmp_test[0][1]))
-                intersections.append(float(tmp_test[1][1]))
+                if type(tmp_test[0][1]) != type(0) or type(tmp_test[1][1]) != type(0.0):
+                    if 'I' in str(tmp_test[0][1]):
+                        intersections.append(float(complex(tmp_test[0][1]).real))
+                        intersections.append(float(complex(tmp_test[1][1]).real))
+                    else:
+                        if len(tmp_test) == 1:
+                            intersections.append(eval(str(sympy.sympify(tmp_test[0][1]))))
+                            intersections.append(eval('-'+str(sympy.sympify(tmp_test[0][1]))))
+                        else:
+                            intersections.append(eval(str(sympy.sympify(tmp_test[0][1]))))
+                            intersections.append(eval(str(sympy.sympify(tmp_test[1][1]))))
+
+                else:
+                    intersections.append(float(tmp_test[0][1]))
+                    intersections.append(float(tmp_test[1][1]))
             else:
-                inte_1 = scipy.optimize.fsolve(self.f, [float(tmp_test[0][0]), 0.0]).item(0)
-                inte_2 = scipy.optimize.fsolve(self.f, [float(tmp_test[1][0]), 0.0]).item(0)
-                intersections.append(float(tmp_test[0][0]))
-                intersections.append(float(tmp_test[1][0]))
+                if type(tmp_test[0][0]) != type(0) or type(tmp_test[1][0]) != type(0.0):
+                    if 'I' in str(tmp_test[0][0]):
+                        intersections.append(float(complex(tmp_test[0][0]).real))
+                        intersections.append(float(complex(tmp_test[1][0]).real))
+                    else:
+                        if len(tmp_test) == 1:
+                            intersections.append(eval(str(sympy.sympify(tmp_test[0][0]))))
+                            intersections.append(eval('-'+str(sympy.sympify(tmp_test[0][0]))))
+                        else:
+                            intersections.append(eval(str(sympy.sympify(tmp_test[0][0]))))
+                            intersections.append(eval(str(sympy.sympify(tmp_test[1][0]))))
+
+                else:
+                    intersections.append(float(tmp_test[0][0]))
+                    intersections.append(float(tmp_test[1][0]))
         except Exception as e:
-            print(e)
+            print("Line {0} exception: {1}".format(sys.exc_info()[-1].tb_lineno, str(e)))
 
 
         return intersections

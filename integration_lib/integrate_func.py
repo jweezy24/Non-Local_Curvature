@@ -24,13 +24,21 @@ class integral:
                 self.region_def(self.func.domain)
 
     def integrate_basic(self, range):
-        #print(range)
+        print(range)
         if 'x' in self.func.original_str:
             #print(self.func.original_str)
-            I = inte.quad(lambda x: eval(self.func.func), range[0], range[1])
+            try:
+                I = inte.quad(lambda x: eval(self.func.func), range[0], range[1])
+            except:
+                range[1] = 0
+                I = inte.quad(lambda x: eval(self.func.func), range[0], range[1])
         elif 'y' in self.func.original_str:
             #print(self.func.original_str)
-            I = inte.quad(lambda y: eval(self.func.func), range[0], range[1])
+            try:
+                I = inte.quad(lambda y: eval(self.func.func), range[0], range[1])
+            except:
+                range[1] = 0
+                I = inte.quad(lambda y: eval(self.func.func), range[0], range[1])
 
         return I
 
