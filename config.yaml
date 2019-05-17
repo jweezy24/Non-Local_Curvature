@@ -1,8 +1,8 @@
-#problem in progress
+#work in progress regions defined with functions of different variables
 args:
-  function: x + 2*y
+  function: 5*x**3*(cos(y**3))
   with_respect: dx dy
-  functions: y=2*x**2, y=1+x**2
+  functions: y= 3 ,x= 2*(y**float(1/2))
 
 
 
