@@ -8,7 +8,7 @@ import integration_lib.integrate_func as integrate
 class TestFunctionsMethods(unittest.TestCase):
     def setUp(self):
         self.all_funcs = []
-        for i in range(1,10):
+        for i in range(1,11):
             tmp = parser.parser(file_path="./working_functs/"+str(i)+".yaml")
             self.all_funcs.append(func.math_function(tmp.args))
 
@@ -16,14 +16,17 @@ class TestFunctionsMethods(unittest.TestCase):
     def test_1(self):
         test_integrate = integrate.integral(self.all_funcs[0])
         try:
-            print(test_integrate.integrate_region())
+            tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type((1,2)))
         except:
-            print(test_integrate.integrate_range())
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
+
 
     def test_2(self):
         test_integrate = integrate.integral(self.all_funcs[1])
         try:
-            print(test_integrate.integrate_region())
+            tmp = test_integrate.integrate_region()
         except:
             print(test_integrate.integrate_range())
 
@@ -31,36 +34,77 @@ class TestFunctionsMethods(unittest.TestCase):
     def test_3(self):
         test_integrate = integrate.integral(self.all_funcs[2])
         try:
-            print(test_integrate.integrate_region())
+            tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type((1,2)))
         except:
-            print(test_integrate.integrate_range())
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
+
 
     def test_4(self):
         test_integrate = integrate.integral(self.all_funcs[3])
         try:
-            print(test_integrate.integrate_region())
+            tmp = test_integrate.integrate_region()
         except:
             print(test_integrate.integrate_range())
 
     def test_5(self):
         test_integrate = integrate.integral(self.all_funcs[4])
         try:
-            print(test_integrate.integrate_region())
+            tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type((1,2)))
         except:
-            print(test_integrate.integrate_range())
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
+
 
     def test_6(self):
         test_integrate = integrate.integral(self.all_funcs[5])
         try:
-            print(test_integrate.integrate_region())
+            tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type((1,2)))
         except:
-            print(test_integrate.integrate_range())
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
+
 
     def test_7(self):
         test_integrate = integrate.integral(self.all_funcs[6])
         try:
-            print(test_integrate.integrate_region())
+            tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type((1,2)))
         except:
-            print(test_integrate.integrate_range())
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
+
+    def test_8(self):
+        test_integrate = integrate.integral(self.all_funcs[7])
+        try:
+            tmp = test_integrate.integrate_region()
+            print(type(tmp))
+            self.assertEqual(type(tmp), type((1,2)))
+        except:
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
+
+
+    def test_9(self):
+        test_integrate = integrate.integral(self.all_funcs[8])
+        try:
+            tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type((1,2)))
+        except:
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
+
+    def test_10(self):
+        test_integrate = integrate.integral(self.all_funcs[9])
+        try:
+            tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type((1,2)))
+        except:
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
+
 
 unittest.main()

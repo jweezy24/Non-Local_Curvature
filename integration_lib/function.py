@@ -74,31 +74,17 @@ class math_function:
             if 'x' in str(tmp_test):
                 inte_1 = scipy.optimize.fsolve(self.f, [float(tmp_test[0][1]), 0.0]).item(0)
                 inte_2 = scipy.optimize.fsolve(self.f, [float(tmp_test[1][1]), 0.0]).item(0)
-                intersections.append(inte_1)
-                intersections.append(inte_2)
+                intersections.append(float(tmp_test[0][1]))
+                intersections.append(float(tmp_test[1][1]))
             else:
                 inte_1 = scipy.optimize.fsolve(self.f, [float(tmp_test[0][0]), 0.0]).item(0)
                 inte_2 = scipy.optimize.fsolve(self.f, [float(tmp_test[1][0]), 0.0]).item(0)
-                intersections.append(inte_1)
-                intersections.append(inte_2)
+                intersections.append(float(tmp_test[0][0]))
+                intersections.append(float(tmp_test[1][0]))
         except Exception as e:
             print(e)
 
 
-
-        min = 'West'
-        max = 'Jack'
-        #print(intersections)
-        for i in intersections:
-            if min == 'West':
-                min = i
-            elif min < i:
-                min = i
-            if max == 'Jack':
-                max = i
-            elif max > i:
-                max = i
-        intersections = [min,max]
         return intersections
 
     def f(self, xy):
