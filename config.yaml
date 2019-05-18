@@ -2,7 +2,8 @@
 args:
   function: 5*x**3*(cos(y**3))
   with_respect: dx dy
-  functions: y= 3 ,x= 2*(y**float(1/2))
+  functions: R**2
+
 
 
 

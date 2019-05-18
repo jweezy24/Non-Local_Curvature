@@ -3,6 +3,7 @@ import scipy.integrate as inte
 from sympy import *
 import integration_lib.function as func
 from numpy import sqrt, sin, cos, pi
+import numpy as np
 import sys
 
 
@@ -45,12 +46,18 @@ class integral:
 
     def integrate_region(self):
         change_x = True
+        change_y = True
         counter = 0
         x = Symbol('x')
         y = Symbol('y')
         for i in self.func.domain:
-            if "x" in i.original_str:
-                change_x = False
+            if type(i) == type(self.func):
+                if "x" in i.original_str:
+                    change_x = False
+                else:
+                    change_y = False
+            elif type(i) == type(0.0):
+                return self.integrate_inf()
 
 
         if not change_x:
@@ -71,7 +78,7 @@ class integral:
             new_func = func.math_function(new_args)
             new_integral = integral(new_func)
             newHolder = new_integral.integrate_basic([self.func.intersections[0], self.func.intersections[1]])
-        else:
+        elif not change_y:
             holder = integrate(self.func.original_str, x)
             #print("Integration is " + str(holder))
             str_holder = str(holder)
@@ -132,6 +139,9 @@ class integral:
                 lambda x: float(first[0]), lambda x: eval(first[1].replace(" ", "")))
                 return holder
 
+
+    def integrate_inf(self):
+        holder = inte.dblquad(lambda y, x: eval(self.func.func), np.inf, -np.inf, np.inf, -np.inf,)
 
 
     def eval_func(self, *arg):

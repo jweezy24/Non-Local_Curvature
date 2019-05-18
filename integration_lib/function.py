@@ -16,11 +16,13 @@ class math_function:
             self.original_str = args["args"]["function"]
             checker = True
             self.func = parser.expr(args["args"]["function"]).compile()
-            if 'None' != args["args"]["functions"]:
+            if 'None' != args["args"]["functions"] and 'R**2' != args["args"]["functions"]:
                 self.domain = self.generate_functions_from_domain(args["args"]["functions"])
                 self.domain_range = None
                 if self.domain:
                     self.intersections = self.find_domain_intersections()
+            elif 'R**2' == args["args"]["functions"]:
+                self.domain = [-np.inf, np.inf]
             elif 'None' != args["args"]["range"]:
                 self.domain_range = utils.range_parse(args["args"]["range"])
                 self.domain = None
