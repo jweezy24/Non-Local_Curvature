@@ -58,7 +58,6 @@ class integral:
             elif type(i) == type(0.0):
                 return self.integrate_inf()
 
-
         if not change_x:
             holder = integrate(self.func.original_str, y)
             if 'gamma' in str(holder):

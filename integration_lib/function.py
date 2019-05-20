@@ -70,8 +70,10 @@ class math_function:
                 if '=' in i and not self.double_var:
                     holder = i.split('=')
                     functions.append(math_function(holder[1].strip()))
-                else:
-                    pass
+                elif self.double_var:
+                    self.intersections = [sympy.solve([tmp_d2[0].replace('=', '-'), tmp_d2[1].replace('=', '-')], x,y)[0][1], 0]
+                    holder = i.split('=')
+                    functions.append(math_function(holder[1].strip()))
 
             return functions
         else:
@@ -80,6 +82,8 @@ class math_function:
     def find_domain_intersections(self):
         negative = False
         intersections = []
+        if self.double_var:
+            return self.intersections
         try:
             x = sympy.Symbol('x')
             y = sympy.Symbol('y')
@@ -148,6 +152,10 @@ class math_function:
 
 
         return intersections
+
+
+    def find_intersections(self):
+        pass
 
     def f(self, xy):
         x,y = xy
