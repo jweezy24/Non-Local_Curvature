@@ -1,5 +1,4 @@
 args:
-  function: 10*(x**2)*(y**3) - 6
+  function: 10*x**2*y**3 - 6
   with_respect: dx dy
   functions: x=(-2)*y**2,x=y**3
-  

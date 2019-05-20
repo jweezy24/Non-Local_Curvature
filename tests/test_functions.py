@@ -9,7 +9,7 @@ import numpy as np
 class TestFunctionsMethods(unittest.TestCase):
     def setUp(self):
         self.all_funcs = []
-        for i in range(1,13):
+        for i in range(1,14):
             tmp = parser.parser(file_path="./working_functs/"+str(i)+".yaml")
             self.all_funcs.append(func.math_function(tmp.args))
 
@@ -28,8 +28,10 @@ class TestFunctionsMethods(unittest.TestCase):
         test_integrate = integrate.integral(self.all_funcs[1])
         try:
             tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type((1,2)))
         except:
-            print(test_integrate.integrate_range())
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
 
 
     def test_3(self):
@@ -46,8 +48,10 @@ class TestFunctionsMethods(unittest.TestCase):
         test_integrate = integrate.integral(self.all_funcs[3])
         try:
             tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type((1,2)))
         except:
-            print(test_integrate.integrate_range())
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
 
     def test_5(self):
         test_integrate = integrate.integral(self.all_funcs[4])
@@ -84,11 +88,12 @@ class TestFunctionsMethods(unittest.TestCase):
         test_integrate = integrate.integral(self.all_funcs[7])
         try:
             tmp = test_integrate.integrate_region()
-            print(type(tmp))
             self.assertEqual(type(tmp), type((1,2)))
+            self.assertAlmostEqual(tmp[0], -float(8296/13))
         except:
             tmp = test_integrate.integrate_range()
             self.assertEqual(type(tmp), type((1,2)))
+            self.assertAlmostEqual(tmp[0], -float(8296/13))
 
 
     def test_9(self):
@@ -96,9 +101,11 @@ class TestFunctionsMethods(unittest.TestCase):
         try:
             tmp = test_integrate.integrate_region()
             self.assertEqual(type(tmp), type((1,2)))
+            self.assertAlmostEqual(tmp[0], 0)
         except:
             tmp = test_integrate.integrate_range()
             self.assertEqual(type(tmp), type((1,2)))
+            self.assertAlmostEqual(tmp[0], 0)
 
     def test_10(self):
         test_integrate = integrate.integral(self.all_funcs[9])
@@ -125,11 +132,21 @@ class TestFunctionsMethods(unittest.TestCase):
         try:
             tmp = test_integrate.integrate_region()
             self.assertEqual(type(tmp), type((1,2)))
-            self.assertAlmostEqual(tmp[0], 4811.4)
+            self.assertAlmostEqual(tmp[0], float(24057/5))
         except:
             tmp = test_integrate.integrate_range()
             self.assertEqual(type(tmp), type((1,2)))
-            self.assertAlmostEqual(tmp[0], 4811.4)
+            self.assertAlmostEqual(tmp[0], float(24057/5))
+
+    def test_13(self):
+        test_integrate = integrate.integral(self.all_funcs[12])
+        try:
+            tmp = test_integrate.integrate_region()
+            self.assertEqual(type(tmp), type(''))
+        except:
+            tmp = test_integrate.integrate_range()
+            self.assertEqual(type(tmp), type((1,2)))
+            self.assertAlmostEqual(tmp[0], float(20/3)*np.sin(8))
 
 
 unittest.main()

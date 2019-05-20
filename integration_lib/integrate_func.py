@@ -25,16 +25,15 @@ class integral:
                 self.region_def(self.func.domain)
 
     def integrate_basic(self, range):
-        print(range)
+        print("Range is: " + str(range))
         if 'x' in self.func.original_str:
-            #print(self.func.original_str)
+            print(self.func.original_str)
             try:
                 I = inte.quad(lambda x: eval(self.func.func), range[0], range[1])
             except:
                 range[1] = 0
                 I = inte.quad(lambda x: eval(self.func.func), range[0], range[1])
         elif 'y' in self.func.original_str:
-            #print(self.func.original_str)
             try:
                 I = inte.quad(lambda y: eval(self.func.func), range[0], range[1])
             except:
@@ -70,6 +69,7 @@ class integral:
             newIntegrals.append( str_holder.replace("y", "(" + self.region["max"].original_str + ")"))
             newIntegrals.append( str_holder.replace("y", "(" + self.region["min"].original_str + ")"))
             int_check = False
+            newIntegrals[0] = "(" + newIntegrals[0] + ")"
             newIntegrals[1] = "(" + newIntegrals[1] + ")"
             #print(newIntegrals)
             newIntegral_str = ' - '.join(newIntegrals)
@@ -80,18 +80,21 @@ class integral:
             newHolder = new_integral.integrate_basic([self.func.intersections[0], self.func.intersections[1]])
         elif not change_y:
             holder = integrate(self.func.original_str, x)
-            #print("Integration is " + str(holder))
+            #print("X Integration is " + str(holder))
             str_holder = str(holder)
             newIntegrals = []
             newIntegrals.append( str_holder.replace("x", "(" + self.region["max"].original_str + ")"))
             newIntegrals.append( str_holder.replace("x", "(" + self.region["min"].original_str + ")"))
             int_check = False
+            newIntegrals[0] = "(" + newIntegrals[0] + ")"
             newIntegrals[1] = "(" + newIntegrals[1] + ")"
             #print(newIntegrals)
             newIntegral_str = ' - '.join(newIntegrals)
             #print("New Integral: " + newIntegral_str)
+            #print(self.func.intersections)
             new_args = {"args" : {"function" : newIntegral_str, "functions": [self.func.intersections[0], self.func.intersections[1]]}}
             new_func = func.math_function(new_args)
+            #print(new_func.original_str)
             new_integral = integral(new_func)
             newHolder = new_integral.integrate_basic([self.func.intersections[0], self.func.intersections[1]])
 
@@ -164,17 +167,17 @@ class integral:
                 try:
                     tmp_holder = dict["func"].run_func([i])
                     if tmp_holder or tmp_holder == 0:
-                        if dict["func"].run_func([i]) < j.run_func([i]):
+                        if dict["func"].run_func([i]) > j.run_func([i]):
                             dict["func"] = j
 
                     else:
                         comp = int(dict["func"].original_str)
                         var = j.run_func([i])
                         if type(comp) != type(var):
-                            if comp < var.real:
+                            if comp > var.real:
                                 dict["func"] = j
                         else:
-                            if comp < var:
+                            if comp > var:
                                 dict["func"] = j
 
                 except Exception as e:
@@ -185,3 +188,5 @@ class integral:
                 self.region.update({"min" : i})
             else:
                 self.region.update({"max" : i})
+
+        print("Region is defined by: " + str(self.region))
