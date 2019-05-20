@@ -142,7 +142,7 @@ class integral:
 
     def integrate_inf(self):
         holder = inte.dblquad(lambda y, x: eval(self.func.func), np.inf, -np.inf, np.inf, -np.inf,)
-
+        return holder
 
     def eval_func(self, *arg):
         return self.func.run_func([arg[0]])
