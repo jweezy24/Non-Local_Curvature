@@ -4,6 +4,9 @@ args:
   with_respect: dx dy
   functions: y= 2,x= 2*y**float(1/2)
 
+curv:
+  func: x**2 + y**2
+  radius: 3
 # args:
 #   function: 2*y*x**2 + 9*y**3
 #   with_respect: dx dy
