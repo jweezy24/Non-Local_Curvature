@@ -4,7 +4,7 @@ import sympy
 
 class A:
 
-    def __init__(self, args):
+    def __init__(self, radius, func):
         #True
         self.is_closed = True
         self.A_e = []
@@ -15,15 +15,15 @@ class A:
         self.orientation = True
 
         #grabs the domian defined by the user
-        self.radius = args["curv"]["radius"]
-        self.func = args["curv"]["domain"]
+        self.radius = radius
+        self.func = func
 
     #if the domain is a circle
     def which_set_circle(self, point):
 
         if (point[0]**2 + point[1]**2) > self.radius:
-            self.A_e.append(point)
+            return True
         elif (point[0]**2 + point[1]**2) < self.radius:
-            self.A_e.append(point)
+            return True
         else:
-            self.A_i.append(point)
+            return False

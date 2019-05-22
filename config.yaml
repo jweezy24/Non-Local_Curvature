@@ -6,7 +6,9 @@ args:
 
 curv:
   func: x**2 + y**2
-  radius: 3
+  radius: 4
+  circle: True
+
 # args:
 #   function: 2*y*x**2 + 9*y**3
 #   with_respect: dx dy
