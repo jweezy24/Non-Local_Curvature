@@ -22,7 +22,14 @@ class Eval:
             return -1
 
     def eval(self):
-        p = (2,0)
-        I = inte.dblquad(lambda x,y: (self.eval_char_func(p,(x,y))/sqrt((p[0] - x)**2 + (p[1]- y)**2)),
-        -np.inf, np.inf, -np.inf, np.inf)
-        print(I)
+        total = 0.0
+        for i in range(0,361):
+            p = (sin(i *float(pi/180)), cos(i * float(pi/180)))
+            I = inte.dblquad(lambda x,y: (float(1/2)*(self.eval_char_func(p,(x,y))/abs(p[1]-y)**(float(1/10)))),
+            -np.inf, np.inf, -np.inf, np.inf)
+            print("Integral evals to: " + str(I) + "\tThe angle is: " + str(i))
+            if I[0] > 100000 or I[0] == np.inf or I[0] == -np.inf:
+                continue
+            else:
+                total += float(I[0])
+        print(total)
