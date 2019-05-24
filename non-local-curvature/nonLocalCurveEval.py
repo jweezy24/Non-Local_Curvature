@@ -24,7 +24,7 @@ class Eval:
     def eval(self):
         total = 0.0
         for i in range(0,361):
-            p = (sin(i *float(pi/180)), cos(i * float(pi/180)))
+            p = (sin(float((i *pi)/180)), cos(float((i *pi)/180)))
             I = inte.dblquad(lambda x,y: (float(1/2)*(self.eval_char_func(p,(x,y))/abs(p[1]-y)**(float(1/10)))),
             -np.inf, np.inf, -np.inf, np.inf)
             print("Integral evals to: " + str(I) + "\tThe angle is: " + str(i))
