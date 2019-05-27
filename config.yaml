@@ -5,8 +5,8 @@ args:
   functions: y= 2,x= 2*y**float(1/2)
 
 curv:
-  func: x**2 + y**2
-  radius: 4
+  func: x**2 + (y-2)**2
+  radius: 2
   circle: True
 
 # args:

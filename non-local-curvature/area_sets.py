@@ -20,10 +20,10 @@ class A:
 
     #if the domain is a circle
     def which_set_circle(self, point):
-
-        if (point[0]**2 + point[1]**2) > self.radius:
+        #print("Point checked: " + str(point))
+        if (point[0]**2 + (point[1]-2)**2) > self.radius**2:
             return True
-        elif (point[0]**2 + point[1]**2) < self.radius:
-            return True
+        elif (point[0]**2 + (point[1]-2)**2) < self.radius**2:
+            return False
         else:
             return False
