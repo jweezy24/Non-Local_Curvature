@@ -7,6 +7,8 @@ args:
 curv:
   func: x**2 + (y-2)**2
   radius: 2
+  xrange: -2 -> 2
+  yrange: -2 -> 2
   circle: True
 
 # args:
