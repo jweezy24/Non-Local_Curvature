@@ -15,7 +15,7 @@ curv:
 #   function: 2*y*x**2 + 9*y**3
 #   with_respect: dx dy
 #   functions: y= float(2/3)*x, y= 2*x**float(1/2) test
-#TEST FOR THINGS HOMIE
+#TEST 
 
 
 
