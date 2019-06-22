@@ -24,15 +24,14 @@ class winder:
         angle1 = 0
         start = True
         flip = False
+        negative = False
         for x,y in self.range:
             func_point = (x, y)
-            line = [point, func_point]
-            if self.test_nums(func_point) != 4:
-                continue
+            vector = ((x - point[0]), (y - point[1]))
+            line = [point, vector]
             #magnitude of the vector
             r = np.sqrt((func_point[0] - point[0])**2  + (func_point[1] - point[1])**2)
             if not self.line_compare(line):
-                print("HERE")
                 flip = True
             elif start:
                 start = False
@@ -42,14 +41,17 @@ class winder:
             elif self.first_line and line:
                 angles = self.angle_between(self.first_line, line)
                 if not math.isnan(angles):
-                    print(angles)
-                    angle1 += angles
-        print(float(angle1/(1)))
+                    if angles * (180.0/np.pi) == 180.0:
+                        negative = True
+                    if not negative:
+                        angle1 += angles * (180.0/np.pi)
+                    else:
+                        angle1 -= angles * (180.0/np.pi)
+        print(float(angle1))
         return self.turns
 
 
     def line_compare(self, line):
-
         if not self.line_holder:
             self.line_holder = line
             return True
@@ -60,7 +62,10 @@ class winder:
             return False
 
     def angle_between(self, line1, line2):
-        return np.arctan(((line2[1][0]-line1[1][0])/2)/((line2[0][1]-line1[1][1])/2))
+        dot_prod = line1[1][0]*line2[1][0] + line1[1][1]*line2[1][1]
+        denom = math.sqrt(line1[1][0]**2 + line1[1][1]**2) * math.sqrt(line2[1][0]**2 + line2[1][1]**2)
+        return np.arccos(dot_prod/denom)
+
 
     def make_range(self,r):
         func_holder = self.func
@@ -74,4 +79,4 @@ class winder:
 if __name__ == "__main__":
 
     wind = winder("x**2 + y**2", radius=2)
-    print(wind.calculate((0,6)))
+    print(wind.calculate((0,0.5)))
