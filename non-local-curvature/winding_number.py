@@ -40,14 +40,16 @@ class winder:
                 continue
             elif self.first_line and line:
                 angles = self.angle_between(self.first_line, line)
+                self.first_line = line
                 if not math.isnan(angles):
-                    if angles * (180.0/np.pi) == 180.0:
+                    if np.isclose(angles * (180.0/np.pi), 180.0):
                         negative = True
                     if not negative:
                         angle1 += angles * (180.0/np.pi)
                     else:
                         angle1 -= angles * (180.0/np.pi)
-        print(float(angle1))
+            if np.isclose(angle1, 360):
+                self.turns +=1
         return self.turns
 
 
@@ -79,4 +81,4 @@ class winder:
 if __name__ == "__main__":
 
     wind = winder("x**2 + y**2", radius=2)
-    print(wind.calculate((0,0.5)))
+    print(wind.calculate((0,4)))

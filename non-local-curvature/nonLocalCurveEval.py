@@ -2,7 +2,6 @@ import ast
 import scipy.integrate as inte
 import scipy
 from sympy import *
-import integration_lib.function as func
 from numpy import sqrt, sin, cos, pi
 import numpy as np
 import sys
