@@ -5,7 +5,8 @@ args:
   functions: y= 2,x= 2*y**float(1/2)
 
 curv:
-  func: x**2 + (y-2)**2
+  func_x: (4 - (y)**2 )**(1/2)
+  func_y: (4 - (x)**2)**(1/2)
   radius: 2
   xrange: -2 -> 2
   yrange: -2 -> 2

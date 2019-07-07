@@ -5,8 +5,9 @@ import math
 
 class winder:
 
-    def __init__(self, func, radius=0):
-        self.func = func
+    def __init__(self, func_x, func_y, radius=0):
+        self.func_x = func_x
+        self.func_y = func_y
         self.line_holder = None
         self.first_line = None
         self.first_line_mag = 0
@@ -42,14 +43,11 @@ class winder:
                 angles = self.angle_between(self.first_line, line)
                 self.first_line = line
                 if not math.isnan(angles):
-                    if np.isclose(angles * (180.0/np.pi), 180.0):
-                        negative = True
-                    if not negative:
-                        angle1 += angles * (180.0/np.pi)
-                    else:
-                        angle1 -= angles * (180.0/np.pi)
-            if np.isclose(angle1, 360):
-                self.turns +=1
+                    #print(angles * (180.0/np.pi))
+                    angle1 += angles * (180.0/np.pi)
+                print(angle1)
+            if angle1 >= 360:
+                self.turns = 1
         return self.turns
 
 
@@ -69,16 +67,24 @@ class winder:
         return np.arccos(dot_prod/denom)
 
 
-    def make_range(self,r):
-        func_holder = self.func
-        for i in range(0, 361):
-            point = ((r)*np.cos((i*np.pi)/180), (r)*np.sin((i*np.pi)/180))
-            self.range.append(point)
+    def make_range(self,radius):
+        r = radius
+        func_x_eval = lambda y: eval(self.func_x)
+        func_y_eval = lambda x: eval(self.func_y)
+        for i in range(0, 1):
+            point_pos = (func_x_eval(r*np.cos((i*np.pi)/180)), func_y_eval(r*np.sin((i*np.pi)/180)))
+            point_neg_x = (-func_x_eval(r*np.cos((i*np.pi)/180)), func_y_eval(r*np.sin((i*np.pi)/180)))
+            point_neg = (-func_x_eval(r*np.cos((i*np.pi)/180)), -func_y_eval(r*np.sin((i*np.pi)/180)))
+            point_neg_y = (func_x_eval(r*np.cos((i*np.pi)/180)), -func_y_eval(r*np.sin((i*np.pi)/180)))
+            self.range.append(point_pos)
+            self.range.append(point_neg)
+            self.range.append(point_neg_x)
+            self.range.append(point_neg_y)
 
 
 
 
 if __name__ == "__main__":
 
-    wind = winder("x**2 + y**2", radius=2)
-    print(wind.calculate((0,4)))
+    wind = winder("(4 -(y)**2 )**(1/2)", "(4 - (x)**2)**(1/2)", radius=2)
+    print(wind.calculate((.2, 0)))
