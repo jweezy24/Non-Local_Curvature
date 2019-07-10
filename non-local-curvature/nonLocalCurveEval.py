@@ -24,8 +24,9 @@ class Eval:
     def eval(self):
         total = 0.0
         for i in range(10, 1, -1):
-            I = inte.dblquad(lambda r,theta: (self.holder(r, theta)),
-            0, 2*pi, 0, np.inf)
+            I = inte.dblquad(lambda r,theta:
+            (float(1/2)*(self.eval_char_func((0,0),(r*math.cos(theta), r*math.sin(theta)))/r**(1+float(1/2)))),
+            0, 2*pi, float(i/100000), np.inf)
             print("Integral evals to: " + str(I) + "\tThe angle is: " + str(i))
         print(total)
 

@@ -25,7 +25,14 @@ class A:
     def which_set_circle(self, point):
         #print("Point checked: " + str(point))
         #calc = winding_number.winder(self.func, self.radius)
-        if self.calc.calculate(point) != 0:
+        # if self.calc.calculate(point) != 0:
+        #     return True
+        # else:
+        #     return False
+
+        if (point[0]**2 + (point[1])**2) > self.radius**2:
             return True
+        elif (point[0]**2 + (point[1])**2) < self.radius**2:
+            return False
         else:
             return False

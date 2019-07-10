@@ -47,7 +47,6 @@ class winder:
                     angle1 += angles * (180.0/np.pi)
                 #print(angle1)
             if np.isclose(angle1, 360):
-                
                 self.turns = 1
         return self.turns
 
