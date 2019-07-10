@@ -45,7 +45,7 @@ class winder:
                 if not math.isnan(angles):
                     #print(angles * (180.0/np.pi))
                     angle1 += angles * (180.0/np.pi)
-                print(angle1)
+                #print(angle1)
             if angle1 >= 360:
                 self.turns = 1
         return self.turns
@@ -68,14 +68,13 @@ class winder:
 
 
     def make_range(self,radius):
-        r = radius
-        func_x_eval = lambda y: eval(self.func_x)
-        func_y_eval = lambda x: eval(self.func_y)
-        for i in range(0, 1):
-            point_pos = (func_x_eval(r*np.cos((i*np.pi)/180)), func_y_eval(r*np.sin((i*np.pi)/180)))
-            point_neg_x = (-func_x_eval(r*np.cos((i*np.pi)/180)), func_y_eval(r*np.sin((i*np.pi)/180)))
-            point_neg = (-func_x_eval(r*np.cos((i*np.pi)/180)), -func_y_eval(r*np.sin((i*np.pi)/180)))
-            point_neg_y = (func_x_eval(r*np.cos((i*np.pi)/180)), -func_y_eval(r*np.sin((i*np.pi)/180)))
+        func_x_eval = lambda t: eval(self.func_x)
+        func_y_eval = lambda t: eval(self.func_y)
+        for i in range(1, 2):
+            point_pos = (func_x_eval(2*np.pi/i), func_y_eval(2*np.pi/i))
+            point_neg_x = (-func_x_eval(2*np.pi/i), func_y_eval(2*np.pi/i))
+            point_neg = (-func_x_eval(2*np.pi/i), -func_y_eval(2*np.pi/i))
+            point_neg_y = (func_x_eval(2*np.pi/i), -func_y_eval(2*np.pi/i))
             self.range.append(point_pos)
             self.range.append(point_neg)
             self.range.append(point_neg_x)
@@ -86,5 +85,5 @@ class winder:
 
 if __name__ == "__main__":
 
-    wind = winder("(4 -(y)**2 )**(1/2)", "(4 - (x)**2)**(1/2)", radius=2)
-    print(wind.calculate((.2, 0)))
+    wind = winder("2*np.cos(t)", "2*np.sin(t)", radius=2)
+    print(wind.calculate((-2, 0)))
