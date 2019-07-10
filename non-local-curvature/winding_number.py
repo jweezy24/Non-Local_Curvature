@@ -1,7 +1,7 @@
-from scipy.optimize import fsolve
 import numpy as np
 import sympy
 import math
+import time
 
 class winder:
 
@@ -46,7 +46,8 @@ class winder:
                     #print(angles * (180.0/np.pi))
                     angle1 += angles * (180.0/np.pi)
                 #print(angle1)
-            if angle1 >= 360:
+            if np.isclose(angle1, 360):
+                
                 self.turns = 1
         return self.turns
 
@@ -70,15 +71,14 @@ class winder:
     def make_range(self,radius):
         func_x_eval = lambda t: eval(self.func_x)
         func_y_eval = lambda t: eval(self.func_y)
-        for i in range(1, 2):
-            point_pos = (func_x_eval(2*np.pi/i), func_y_eval(2*np.pi/i))
-            point_neg_x = (-func_x_eval(2*np.pi/i), func_y_eval(2*np.pi/i))
-            point_neg = (-func_x_eval(2*np.pi/i), -func_y_eval(2*np.pi/i))
-            point_neg_y = (func_x_eval(2*np.pi/i), -func_y_eval(2*np.pi/i))
-            self.range.append(point_pos)
-            self.range.append(point_neg)
-            self.range.append(point_neg_x)
-            self.range.append(point_neg_y)
+        point_pos = (func_x_eval(2*np.pi), func_y_eval(2*np.pi))
+        point_neg_x = (-func_x_eval(2*np.pi), func_y_eval(2*np.pi))
+        point_neg = (-func_x_eval(2*np.pi), -func_y_eval(2*np.pi))
+        point_neg_y = (func_x_eval(2*np.pi), -func_y_eval(2*np.pi))
+        self.range.append(point_pos)
+        self.range.append(point_neg)
+        self.range.append(point_neg_x)
+        self.range.append(point_neg_y)
 
 
 

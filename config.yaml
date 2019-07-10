@@ -5,11 +5,9 @@ args:
   functions: y= 2,x= 2*y**float(1/2)
 
 curv:
-  func_x: 2 - 2*np.cos(t)
-  func_y: 2 - 2*np.sin(t)
-  radius: 2
-  xrange: -2 -> 2
-  yrange: -2 -> 2
+  func_x: 4*np.cos(t)
+  func_y: 4*np.sin(t)
+  radius: 4
   circle: True
 
 # args:
