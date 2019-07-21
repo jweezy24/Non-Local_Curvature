@@ -1,5 +1,8 @@
 import numpy as np
 import sympy
+from shapely.geometry import LineString
+from shapely.geometry import Point
+from scipy.optimize import fsolve
 import math
 import time
 
@@ -13,51 +16,51 @@ class winder:
         self.first_line_mag = 0
         self.turns = 0
         self.range = []
-
-        self.make_range(radius)
+        self.radius = radius
 
 
     def test_nums(self,point):
-        f = lambda x,y: eval(self.func)
-        val = f(point[0],point[1])
-        return val
-    def calculate(self, point):
-        angle1 = 0
-        start = True
-        flip = False
-        negative = False
-        for x,y in self.range:
-            func_point = (x, y)
-            vector = ((x - point[0]), (y - point[1]))
-            line = [point, vector]
-            #magnitude of the vector
-            r = np.sqrt((func_point[0] - point[0])**2  + (func_point[1] - point[1])**2)
-            if not self.line_compare(line):
-                flip = True
-            elif start:
-                start = False
-                self.first_line = line
-                self.first_line_mag = r
-                continue
-            elif self.first_line and line:
-                angles = self.angle_between(self.first_line, line)
-                self.first_line = line
-                if not math.isnan(angles):
-                    #print(angles * (180.0/np.pi))
-                    angle1 += angles * (180.0/np.pi)
-                #print(angle1)
-            if np.isclose(angle1, 360):
-                self.turns = 1
-        return self.turns
+        f_x = lambda t: eval(self.func_x)
+        f_y = lambda t: eval(self.func_y)
+        value = f_x(point[0]) + f_y(point[1])
+        return value
 
+    def calculate(self, start, point):
+        vector = ((start[0] - point[0]), (start[1] - point[1]))
+        line = [point, vector]
+        
+        x_1 = vector[0]
+        y_1 = vector[1]
 
-    def line_compare(self, line):
-        if not self.line_holder:
-            self.line_holder = line
-            return True
-        elif line[0] != self.line_holder[0] or line[1] != self.line_holder[1]:
-            self.line_holder = line
-            return True
+        p = Point(0, 0)
+
+        c = p.buffer(self.radius).boundary
+
+        slope = (y_1/x_1)
+        
+
+        f = lambda x: slope*(x - point[0]) + point[1]
+        #f1_y = lambda x: 
+
+        l = LineString([(self.radius,f(self.radius)),(-self.radius,f(-self.radius)) ])
+
+        i = c.intersection(l)
+        l2 = None
+        if type(i) == "<class 'shapely.geometry.multipoint.MultiPoint'>":
+            l2 = LineString(i)
+        else:
+            return False
+
+        l2 = LineString(i)
+
+        if l2.contains(Point(point)):
+            point_count = 0
+            for p in i:
+                point_count+=1
+            if point_count > 0 and point_count%2 == 0:
+                return True
+            else:
+                return False
         else:
             return False
 
@@ -67,22 +70,10 @@ class winder:
         return np.arccos(dot_prod/denom)
 
 
-    def make_range(self,radius):
-        func_x_eval = lambda t: eval(self.func_x)
-        func_y_eval = lambda t: eval(self.func_y)
-        point_pos = (func_x_eval(2*np.pi), func_y_eval(2*np.pi))
-        point_neg_x = (-func_x_eval(2*np.pi), func_y_eval(2*np.pi))
-        point_neg = (-func_x_eval(2*np.pi), -func_y_eval(2*np.pi))
-        point_neg_y = (func_x_eval(2*np.pi), -func_y_eval(2*np.pi))
-        self.range.append(point_pos)
-        self.range.append(point_neg)
-        self.range.append(point_neg_x)
-        self.range.append(point_neg_y)
-
 
 
 
 if __name__ == "__main__":
 
-    wind = winder("2*np.cos(t)", "2*np.sin(t)", radius=2)
-    print(wind.calculate((-2, 0)))
+    wind = winder("2*np.cos(t)", "2*np.sin(t)", (2,0), radius=2)
+    print(wind.calculate((0,7)))

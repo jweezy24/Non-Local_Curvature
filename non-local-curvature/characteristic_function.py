@@ -16,4 +16,4 @@ class chi:
     def check(self, p1, p2):
         #print("Points given P1: " + str(p1) + "\t P2:" + str(p2))
         if self.is_circle:
-            return self.area_sets.which_set_circle(p2)
+            return self.area_sets.which_set_circle(p1, p2)

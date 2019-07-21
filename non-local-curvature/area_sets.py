@@ -22,17 +22,17 @@ class A:
         self.calc = winding_number.winder(self.func_x,self.func_y, self.radius)
 
     #if the domain is a circle
-    def which_set_circle(self, point):
+    def which_set_circle(self, point, point2):
         #print("Point checked: " + str(point))
         #calc = winding_number.winder(self.func, self.radius)
-        # if self.calc.calculate(point) != 0:
-        #     return True
-        # else:
-        #     return False
-
-        if (point[0]**2 + (point[1])**2) > self.radius**2:
+        if self.calc.calculate(point, point2):
             return True
-        elif (point[0]**2 + (point[1])**2) < self.radius**2:
-            return False
         else:
             return False
+
+        # if (point[0]**2 + (point[1])**2) > self.radius**2:
+        #     return True
+        # elif (point[0]**2 + (point[1])**2) < self.radius**2:
+        #     return False
+        # else:
+        #     return False
