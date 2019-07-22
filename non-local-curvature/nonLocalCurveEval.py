@@ -26,7 +26,7 @@ class Eval:
         for i in range(10, 1, -1):
             I = inte.dblquad(lambda r,theta:
             self.holder(r,theta),
-            0, 2*pi, 0, np.inf)
+            0, 2*pi, float(i/1000), np.inf)
             print("Integral evals to: " + str(I) + "\tThe angle is: " + str(i))
         print(total)
 

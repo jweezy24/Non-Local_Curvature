@@ -17,6 +17,8 @@ class winder:
         self.turns = 0
         self.range = []
         self.radius = radius
+        origin = Point(0, 0)
+        self.circle = origin.buffer(self.radius).boundary
 
 
     def test_nums(self,point):
@@ -32,10 +34,6 @@ class winder:
         x_1 = vector[0]
         y_1 = vector[1]
 
-        p = Point(0, 0)
-
-        c = p.buffer(self.radius).boundary
-
         slope = (y_1/x_1)
         
 
@@ -44,10 +42,16 @@ class winder:
 
         l = LineString([(self.radius,f(self.radius)),(-self.radius,f(-self.radius)) ])
 
-        i = c.intersection(l)
+        i = self.circle.intersection(l)
         l2 = None
-        if type(i) == "<class 'shapely.geometry.multipoint.MultiPoint'>":
+        if str(type(i)) == "<class 'shapely.geometry.multipoint.MultiPoint'>":
             l2 = LineString(i)
+        elif str(type(i)) == "<class 'shapely.geometry.collection.GeometryCollection'>":
+            print(point)
+            print(i)
+            return False
+        elif str(type(i)) == "<class 'shapely.geometry.linestring.LineString'>":
+            l2 = i
         else:
             return False
 
@@ -63,11 +67,6 @@ class winder:
                 return False
         else:
             return False
-
-    def angle_between(self, line1, line2):
-        dot_prod = line1[1][0]*line2[1][0] + line1[1][1]*line2[1][1]
-        denom = math.sqrt(line1[1][0]**2 + line1[1][1]**2) * math.sqrt(line2[1][0]**2 + line2[1][1]**2)
-        return np.arccos(dot_prod/denom)
 
 
 
