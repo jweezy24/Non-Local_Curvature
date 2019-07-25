@@ -74,5 +74,5 @@ class winder:
 
 if __name__ == "__main__":
 
-    wind = winder("2*np.cos(t)", "2*np.sin(t)", (2,0), radius=2)
-    print(wind.calculate((0,7)))
+    wind = winder("2*np.cos(t)", "2*np.sin(t)", radius=2)
+    print(wind.calculate((2,0),(0,7)))

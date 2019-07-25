@@ -15,4 +15,15 @@ origin = Point(0, 0)
 # self.radius refers to the radius given by the user in the config file
 self.circle = origin.buffer(self.radius).boundary
 ```
+
+Intersections are found using:
+```Python
+#l is the line given from two points
+l = LineString([(self.radius,f(self.radius)),(-self.radius,f(-self.radius)) ])
+#This line will find where l intersects with the circle
+#i is the geometry object that is created from the intersection (POINT, MULTIPOINT, LINE, etc)
+i = self.circle.intersection(l)
+```
+
+I found that using shapely has made the functions more accurate. We do lose some speed as a consequence.
     
