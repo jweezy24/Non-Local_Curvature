@@ -11,7 +11,13 @@ class chi:
         self.func_x = args["curv"]["func_x"]
         self.func_y = args["curv"]["func_y"]
         self.is_circle = args["curv"]["circle"]
-        self.area_sets = area.A(self.radius, self.func_x, self.func_y)
+        self.start = args["curv"]["start_point"]
+        if self.is_circle:
+            self.origin = args["curv"]["origin"]
+        if self.is_circle:
+            self.area_sets = area.A(self.radius, self.func_x, self.func_y, self.origin)
+        else:
+            return
 
     def check(self, p1, p2):
         #print("Points given P1: " + str(p1) + "\t P2:" + str(p2))

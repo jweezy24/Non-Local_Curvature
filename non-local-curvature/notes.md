@@ -1,3 +1,22 @@
+## Speed Notes
+
+#### Math program computed on gpu results
+We may want to use GPUs to accelerate the math computations. https://www.researchgate.net/publication/261987861_A_Memory_Efficient_Algorithm_for_Adaptive_Multidimensional_Integration_with_Multiple_GPUs
+
+#### Library for python GPU computing
+https://www.researchgate.net/profile/Razvan_Pascanu/publication/228832149_Theano_A_CPU_and_GPU_math_compiler_in_Python/links/004635314aa30be30d000000/Theano-A-CPU-and-GPU-math-compiler-in-Python.pdf
+
+#### Another paper discussing integration technique on GPU
+https://onlinelibrary.wiley.com/doi/epdf/10.1002/nme.2661
+
+
+#### Monte Carlo Integration on GPU
+https://link.springer.com/article/10.1140/epjc/s10052-011-1559-8
+https://link.springer.com/content/pdf/10.1140%2Fepjc%2Fs10052-011-1559-8.pdf
+
+#### Image calculations done on GPU
+https://www.osapublishing.org/oe/fulltext.cfm?uri=oe-20-2-732&id=226157
+
 ## Libraries Used
 
 ### Shapely

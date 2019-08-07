@@ -7,85 +7,8 @@ args:
 curv:
   func_x: 2*np.cos(t)
   func_y: 2*np.sin(t)
+  start_point: [2,0]
+  origin: [0,0]
   radius: 2
   circle: True
 
-# args:
-#   function: 2*y*x**2 + 9*y**3
-#   with_respect: dx dy
-#   functions: y= float(2/3)*x, y= 2*x**float(1/2)
-
-#next phase
-# args:
-#   function: y**2+(3*x)
-#   with_respect: dx dy
-#   #if the domain is given in ranges
-#   range: None
-#   #if the domain is given by functions
-#   functions: None #could also be a file name
-#   #if the domain is give by object
-#   objects: x**2 + y**2=1, x**2+y**2=9
-
-
-#edge cases that dont work
-#Edge case 1: One of the functions is defined by a constant
-# args:
-#   function: 5*x**3*(cos(y**3))
-#   with_respect: dx dy
-#   functions: x=0,x= 2*(y**float(1/2))
-# args:
-#   function: 1/(y**float(1/3)*(x**3 + 1))
-#   with_respect: dx dy
-#   functions: x=y**float(1/3),x=3
-
-
-
-#Working double integrals
-
-# args:
-#   function: x + 2*y
-#   with_respect: dx dy
-#   functions: y=2*x**2, y=1+x**2
-
-# args:
-#   function: x**2 + y**2
-#   with_respect: dx dy
-#   functions: y=x**2, y=2*
-
-# args:
-#   function: x**2 + y**2
-#   with_respect: dx dy
-#   functions: x=(float(1/2)*y), x=(y**float(1/2))
-
-# args:
-#   function: x**2 + y**2
-#   with_respect: dx dy
-#   functions: y=x**2, y=x
-
-# args:
-#   function: x**2 + y**2
-#   with_respect: dx dy
-#   functions: x=y, x=y**float(1/2)
-
-# args:
-#   function: (2*y*x**2)+(9*y**3)
-#   with_respect: dx dy
-#   functions: y=float(2/3)*x, y=2*x**float(1/2)
-
-# args:
-#   function: (42*y**2)-(12*x)
-#   with_respect: dx dy
-#   #if the domain is given in ranges
-#   range: 0<=x<=4,(x-2)**2<=y<=6
-#   #if the domain is given by functions
-#   functions: None #could also be a file name
-
-# args:
-#   function: 10*(x**2)*(y**3) - 6
-#   with_respect: dx dy
-#   functions: x=(-2)*y**2,x=y**3
-
-# args:
-#   function: x*(y-1)
-#   with_respect: dx dy
-#   functions: y=1-x**2,y=x**2-3

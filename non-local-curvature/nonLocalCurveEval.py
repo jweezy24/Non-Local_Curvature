@@ -23,18 +23,18 @@ class Eval:
 
     def eval(self):
         total = 0.0
-        for i in range(10, 1, -1):
-            I = inte.dblquad(lambda r,theta:
-            self.holder(r,theta),
-            0, 2*pi, float(i/1000), np.inf)
-            print("Integral evals to: " + str(I) + "\tThe angle is: " + str(i))
+        #for i in range(10, 1, -1):
+        I = inte.dblquad(lambda r,theta:
+        self.holder(r,theta),
+        0, 2*pi, float(1/10000), np.inf)
+        print("Integral evals to: " + str(I))
         print(total)
 
     def holder(self, r, theta):
         #print("point is " + str((r, theta)))
-        vector_x = 2 - r*np.cos(theta) 
-        vector_y =  -r*np.sin(theta)
+        vector_x = self.char_func.start[0]-r*np.cos(theta) 
+        vector_y = self.char_func.start[1]-r*np.sin(theta)
         norm = math.sqrt(vector_x**2 + vector_y**2)
         #working code
-        return float(1/2)*(self.eval_char_func((2,0),(r*np.cos(theta), r*np.sin(theta)))/norm**(1+float(1/2)))
+        return float(1/2)*(self.eval_char_func(self.char_func.start,(r*np.cos(theta), r*np.sin(theta)))/norm**(1+float(1/2)))
         #return float(1/2)*(self.eval_char_func((0,0),(r, theta))/r**(1+float(1/2)))
