@@ -16,7 +16,10 @@ class Eval:
         self.eval()
 
     def eval_char_func(self, p1, p2):
-        if self.char_func.check(p1,p2):
+        val = self.char_func.check(p1,p2)
+        if val == None:
+            return 0
+        elif val:
             return 1
         else:
             return -1
@@ -26,7 +29,7 @@ class Eval:
         #for i in range(10, 1, -1):
         I = inte.dblquad(lambda r,theta:
         self.holder(r,theta),
-        0, 2*pi, float(1/10000), np.inf)
+        0, 2*pi, float(1/100000), np.inf)
         print("Integral evals to: " + str(I))
         print(total)
 
