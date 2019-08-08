@@ -32,7 +32,8 @@ class winder:
         vector = ((start[0] - point[0]), (start[1] - point[1]))
         line = [point, vector]
 
-
+        atol_temp= 10**-13
+        rtol_temp= 10**-13
         
         x_direction = vector[0]/vector[0]
         y_direction = vector[1]/vector[1]
@@ -43,26 +44,68 @@ class winder:
 
         #f = lambda x: slope*(x - point[0]) + point[1]
         
-        l = LineString([(self.radius*point[0]*x_direction, point[1]),(point[0],point[1])])
+        l = LineString([(start[0], start[1]),(point[0],point[1])])
 
         i = self.circle.intersection(l)
         l2 = None
         #print( f'Line:{l} intersection:{i}')
         if str(type(i)) == "<class 'shapely.geometry.multipoint.MultiPoint'>":
             # Are there an even number of intersections? save the line to test for later
-            #self.debug_point(point,True, f'False. Intersection:{i} Point:{point} Even points yet in the circle')
-            return False
+            # self.debug_point(point,True, f'False. Intersection:{i} Point:{point} Even points yet in the circle')
+            intersections = len(list(i))
+            for intsec_p in range(0, len(list(i))):
+                    # Does the point already exist on the circle? Return True 
+                    if np.isclose(list(i)[intsec_p].coords[0][0], start[0],rtol=rtol_temp, atol=atol_temp) and np.isclose(list(i)[intsec_p].coords[0][1], start[1], rtol=rtol_temp, atol=atol_temp):
+                        intersections -= 1
+                    elif np.isclose(list(i)[intsec_p].coords[0][0], point[0],rtol=rtol_temp, atol=atol_temp) and np.isclose(list(i)[intsec_p].coords[0][1], point[1], rtol=rtol_temp, atol=atol_temp):
+                        intersections -= 1
+            if intersections == 0:
+                return None
+            
+            if point[1] > start[1] and intersections%2 == 0:
+                #self.debug_point(point,False, f' Intersection:{i} number of intersections:{intersections} Point:{point} Even intersections above line')
+                return True
+            elif point[1] <= start[1] and intersections%2 == 0:
+                #self.debug_point(point,True, f'Intersection:{i} number of intersections:{intersections} Point:{point} Even intersections below line')
+                return False
+            elif point[1] > start[1] and intersections%2 == 1:
+                #self.debug_point(point,True, f'Intersection:{i} number of intersections:{intersections} Point:{point} Odd intersections above line')
+                return False
+            elif point[1] <= start[1] and intersections%2 == 1:
+                #self.debug_point(point,False, f'Intersection:{i} number of intersections:{intersections} Point:{point} Odd intersections below line')
+                return True
+
         elif str(type(i)) == "<class 'shapely.geometry.linestring.LineString'>":
-            #self.debug_point(point,True, f'False. Intersection:{i} Point:{point} Line is wrong')
+            self.debug_point(point,True, f'False. Intersection:{i} Point:{point} Line is wrong')
             return False
         elif str(type(i)) == "<class 'shapely.geometry.point.Point'>":
-            #self.debug_point(point,False, f'Wrong True. Intersection:{i} Point:{point} Bad Point.')
-            return True
+            intersections = 1
+
+            if np.isclose(i.coords[0][0], start[0],rtol=rtol_temp, atol=atol_temp) and np.isclose(i.coords[0][1], start[1], rtol=rtol_temp, atol=atol_temp):
+                intersections -= 1
+                return None
+
+            if point[1] > start[1] and intersections%2 == 0:
+                #self.debug_point(point,False, f' Intersection:{i} number of intersections:{intersections} Point:{point} Even intersections above line')
+                return True
+            elif point[1] <= start[1] and intersections%2 == 0:
+                #self.debug_point(point,True, f'Intersection:{i} number of intersections:{intersections} Point:{point} Even intersections below line')
+                return False
+            elif point[1] > start[1] and intersections%2 == 1:
+                #self.debug_point(point,True, f'Intersection:{i} number of intersections:{intersections} Point:{point} Odd intersections above line')
+                return False
+            elif point[1] <= start[1] and intersections%2 == 1:
+                #self.debug_point(point,False, f'Intersection:{i} number of intersections:{intersections} Point:{point} Odd intersections below line')
+                return True
+    
         elif str(type(i)) == "<class 'shapely.geometry.collection.GeometryCollection'>":
             #self.debug_point(point,True, f'False. Intersection:{i} Point:{point} point missed by shapelys intersections.')
-            return False
+            if point[1] > start[1]:
+                return True
+            elif point[1] <= start[1]:
+                return False
         else:
-            #self.debug_point(point,True, f'False. Intersection:{i} Point:{point} type:{str(type(i))} Geometry object not accounted for')
+            self.debug_point(point,True, f'False. Intersection:{i} Point:{point} type:{str(type(i))} Geometry object not accounted for')
             return None
 
     def debug_point(self, point, expected_bool, log_message):
@@ -81,4 +124,4 @@ class winder:
 if __name__ == "__main__":
 
     wind = winder("2*np.cos(t)", "2*np.sin(t)", radius=2)
-    print(wind.calculate((2,0), [1.821991980118068, -0.8198467884326306]))
+    print(wind.calculate((0,-2), [2.1,0]))

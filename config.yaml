@@ -7,7 +7,7 @@ args:
 curv:
   func_x: 2*np.cos(t)
   func_y: 2*np.sin(t)
-  start_point: [2,0]
+  start_point: [0,-2]
   origin: [0,0]
   radius: 2
   circle: True
