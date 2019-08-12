@@ -7,6 +7,7 @@ import numpy as np
 import sys
 import math
 import time
+import weezy_integration as jack_integral
 
 class Eval:
 
@@ -14,6 +15,7 @@ class Eval:
 
         self.char_func = func
         self.eval()
+        self.weezy_integration = lambda func, range: jack_integral.integrate(func, range)
 
     def eval_char_func(self, p1, p2):
         val = self.char_func.check(p1,p2)
