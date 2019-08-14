@@ -14,8 +14,11 @@ class Eval:
     def __init__(self, func):
 
         self.char_func = func
+        time1 = time.time()
         self.eval()
-        self.weezy_integration = lambda func, range: jack_integral.integrate(func, range)
+        time2 = time.time()
+        print('Evaluation of Integral tooktook {:.3f} minutes'.format( (time2-time1)/60))
+        #self.weezy_integration = lambda func, range: jack_integral.integrate(func, range)
 
     def eval_char_func(self, p1, p2):
         val = self.char_func.check(p1,p2)

@@ -5,7 +5,7 @@ import winding_number
 
 class A:
 
-    def __init__(self, radius, func_x, func_y, origin=[0,0]):
+    def __init__(self, radius, func_x, func_y, origin=[0,0], points=[]):
         #True
         self.is_closed = True
         self.A_e = []
@@ -19,7 +19,7 @@ class A:
         self.radius = radius
         self.func_x = func_x
         self.func_y = func_y
-        self.calc = winding_number.winder(self.func_x,self.func_y, self.radius, origin)
+        self.calc = winding_number.winder(self.func_x,self.func_y, self.radius, origin, points)
 
     #if the domain is a circle
     def which_set_circle(self, point, point2):

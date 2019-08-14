@@ -27,7 +27,7 @@ def integrate(x_func, range2):
     return total
 
 def integrate2(func, range_x, range_y):
-    n = 1000
+    n = 10000
     delta_x = float((range_x[1] - range_x[0])/n)
     delta_y = float((range_y[1] - range_y[0])/n)
     delta_a = float(delta_x*delta_y)
@@ -42,32 +42,30 @@ def integrate2(func, range_x, range_y):
             total += float(func_eval(start_x + i*delta_x, start_y+ j*delta_y )) * delta_a
 
     return total
-
-def func_2(func, x,y):
-    return float(eval(func))
-
-@generated_jit(nopython=True)
-def func_eval_u(func,x,y):
-    return lambda func,x,y: func_2
-
-@vectorize(['float64(float64, float64)'], target='cuda')
+@njit
 def add_ufunc(x, y):
     return x + y
 
-@njit(parallel = True)
+@jit(parallel = True)
+def sumation(start_x, delta_x, func_2, start_y, delta_y, delta_a, total,n):
+    for i in prange(n):
+        for j in prange(n):
+            total = func_2(add_ufunc(start_x, i*delta_x), add_ufunc(start_y, j*delta_y) ) * delta_a + total
+    return total
+
 def integrate2_u(func, range_x, range_y):
-    n = 1000
+    n = 10000
     delta_x = float((range_x[1] - range_x[0])/n)
     delta_y = float((range_y[1] - range_y[0])/n)
     delta_a = float(delta_x*delta_y)
+
 
     start_x = float(range_x[0])
     start_y = float(range_y[0])
 
     total = 0.0
-    for i in prange(n):
-        for j in prange(n):
-            total = float(func_eval_u(func, start_x + i*delta_x, start_y+ j*delta_y )) * delta_a + total
+    
+    total = sumation(start_x, delta_x, func, start_y, delta_y, delta_a, total,n)
 
     return total
 
@@ -79,6 +77,6 @@ if __name__ == '__main__':
     time2 = time.time()
     print('{:s} function took {:.3f} ms'.format(integrate2.__name__, (time2-time1)*1000.0))
     time1 = time.time()
-    print(integrate2_u('x**2 + y**2 - 2',(-2, 2), (-2,2)))
+    print(integrate2_u(lambda x,y: eval('x**2 + y**2 - 2'),(-2, 2), (-2,2)))
     time2 = time.time()
     print('{:s} function took {:.3f} ms'.format(integrate2.__name__, (time2-time1)*1000.0))
