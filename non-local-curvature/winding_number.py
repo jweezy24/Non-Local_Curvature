@@ -67,12 +67,12 @@ class winder:
         x_direction = vector[0]/vector[0]
         y_direction = vector[1]/vector[1]
 
-        winding_number = self.angle_summation_method(point, False)
-        if  winding_number >= 1:
-            self.debug_point(point,False, f'Winding_number:{winding_number} Point:{point} point is not apart of the circle.')
+        winding_number = self.angle_summation_method(point, True)
+        if  winding_number >= 0.99998:
+            #self.debug_point(point,False, f'Winding_number:{winding_number} Point:{point} point is not apart of the circle.')
             return True
         else:
-            self.debug_point(point,True, f'Winding_number:{winding_number} Point:{point} point is apart of the circle.')
+            #self.debug_point(point,True, f'Winding_number:{winding_number} Point:{point} point is apart of the circle.')
             return False
 
 
