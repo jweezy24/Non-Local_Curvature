@@ -1,7 +1,7 @@
 import math
 import time
-import numpy as np
 import sympy as sp
+import minpy.numpy as np
 from minpy.context import cpu, gpu
 from shapely.geometry import LineString
 from shapely.geometry import Point
@@ -79,7 +79,7 @@ class winder:
                         vector_length_1 = math.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2)
                         vector_length_2 = math.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)
                         denom = vector_length_1*vector_length_2
-                        value = dot_prod/denom
+                        value = np.array(dot_prod/denom)
                         calculation = np.arccos(value)
                         total += calculation
         else:
