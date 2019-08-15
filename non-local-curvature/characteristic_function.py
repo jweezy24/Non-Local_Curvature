@@ -30,7 +30,7 @@ class chi:
         x_eval = lambda t: eval(self.func_x)
         y_eval = lambda t: eval(self.func_y)
         points = []
-        for angle in range(0,381):
+        for angle in range(0,800):
             points.append((x_eval((angle*np.pi)/180),y_eval((angle*np.pi)/180)))
         return points
 

@@ -1,11 +1,35 @@
 import math
 import time
 import sympy as sp
+import numpy
 import minpy.numpy as np
+import mxnet
+from mxnet.gluon import nn
 from minpy.context import cpu, gpu
 from shapely.geometry import LineString
 from shapely.geometry import Point
 from scipy.optimize import fsolve
+from numba import vectorize
+from numba import jit, njit, prange, generated_jit
+
+
+@njit(parallel = True)
+def sumation(p,domain):
+    total = 0
+    for pos in range(0,len(domain)):
+        if pos < len(domain)-1:
+            point_1 = domain[pos]
+            point_2 = domain[pos+1]
+            vector_diff_1 = (point_1[0] - p[0], point_1[1]- p[1])
+            vector_diff_2 = (point_2[0] - p[0], point_2[1]- p[1])
+            dot_prod = vector_diff_1[0]*vector_diff_2[0] + vector_diff_1[1]*vector_diff_2[1]
+            vector_length_1 = math.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2)
+            vector_length_2 = math.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)
+            denom = vector_length_1*vector_length_2
+            value = float(dot_prod/denom)
+            calculation = numpy.arccos(value)
+            total += calculation
+    return total
 
 class winder:
 
@@ -43,12 +67,12 @@ class winder:
         x_direction = vector[0]/vector[0]
         y_direction = vector[1]/vector[1]
 
-        winding_number = self.angle_summation_method(point, True)
-        if  winding_number >= 0.9999999999997737:
-            #self.debug_point(point,False, f'Winding_number:{winding_number} Point:{point} point is not apart of the circle.')
+        winding_number = self.angle_summation_method(point, False)
+        if  winding_number >= 1:
+            self.debug_point(point,False, f'Winding_number:{winding_number} Point:{point} point is not apart of the circle.')
             return True
         else:
-            #self.debug_point(point,True, f'Winding_number:{winding_number} Point:{point} point is apart of the circle.')
+            self.debug_point(point,True, f'Winding_number:{winding_number} Point:{point} point is apart of the circle.')
             return False
 
 
@@ -61,27 +85,13 @@ class winder:
         if statement:
             print(log_message)
 
+
     def angle_summation_method(self, p, if_gpu):
         constant = 1/(2*np.pi)
         total = 0.0
-        time1 =0
-        time2 =0
         if if_gpu:
             with gpu(0):
-                time1 = time.time() 
-                for pos in range(0,len(self.domain)):
-                    if pos < len(self.domain)-1:
-                        point_1 = self.domain[pos]
-                        point_2 = self.domain[pos+1]
-                        vector_diff_1 = (point_1[0] - p[0], point_1[1]- p[1])
-                        vector_diff_2 = (point_2[0] - p[0], point_2[1]- p[1])
-                        dot_prod = vector_diff_1[0]*vector_diff_2[0] + vector_diff_1[1]*vector_diff_2[1]
-                        vector_length_1 = math.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2)
-                        vector_length_2 = math.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)
-                        denom = vector_length_1*vector_length_2
-                        value = np.array(dot_prod/denom)
-                        calculation = np.arccos(value)
-                        total += calculation
+                total = sumation(p,tuple(self.domain))
         else:
             for pos in range(0,len(self.domain)):
                     if pos < len(self.domain)-1:
@@ -94,7 +104,7 @@ class winder:
                         vector_length_2 = math.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)
                         denom = vector_length_1*vector_length_2
                         value = dot_prod/denom
-                        calculation = np.arccos(value)
+                        calculation = numpy.arccos(value)
                         total += calculation
         return constant*total
 
