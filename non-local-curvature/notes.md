@@ -46,3 +46,5 @@ i = self.circle.intersection(l)
 
 I found that using shapely has made the functions more accurate. We do lose some speed as a consequence.
     
+
+http://geomalgorithms.com/a03-_inclusion.html
