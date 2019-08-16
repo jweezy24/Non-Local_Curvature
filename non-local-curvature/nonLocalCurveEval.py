@@ -15,9 +15,12 @@ class Eval:
 
         self.char_func = func
         time1 = time.time()
-        self.eval()
+        self.val = self.eval()
         time2 = time.time()
+        self.actual = -5.24411510858423962093
         print('Evaluation of Integral tooktook {:.3f} minutes'.format( (time2-time1)/60))
+        error = abs(self.actual - self.val)
+        print('Error evaluate to, {:.2f}'.format(error*10))
         #self.weezy_integration = lambda func, range: jack_integral.integrate(func, range)
 
     def eval_char_func(self, p1, p2):
@@ -36,7 +39,7 @@ class Eval:
         self.holder(r,theta),
         0, 2*pi, float(1/100000), np.inf)
         print("Integral evals to: " + str(I))
-        print(total)
+        return I[0]
 
     def holder(self, r, theta):
         #print("point is " + str((r, theta)))

@@ -4,6 +4,7 @@ import sympy as sp
 import numpy
 import minpy.numpy as np
 import mxnet
+import intersection_algorithms as inter
 from mxnet.gluon import nn
 from minpy.context import cpu, gpu
 from shapely.geometry import LineString
@@ -69,11 +70,13 @@ class winder:
 
         winding_number = self.angle_summation_method(point, True)
 
-        if  winding_number >= 0.998:
-            self.debug_point(point,False, f'Winding_number:{winding_number} Point:{point} point is not apart of the circle.')
+        intersections = inter.bounding_box_algorithm(self.domain, point)
+
+        if  intersections != 0 and intersections%2 == 0:
+            #self.debug_point(point,False, f'Winding_number:{intersections} Point:{point} point is not apart of the circle.')
             return True
         else:
-            self.debug_point(point,True, f'Winding_number:{winding_number} Point:{point} point is apart of the circle.')
+            #self.debug_point(point,True, f'Winding_number:{intersections} Point:{point} point is apart of the circle.')
             return False
 
     def intersection_calculate(self, start, point):

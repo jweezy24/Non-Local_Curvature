@@ -25,7 +25,7 @@ class A:
     def which_set_circle(self, point, point2):
         #print("Point checked: " + str(point))
         #calc = winding_number.winder(self.func, self.radius)
-        return self.calc.intersection_calculate(point, point2)
+        return self.calc.winding_calculate(point, point2)
 
         # if (point[0]**2 + (point[1])**2) > self.radius**2:
         #     return True

@@ -48,3 +48,5 @@ I found that using shapely has made the functions more accurate. We do lose some
     
 
 http://geomalgorithms.com/a03-_inclusion.html
+
+https://ieeexplore.ieee.org/document/4649051
