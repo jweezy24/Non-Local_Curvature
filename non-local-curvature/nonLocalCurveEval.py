@@ -18,7 +18,7 @@ class Eval:
         self.val = self.eval()
         time2 = time.time()
         self.actual = -5.24411510858423962093
-        print('Evaluation of Integral tooktook {:.3f} minutes'.format( (time2-time1)/60))
+        print('Evaluation of Integral took {:.3f} minutes'.format( (time2-time1)/60))
         error = abs(self.actual - self.val)
         print('Error evaluate to, {:.2f}'.format(error*10))
         #self.weezy_integration = lambda func, range: jack_integral.integrate(func, range)

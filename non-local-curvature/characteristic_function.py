@@ -3,6 +3,7 @@ import sympy
 import numpy as np
 from shapely.geometry import Point
 import area_sets as area
+import random
 
 class chi:
 
@@ -29,8 +30,16 @@ class chi:
     def create_domain(self):
         x_eval = lambda t: eval(self.func_x)
         y_eval = lambda t: eval(self.func_y)
-        points = []
-        for angle in range(0,361):
-            points.append((x_eval((angle*np.pi)/180),y_eval((angle*np.pi)/180)))
-        return points
+        domain = []
+        for mod in range(1, 40):
+            points = []
+            for angle in range(0,361):
+                if mod == 1:
+                    points.append((x_eval((angle*np.pi)/180),y_eval((angle*np.pi)/180)))
+                else:
+                    points.append((x_eval(((mod*angle*np.pi)/180)),y_eval(((mod*angle*np.pi)/180))))
+                    
+
+            domain.append(tuple(points))
+        return domain
 
