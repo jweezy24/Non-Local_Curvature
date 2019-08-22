@@ -14,13 +14,19 @@ class Eval:
     def __init__(self, func):
 
         self.char_func = func
-        time1 = time.time()
-        self.val = self.eval()
-        time2 = time.time()
-        self.actual = -5.24411510858423962093
-        print('Evaluation of Integral took {:.3f} minutes'.format( (time2-time1)/60))
-        error = abs(self.actual - self.val)
-        print('Error evaluate to, {:.2f}'.format(error*10))
+        epsilon = 100
+        for i in range(1,10):
+            time1 = time.time()
+            epsilon = epsilon*10
+            self.val = self.eval(epsilon)
+            time2 = time.time()
+            self.actual = -5.24411510858423962093
+            print('Evaluation of Integral took {:.3f} minutes'.format( (time2-time1)/60))
+            error = abs(abs(self.actual - self.val)/self.actual)
+            print('Error evaluate to, {:.2f}'.format(error*100))
+            with open('./results.txt', 'a') as f:
+                f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
+
         #self.weezy_integration = lambda func, range: jack_integral.integrate(func, range)
 
     def eval_char_func(self, p1, p2):
@@ -32,12 +38,12 @@ class Eval:
         else:
             return -1
 
-    def eval(self):
+    def eval(self,epsilon):
         total = 0.0
         #for i in range(10, 1, -1):
         I = inte.dblquad(lambda r,theta:
         self.holder(r,theta),
-        0, 2*pi, float(1/10000), np.inf)
+        0, 2*pi, float(1/epsilon), np.inf)
         print("Integral evals to: " + str(I))
         return I[0]
 

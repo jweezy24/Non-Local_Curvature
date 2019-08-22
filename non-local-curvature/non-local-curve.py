@@ -7,9 +7,11 @@ import nonLocalCurveEval as eval
 
 def main():
     par = parser.parser(file_path="../config.yaml")
-    char_func = chi.chi(par.args)
-
-    print(eval.Eval(char_func))
+    n = 100
+    for i in range(1,10):
+        n = n*i
+        char_func = chi.chi(par.args,n)
+        eval.Eval(char_func)
 
 
 if __name__ == "__main__":

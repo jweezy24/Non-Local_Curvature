@@ -6,7 +6,7 @@ import random
 
 class chi:
 
-    def __init__(self, args):
+    def __init__(self, args,n):
 
         x_min = 't'
         y_min = 't'
@@ -19,7 +19,8 @@ class chi:
         self.func_y = args["curv"]["func_y"]
         self.is_circle = args["curv"]["circle"]
         self.start = args["curv"]["start_point"]
-        self.domain = self.create_domain()
+        self.domain_size = n
+        self.domain = self.create_domain(n)
 
         if self.is_circle:
             self.origin = args["curv"]["origin"]
@@ -33,22 +34,16 @@ class chi:
         if self.is_circle:
             return self.area_sets.which_set_circle(p1, p2)
 
-    def create_domain(self):
+    def create_domain(self, n):
         x_eval = lambda t: eval(self.func_x)
         y_eval = lambda t: eval(self.func_y)
 
         domain = set()
         domain.add((x_eval(0),y_eval(0)))
         domain2 = []
-        for angle in range(1,361):
-            p_1 = ((angle)*np.pi)/180
-            point_holder = (x_eval(p_1),y_eval(p_1),p_1)
-            self.min_max(point_holder)
-            domain.add(point_holder)
 
-        random_constant = scipy.constants.golden
-        for angle in range(1,361):
-            p_1 = (angle*np.pi*(random_constant))/180
+        for angle in range(1,n+1):
+            p_1 = (angle*2*np.pi/n)
             point_holder = (x_eval(p_1),y_eval(p_1),p_1)
             self.min_max(point_holder)
             domain.add(point_holder)
@@ -60,11 +55,10 @@ class chi:
         for point in domain_sorted:
             points.append((point[0],point[1]))
             count+=1
-            if count >= 361:
+            if count >= 700:
                 domain2.append(points)
                 points = []
                 count = 0
-        print(len(domain2))
         return domain2
 
     def min_max(self,gen_point):
