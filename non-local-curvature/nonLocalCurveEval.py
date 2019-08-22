@@ -37,7 +37,7 @@ class Eval:
         #for i in range(10, 1, -1):
         I = inte.dblquad(lambda r,theta:
         self.holder(r,theta),
-        0, 2*pi, float(1/100000), np.inf)
+        0, 2*pi, float(1/10000), np.inf)
         print("Integral evals to: " + str(I))
         return I[0]
 

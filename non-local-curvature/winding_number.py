@@ -34,7 +34,7 @@ def sumation(p,domain):
 
 class winder:
 
-    def __init__(self, func_x, func_y, radius=0, origin=[0,0], points=[]):
+    def __init__(self, func_x, func_y, radius=0, origin=[0,0], points=[],bounds=[]):
         self.func_x = func_x
         self.func_y = func_y
         self.line_holder = None
@@ -46,6 +46,7 @@ class winder:
         self.origin = Point(origin[0], origin[1])
         self.origin_list = origin
         self.domain = points
+        self.bounds = bounds
         #self.circle = LineString(points)
 
 
@@ -71,15 +72,23 @@ class winder:
         intersections = 0
 
         #winding_number = self.angle_summation_method(point, True)
-
         for p in self.domain:
-            intersections += inter.bounding_box_algorithm(tuple(p), point)
+            intersections = inter.bounding_box_algorithm(tuple(p), point, intersections, start, True, tuple(self.bounds))
+        #print(winding_number)
+        #print(winding_number)
+        intersections = math.floor(intersections/len(self.bounds))
 
-        if  intersections != 0 and intersections%2 == 0:
-            #self.debug_point(point,False, f'Winding_number:{intersections} Point:{point} point is not apart of the circle.')
+        if point[1] > start[1] and intersections%2 == 0:
+            #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} EVEN AND IS A POINT')
+            return False
+        elif point[1] < start[1] and intersections%2 == 0 and intersections != 0:
+            #self.debug_point(point,True, f'Number of intersections:{intersections} Point:{point} EVEN AND IS NOT A POINT')
             return True
-        else:
-            #self.debug_point(point,True, f'Winding_number:{intersections} Point:{point} point is apart of the circle.')
+        elif point[1] > start[1] and intersections%2 == 1:
+            #self.debug_point(point,True, f'Number of intersections:{intersections} Point:{point} ODD AND IS NOT A POINT')
+            return True
+        elif point[1] <  start[1] and intersections%2 == 1:
+            #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} ODD AND IS A POINT')
             return False
 
     def intersection_calculate(self, start, point):
@@ -199,7 +208,8 @@ class winder:
         total = 0.0
         if if_gpu:
             with gpu(0):
-                total = sumation(p,tuple(self.domain))
+                for i in self.domain:
+                    total += sumation(p,tuple(i))
         else:
             for pos in range(0,len(self.domain)):
                     if pos < len(self.domain)-1:
@@ -214,7 +224,7 @@ class winder:
                         value = dot_prod/denom
                         calculation = numpy.arccos(value)
                         total += calculation
-        return abs(constant*total)
+        return constant*total
 
 
 

@@ -1,7 +1,6 @@
-import scipy
-import sympy
+import scipy.constants
+import math
 import numpy as np
-from shapely.geometry import Point
 import area_sets as area
 import random
 
@@ -9,16 +8,23 @@ class chi:
 
     def __init__(self, args):
 
+        x_min = 't'
+        y_min = 't'
+        x_max = 't'
+        y_max = 't'
+        self.bounds = [x_min,y_min,x_max,y_max]
+
         self.radius = args["curv"]["radius"]
         self.func_x = args["curv"]["func_x"]
         self.func_y = args["curv"]["func_y"]
         self.is_circle = args["curv"]["circle"]
         self.start = args["curv"]["start_point"]
         self.domain = self.create_domain()
+
         if self.is_circle:
             self.origin = args["curv"]["origin"]
         if self.is_circle:
-            self.area_sets = area.A(self.radius, self.func_x, self.func_y, self.origin, self.domain)
+            self.area_sets = area.A(self.radius, self.func_x, self.func_y, self.origin, self.domain, self.bounds)
         else:
             return
 
@@ -30,16 +36,48 @@ class chi:
     def create_domain(self):
         x_eval = lambda t: eval(self.func_x)
         y_eval = lambda t: eval(self.func_y)
-        domain = []
-        for mod in range(1, 40):
-            points = []
-            for angle in range(0,361):
-                if mod == 1:
-                    points.append((x_eval((angle*np.pi)/180),y_eval((angle*np.pi)/180)))
-                else:
-                    points.append((x_eval(((mod*angle*np.pi)/180)),y_eval(((mod*angle*np.pi)/180))))
-                    
 
-            domain.append(tuple(points))
-        return domain
+        domain = set()
+        domain.add((x_eval(0),y_eval(0)))
+        domain2 = []
+        for angle in range(1,361):
+            p_1 = ((angle)*np.pi)/180
+            point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+            self.min_max(point_holder)
+            domain.add(point_holder)
+
+        random_constant = scipy.constants.golden
+        for angle in range(1,361):
+            p_1 = (angle*np.pi*(random_constant))/180
+            point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+            self.min_max(point_holder)
+            domain.add(point_holder)
+    
+        domain_sorted = sorted(domain, key=lambda tup: tup[1])
+
+        count = 0
+        points = []
+        for point in domain_sorted:
+            points.append((point[0],point[1]))
+            count+=1
+            if count >= 361:
+                domain2.append(points)
+                points = []
+                count = 0
+        print(len(domain2))
+        return domain2
+
+    def min_max(self,gen_point):
+        if type(self.bounds[0]) == type('t') or self.bounds[0] < gen_point[0]:
+            x_min = gen_point[0]
+            self.bounds[0] = gen_point[0]
+        elif type(self.bounds[1]) == type('t') or self.bounds[1] < gen_point[1]:
+            y_min = gen_point[1]
+            self.bounds[1] = gen_point[1]
+        elif type(self.bounds[2]) == type('t') or self.bounds[2] > gen_point[0]:
+            x_max = gen_point[0]
+            self.bounds[2] = gen_point[0]
+        elif type(self.bounds[3]) == type('t') or self.bounds[3] > gen_point[1]:
+            y_max = gen_point[1]
+            self.bounds[3] = gen_point[1]
 

@@ -23,33 +23,49 @@ def calculate_intersections(domain, p):
     return intersections
 
 @njit(parallel=True)
-def bounding_box_algorithm(domain, p):
-    intersections = 0
+def bounding_box_algorithm(domain, p, prior_intersections, ref_p, is_circle, min_max):
+    intersections = prior_intersections
+    left_int = False
+    right_int = False
+    last_intersection = 0
+    x_max = min_max[0]
+    y_max = min_max[1]
+    x_min = min_max[2]
+    y_min = min_max[3]
+    ref_v = (ref_p[0]-p[0], ref_p[1]-p[1])
+
+    if p[0] < x_min or p[1] < y_min:
+        return 0
+            
+    if p[0] > x_max or p[1] > y_max:
+        return 0
+
     for pos in range(0,len(domain)):
         if pos < len(domain)-1:
             point_1 = domain[pos]
             point_2 = domain[pos+1]
             edge_1 = (point_1[0] - point_2[0], point_1[1]-point_2[1])
-            if point_1[1] > point_2[1]:
-                w_y = point_1[1]
-                w = point_1
-                v_y = point_2[1]
-                v = point_2
-            else:
-                v_y = point_1[1]
-                v = point_1
-                w_y = point_2[1]
-                w = point_2
-
+            if point_1[0] < p[0] and point_2[0] < p[0]:
+                continue
+            w_y = point_1[1]
+            w = point_1
+            v_y = point_2[1]
+            v = point_2
+        
             w_v = (w[0]-v[0], w[1]- v[1])
             p_v = (p[0]-v[0], p[1]-v[1])
             dot_prod = w_v[0] * p_v[0] + w_v[1]*p_v[1]
+
+            #print(p)
+            #print(dot_prod)
+            #print(intersections)
+
             if v[1] <= p[1] and p[1] < w[1] and dot_prod > 0:
                 intersections += 1
-                
-            elif w[1] <= p[1] and p[1] < v[1] and dot_prod < 0:
+
+            elif w[1] <= p[1] and p[1] < v[1] and dot_prod <= 0:
                 intersections -=1
-            
+
     return intersections
 
     
