@@ -43,10 +43,24 @@ class chi:
         domain2 = []
 
         for angle in range(1,n+1):
-            p_1 = (angle*2*np.pi/n)
+            p_1 = (angle*2*np.pi*random.random()/n) + (angle/n)
             point_holder = (x_eval(p_1),y_eval(p_1),p_1)
             self.min_max(point_holder)
             domain.add(point_holder)
+
+        # start_point_angle = math.atan2(self.start[1], self.start[0])
+    
+        # for i in range(1,101):
+        #     p_1 =  start_point_angle + (i/10000)
+        #     point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+        #     self.min_max(point_holder)
+        #     domain.add(point_holder)
+
+        # for i in range(1,101):
+        #     p_1 =  start_point_angle - (i/10000)
+        #     point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+        #     self.min_max(point_holder)
+        #     domain.add(point_holder)
     
         domain_sorted = sorted(domain, key=lambda tup: tup[1])
 
@@ -55,7 +69,7 @@ class chi:
         for point in domain_sorted:
             points.append((point[0],point[1]))
             count+=1
-            if count >= 700:
+            if count >= 998:
                 domain2.append(points)
                 points = []
                 count = 0
