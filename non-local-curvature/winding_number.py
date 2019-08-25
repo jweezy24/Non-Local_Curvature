@@ -1,16 +1,11 @@
 import math
 import time
 import sympy as sp
-import numpy
-import minpy.numpy as np
-import mxnet
+import numpy as np
 import instersection_algorithms as inter
-from mxnet.gluon import nn
-from minpy.context import cpu, gpu
 from shapely.geometry import LineString
 from shapely.geometry import Point
 from scipy.optimize import fsolve
-from numba import vectorize
 from numba import jit, njit, prange, generated_jit
 
 

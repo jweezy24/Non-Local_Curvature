@@ -1,6 +1,5 @@
 scipy
 sympy
 pyyaml
-mxnet
-minpy
 numba
+shapely

@@ -200,3 +200,4 @@ Error percent: 0.01757137567937204	Epsilon:1/1000	Domain Size: 2300 	Integration
 Error percent: 0.017770411521705404	Epsilon:1/10000	Domain Size: 2300 	Integration Evaluation: -5.1509250250375045	 Time: 16.9027578552564
 Error percent: 0.018118192582186245	Epsilon:1/100000	Domain Size: 2300 	Integration Evaluation: -5.1491012211237575	 Time: 16.673927732308705
 Error percent: 0.017650278358450983	Epsilon:1/1000000	Domain Size: 2300 	Integration Evaluation: -5.151555017173969	 Time: 16.960568233331045
+Error percent: 0.15096714505394168	Epsilon:1/1000	Domain Size: 100 	Integration Evaluation: -6.035804194861443	 Time: 0.5942794720331828
