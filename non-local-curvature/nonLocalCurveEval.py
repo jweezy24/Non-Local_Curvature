@@ -10,7 +10,7 @@ import time
 
 class Eval:
 
-    def __init__(self, func):
+    def __init__(self, func, random):
 
         self.char_func = func
         epsilon = 100
@@ -23,12 +23,17 @@ class Eval:
             print('Evaluation of Integral took {:.3f} minutes'.format( (time2-time1)/60))
             error = abs(abs(self.actual - self.val)/self.actual)
             print('Error evaluate to, {:.2f}'.format(error*100))
-            with open('./results.txt', 'a') as f:
-                f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
-            if error*100 < 1:
-                with open('./random_domains.txt', 'a') as f:
-                    f.write(f'Domain: {str(self.char_func.domain)}')
-                    f.write(f' Error for this domain: {error}\t Domain Size: {self.char_func.domain_size}\t Epsilon: {epsilon}')
+            if random:
+                with open('./results_random.txt', 'a') as f:
+                    f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
+                if error*100 < 1:
+                    with open('./random_domains.txt', 'a') as f:
+                        f.write(f'Domain: {str(self.char_func.domain)}')
+                        f.write(f' Error for this domain: {error}\t Domain Size: {self.char_func.domain_size}\t Epsilon: {epsilon}')
+            else:
+                with open('./results_without_random.txt', 'a') as f:
+                    f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
+
 
         #self.weezy_integration = lambda func, range: jack_integral.integrate(func, range)
 

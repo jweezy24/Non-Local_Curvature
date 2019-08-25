@@ -6,7 +6,7 @@ import random
 
 class chi:
 
-    def __init__(self, args,n):
+    def __init__(self, args,n,random=False):
 
         x_min = 't'
         y_min = 't'
@@ -20,7 +20,7 @@ class chi:
         self.is_circle = args["curv"]["circle"]
         self.start = args["curv"]["start_point"]
         self.domain_size = n
-        self.domain = self.create_domain(n)
+        self.domain = self.create_domain(n,random)
 
         if self.is_circle:
             self.origin = args["curv"]["origin"]
@@ -34,7 +34,7 @@ class chi:
         if self.is_circle:
             return self.area_sets.which_set_circle(p1, p2)
 
-    def create_domain(self, n):
+    def create_domain(self, n,random_check):
         x_eval = lambda t: eval(self.func_x)
         y_eval = lambda t: eval(self.func_y)
 
@@ -42,25 +42,19 @@ class chi:
         domain.add((x_eval(0),y_eval(0)))
         domain2 = []
 
-        for angle in range(1,n+1):
-            p_1 = (angle*2*np.pi*random.random()/n) + (angle/n)
-            point_holder = (x_eval(p_1),y_eval(p_1),p_1)
-            self.min_max(point_holder)
-            domain.add(point_holder)
-
-        # start_point_angle = math.atan2(self.start[1], self.start[0])
+        if random_check:
+            for angle in range(1,n+1):
+                p_1 = (angle*2*np.pi*random.random()/n) + (angle/n)
+                point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+                self.min_max(point_holder)
+                domain.add(point_holder)
+        else:
+            for angle in range(1,n+1):
+                p_1 = (angle*2*np.pi/n) + (angle/n)
+                point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+                self.min_max(point_holder)
+                domain.add(point_holder)
     
-        # for i in range(1,101):
-        #     p_1 =  start_point_angle + (i/10000)
-        #     point_holder = (x_eval(p_1),y_eval(p_1),p_1)
-        #     self.min_max(point_holder)
-        #     domain.add(point_holder)
-
-        # for i in range(1,101):
-        #     p_1 =  start_point_angle - (i/10000)
-        #     point_holder = (x_eval(p_1),y_eval(p_1),p_1)
-        #     self.min_max(point_holder)
-        #     domain.add(point_holder)
     
         domain_sorted = sorted(domain, key=lambda tup: tup[1])
 
