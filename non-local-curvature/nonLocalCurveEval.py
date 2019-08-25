@@ -7,7 +7,6 @@ import numpy as np
 import sys
 import math
 import time
-import weezy_integration as jack_integral
 
 class Eval:
 

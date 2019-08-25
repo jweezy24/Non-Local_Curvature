@@ -2,7 +2,6 @@ import os
 import time
 import numpy as np
 import winding_number as checker
-from numba import vectorize
 from numba import jit, njit, prange, generated_jit
 
 os.environ['CUDA_VISIBLE_DEVICES'] = "0"
