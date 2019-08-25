@@ -1,7 +1,7 @@
 import math
 import time
 import numpy as np
-from numba import cuda, jit, njit, prange, generated_jit
+from numba import jit, njit, prange, generated_jit
 
 
 @njit(parallel=True)
