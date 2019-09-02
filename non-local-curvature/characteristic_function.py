@@ -40,6 +40,9 @@ class chi:
 
         domain = set()
         domain.add((x_eval(0),y_eval(0)))
+        domain.add((x_eval(np.pi),y_eval(np.pi)))
+        domain.add((x_eval(np.pi/2),y_eval(np.pi/2)))
+        domain.add((x_eval((3*np.pi)/2),y_eval((3*np.pi)/2)))
         domain2 = []
 
         if random_check:
