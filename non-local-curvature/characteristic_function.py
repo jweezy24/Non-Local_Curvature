@@ -47,13 +47,13 @@ class chi:
 
         if random_check:
             for angle in range(1,n+1):
-                p_1 = (angle*2*np.pi*random.random()/n) + (angle/n)
+                p_1 = (angle*2*np.pi*random.random()/n) + (2*np.pi/n)
                 point_holder = (x_eval(p_1),y_eval(p_1),p_1)
                 self.min_max(point_holder)
                 domain.add(point_holder)
         else:
             for angle in range(1,n+1):
-                p_1 = (angle*2*np.pi/n) + (angle/n)
+                p_1 = (angle*2*np.pi/n) + + (2*np.pi/n)
                 point_holder = (x_eval(p_1),y_eval(p_1),p_1)
                 self.min_max(point_holder)
                 domain.add(point_holder)
