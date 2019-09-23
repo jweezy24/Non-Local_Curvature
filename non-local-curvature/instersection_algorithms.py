@@ -33,6 +33,7 @@ def bounding_box_algorithm(domain, p, prior_intersections, ref_p, is_circle, min
     x_min = min_max[2]
     y_min = min_max[3]
     ref_v = (ref_p[0]-p[0], ref_p[1]-p[1])
+    y_tolerence = .1
 
     if p[0] < x_min or p[1] < y_min:
         return 0
@@ -45,8 +46,13 @@ def bounding_box_algorithm(domain, p, prior_intersections, ref_p, is_circle, min
             point_1 = domain[pos]
             point_2 = domain[pos+1]
             edge_1 = (point_1[0] - point_2[0], point_1[1]-point_2[1])
+
             if point_1[0] < p[0] and point_2[0] < p[0]:
                 continue
+            
+            if abs(point_2[1]-p[1]) < y_tolerence:
+                continue
+
             w_y = point_1[1]
             w = point_1
             v_y = point_2[1]
