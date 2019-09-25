@@ -3,7 +3,6 @@ import math
 import numpy as np
 import area_sets as area
 import random
-import matplotlib.pyplot as plt
 
 class chi:
 
