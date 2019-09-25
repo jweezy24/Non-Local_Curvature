@@ -3,6 +3,7 @@ import math
 import numpy as np
 import area_sets as area
 import random
+import matplotlib.pyplot as plt
 
 class chi:
 
@@ -39,27 +40,43 @@ class chi:
         y_eval = lambda t: eval(self.func_y)
 
         domain = set()
-        domain.add((x_eval(0),y_eval(0)))
-        domain.add((x_eval(np.pi),y_eval(np.pi)))
-        domain.add((x_eval(np.pi/2),y_eval(np.pi/2)))
-        domain.add((x_eval((3*np.pi)/2),y_eval((3*np.pi)/2)))
+        domain.add((x_eval(0),y_eval(0),0))
+        domain.add((x_eval(np.pi),y_eval(np.pi), np.pi))
+        domain.add((x_eval(np.pi/2),y_eval(np.pi/2), np.pi/2))
+        domain.add((x_eval((3*np.pi)/2),y_eval((3*np.pi)/2), 3*np.pi/2))
         domain2 = []
 
         if random_check:
             for angle in range(1,n+1):
-                p_1 = (angle*2*np.pi*random.random()/n) + (2*np.pi/n)
-                point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+                p_1 = ((angle*2*np.pi*random.random())/n) + (2*np.pi/n)
+                p_1_ref = p_1
+                if p_1_ref > 2*np.pi:
+                    p_1_ref = p_1/(2*np.pi)
+                point_holder = (x_eval(p_1),y_eval(p_1),p_1_ref)
                 self.min_max(point_holder)
                 domain.add(point_holder)
         else:
             for angle in range(1,n+1):
-                p_1 = (angle*2*np.pi/n) + + (2*np.pi/n)
-                point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+                p_1 = ((angle*2*np.pi)/n)
+                p_1_ref = p_1
+                if p_1_ref > 2*np.pi:
+                    p_1_ref = p_1/(2*np.pi)
+                point_holder = (x_eval(p_1),y_eval(p_1),p_1_ref)
                 self.min_max(point_holder)
                 domain.add(point_holder)
     
     
-        domain_sorted = sorted(domain, key=lambda tup: tup[1])
+        domain_sorted = sorted(domain, key=lambda tup: tup[2])
+        
+        #Code to demonstrate domain creation
+        # xs = []
+        # ys = []
+        # for point in domain_sorted:
+        #     xs.append(point[0])
+        #     ys.append(point[1])
+            
+        # plt.plot(xs,ys)
+        # plt.show()
 
         count = 0
         points = []
