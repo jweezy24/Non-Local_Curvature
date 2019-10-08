@@ -22,6 +22,56 @@ def calculate_intersections(domain, p):
                 intersections += 1
     return intersections
 
+_eps = 0.00001
+_huge = sys.float_info.max
+_tiny = sys.float_info.min
+ 
+@njit(parallel=True)
+def rayintersectseg(domain, p, prior_intersections, min_max):
+    global _eps
+    global _huge
+    global _tiny
+
+    intersections = prior_intersections
+    x_max = min_max[0]
+    y_max = min_max[1]
+    x_min = min_max[2]
+    y_min = min_max[3]
+
+    if p[0] < x_min or p[1] < y_min:
+        return 0
+            
+    if p[0] > x_max or p[1] > y_max:
+        return 0
+
+    for pos in range(0, len(domain)):
+        if pos < len(domain)-1:
+            p_1 = domain[pos]
+            p_2 = domain[pos+1]
+            if p_1[1] > p_2[1]:
+                p_1 = p_2
+                p_2 = p_1
+            if p[1] == p_1[1] or p[1] == p_2[1]:
+                p = (p[0], p[1] + _eps)
+
+        
+            if (p[1] > p_1[1] or p[1] <  p_2[1]) or (p[0] > max(p_1[0], p_2[0])):
+                pass                
+        
+            if p[0] < min(p_1[0], p_2[0]):
+                intersect += 1
+            else:
+                if (p_1[0] - p_2[0]) > _tiny:
+                    m_red = (p_2[1] - p_1[1]) / (float(p_2[0] - p_1[0]))
+                else:
+                    m_red = _huge
+                if (p_1[0] - p[0]) > _tiny:
+                    m_blue = (p[1] - p_1[1]) / (float(p[0] - p_1[0]))
+                else:
+                    m_blue = _huge
+                intersect = m_blue >= m_red
+            return intersect
+
 @njit(parallel=True)
 def bounding_box_algorithm(domain, p, prior_intersections, ref_p, is_circle, min_max):
     intersections = prior_intersections
