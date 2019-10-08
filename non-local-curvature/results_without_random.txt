@@ -1,0 +1,1 @@
+Error percent: 0.15096714505394168	Epsilon:1/1000	Domain Size: 100 	Integration Evaluation: -6.035804194861443	 Time: 1.8238571286201477

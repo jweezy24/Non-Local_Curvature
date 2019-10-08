@@ -23,6 +23,12 @@ def calculate_intersections(domain, p):
     return intersections
 
 @njit(parallel=True)
+def ray_casting_alg(domain, p, prior_intersections, ref_p, min_max):
+    intersections = prior_intersections
+
+
+
+@njit(parallel=True)
 def bounding_box_algorithm(domain, p, prior_intersections, ref_p, is_circle, min_max):
     intersections = prior_intersections
     left_int = False
