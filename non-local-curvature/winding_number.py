@@ -68,23 +68,28 @@ class winder:
 
         #winding_number = self.angle_summation_method(point, True)
         for p in self.domain:
-            intersections = inter.bounding_box_algorithm(tuple(p), point, intersections, start, True, tuple(self.bounds))
+            intersections = inter.ray_casting_alg(tuple(p), point, intersections, tuple(self.bounds))
         #print(winding_number)
         #print(winding_number)
         intersections = math.floor(intersections/len(self.bounds))
 
-        if point[1] > start[1] and intersections%2 == 0:
-            #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} EVEN AND IS A POINT')
-            return False
-        elif point[1] < start[1] and intersections%2 == 0 and intersections != 0:
-            #self.debug_point(point,True, f'Number of intersections:{intersections} Point:{point} EVEN AND IS NOT A POINT')
+        if intersections%2 == 1:
             return True
-        elif point[1] > start[1] and intersections%2 == 1:
-            #self.debug_point(point,True, f'Number of intersections:{intersections} Point:{point} ODD AND IS NOT A POINT')
-            return True
-        elif point[1] <  start[1] and intersections%2 == 1:
-            #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} ODD AND IS A POINT')
+        else:
             return False
+            
+        # if point[1] > start[1] and intersections%2 == 0:
+        #     #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} EVEN AND IS A POINT')
+        #     return False
+        # elif point[1] < start[1] and intersections%2 == 0 and intersections != 0:
+        #     #self.debug_point(point,True, f'Number of intersections:{intersections} Point:{point} EVEN AND IS NOT A POINT')
+        #     return True
+        # elif point[1] > start[1] and intersections%2 == 1:
+        #     #self.debug_point(point,True, f'Number of intersections:{intersections} Point:{point} ODD AND IS NOT A POINT')
+        #     return True
+        # elif point[1] <  start[1] and intersections%2 == 1:
+        #     #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} ODD AND IS A POINT')
+        #     return False
 
     def intersection_calculate(self, start, point):
         vector = ((start[0] - point[0]), (start[1] - point[1]))

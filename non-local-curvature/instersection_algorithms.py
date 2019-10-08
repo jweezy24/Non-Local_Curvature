@@ -1,6 +1,7 @@
 import math
 import time
 import numpy as np
+import sys
 from numba import jit, njit, prange, generated_jit
 
 
@@ -27,7 +28,7 @@ _huge = sys.float_info.max
 _tiny = sys.float_info.min
  
 @njit(parallel=True)
-def rayintersectseg(domain, p, prior_intersections, min_max):
+def ray_casting_alg(domain, p, prior_intersections, min_max):
     global _eps
     global _huge
     global _tiny
@@ -71,10 +72,6 @@ def rayintersectseg(domain, p, prior_intersections, min_max):
                     m_blue = _huge
                 intersect = m_blue >= m_red
             return intersect
-
-@njit(parallel=True)
-def ray_casting_alg(domain, p, prior_intersections, ref_p, min_max):
-    intersections = prior_intersections
 
 
 
