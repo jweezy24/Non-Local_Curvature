@@ -49,9 +49,7 @@ class Eval:
     def eval(self,epsilon):
         total = 0.0
         #for i in range(10, 1, -1):
-        I = inte.dblquad(lambda r,theta:
-        self.holder(r,theta),
-        0, 2*pi, float(1/epsilon), np.inf)
+        I = scipy.integrate.dblquad(lambda r,theta: self.holder(r,theta), 0, 2*np.pi, lambda x: (1/epsilon), lambda y: np.inf)
         print("Integral evals to: " + str(I))
         return I[0]
 
