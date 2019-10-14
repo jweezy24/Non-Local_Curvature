@@ -72,12 +72,12 @@ def plot_data(data):
         bx.plot(domain, time)
 
         fig.suptitle(f'Epsilon is {epsilon_handler[i]}')
-        plt.savefig(f'./plots/No_random/{i}.png')
+        plt.savefig(f'./plots/Random/{i}.png')
 
     
 
 def main():
-    parsed_data = parse_data('../results_without_random.txt')
+    parsed_data = parse_data('../results_random.txt')
     chart_ready_data = create_epsilon_error_charts(parsed_data) 
     plot_data(chart_ready_data)
 
