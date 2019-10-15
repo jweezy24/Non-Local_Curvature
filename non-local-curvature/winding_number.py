@@ -57,7 +57,7 @@ class winder:
         #print(winding_number)
         #print(winding_number)
         intersections = math.floor(intersections/len(self.bounds))
-        if winding_number > .98:
+        if winding_number > .999:
             winding_number = math.ceil(winding_number)
 
         #RAY CASTING CASES
