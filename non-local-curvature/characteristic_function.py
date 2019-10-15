@@ -86,6 +86,10 @@ class chi:
                 domain2.append(points)
                 points = []
                 count = 0
+        
+        if len(points) > 0:
+            domain2.append(points)
+
         return domain2
 
     def min_max(self,gen_point):
