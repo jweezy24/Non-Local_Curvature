@@ -17,6 +17,9 @@ https://link.springer.com/content/pdf/10.1140%2Fepjc%2Fs10052-011-1559-8.pdf
 #### Image calculations done on GPU
 https://www.osapublishing.org/oe/fulltext.cfm?uri=oe-20-2-732&id=226157
 
+#### Point-in-Polygon Algorithms
+http://geomalgorithms.com/a03-_inclusion.html
+
 ## Libraries Used
 
 ### Shapely

@@ -9,24 +9,6 @@ from scipy.optimize import fsolve
 from numba import jit, njit, prange, generated_jit
 
 
-@njit(parallel = True)
-def sumation(p,domain):
-    total = 0
-    for pos in range(0,len(domain)):
-        if pos < len(domain)-1:
-            point_1 = domain[pos]
-            point_2 = domain[pos+1]
-            vector_diff_1 = (point_1[0] - p[0], point_1[1]- p[1])
-            vector_diff_2 = (point_2[0] - p[0], point_2[1]- p[1])
-            dot_prod = vector_diff_1[0]*vector_diff_2[0] + vector_diff_1[1]*vector_diff_2[1]
-            vector_length_1 = math.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2)
-            vector_length_2 = math.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)
-            denom = vector_length_1*vector_length_2
-            value = float(dot_prod/denom)
-            calculation = numpy.arccos(value)
-            total += calculation
-    return total
-
 class winder:
 
     def __init__(self, func_x, func_y, radius=0, origin=[0,0], points=[],bounds=[]):
@@ -64,20 +46,35 @@ class winder:
         x_direction = vector[0]/vector[0]
         y_direction = vector[1]/vector[1]
 
+        winding_number = 0
+
         intersections = 0
 
         #winding_number = self.angle_summation_method(point, True)
         for p in self.domain:
-            intersections = inter.ray_casting_alg(tuple(p), point, intersections, tuple(self.bounds))
+            #intersections = inter.ray_casting_alg(tuple(p), point, intersections, tuple(self.bounds))
+            winding_number = inter.winding_num(point, tuple(p), winding_number, tuple(self.bounds))
         #print(winding_number)
         #print(winding_number)
         intersections = math.floor(intersections/len(self.bounds))
+        if winding_number > .98:
+            winding_number = math.ceil(winding_number)
 
-        if intersections%2 == 1:
+        #RAY CASTING CASES
+        # if intersections%2 == 1:
+        #     return True
+        # else:
+        #     return False
+        
+        #WINDING NUMBER CASES
+        if winding_number >= 1:
+            #self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
             return True
         else:
+            #self.debug_point(point,True, f'Winding Number Value:{winding_number} Point:{point} Less than one but inside cirlce')
             return False
-            
+
+        #FOR FIRST ALG    
         # if point[1] > start[1] and intersections%2 == 0:
         #     #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} EVEN AND IS A POINT')
         #     return False

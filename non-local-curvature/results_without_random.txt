@@ -337,3 +337,6 @@ Error percent: 0.6645720595766582	Epsilon:1/100000	Domain Size: 3800 	Integratio
 Error percent: 0.6644861121162591	Epsilon:1/1000000	Domain Size: 3800 	Integration Evaluation: -1.7594734485909644	 Time: 77.47168921232223
 Error percent: 0.6644874292117673	Epsilon:1/10000000	Domain Size: 3800 	Integration Evaluation: -1.75946654159051	 Time: 77.53159066438675
 Error percent: 0.6644752738172449	Epsilon:1/100000000	Domain Size: 3800 	Integration Evaluation: -1.7595302858785755	 Time: 77.40646005074183
+Error percent: 0.853862874020949	Epsilon:1/1000	Domain Size: 100 	Integration Evaluation: -9.721870306896658	 Time: 0.03511277834574381
+Error percent: 0.853862874020949	Epsilon:1/1000	Domain Size: 100 	Integration Evaluation: -9.721870306896658	 Time: 0.04152832825978597
+Error percent: 0.5516086045805507	Epsilon:1/1000	Domain Size: 1000 	Integration Evaluation: -2.351416091278304	 Time: 7.2740143219629925

@@ -127,6 +127,35 @@ def bounding_box_algorithm(domain, p, prior_intersections, ref_p, is_circle, min
 
     return intersections
 
+@njit(parallel = True)
+def winding_num(p,domain,total, min_max):
+
+    x_max = min_max[0]
+    y_max = min_max[1]
+    x_min = min_max[2]
+    y_min = min_max[3]
+
+    if p[0] < x_min or p[1] < y_min:
+        return 0
+            
+    if p[0] > x_max or p[1] > y_max:
+        return 0
+
+    for pos in range(0,len(domain)):
+        if pos < len(domain)-1:
+            point_1 = domain[pos]
+            point_2 = domain[pos+1]
+            vector_diff_1 = (p[0] - point_1[0], p[1]- point_1[1])
+            vector_diff_2 = (p[0] - point_2[0], p[1]- point_2[1])
+            dot_prod = vector_diff_1[0]*vector_diff_2[0] + vector_diff_1[1]*vector_diff_2[1]
+            vector_length_1 = math.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2)
+            vector_length_2 = math.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)
+            denom = vector_length_1*vector_length_2
+            value = float(dot_prod/denom)
+            calculation = np.arccos(value)
+            total += calculation
+    return (1/(2*np.pi))*total
+
     
 
 def create_domain(func_x, func_y):
