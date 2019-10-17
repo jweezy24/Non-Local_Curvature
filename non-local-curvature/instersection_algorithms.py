@@ -33,7 +33,7 @@ def ray_casting_alg(domain, p, prior_intersections, min_max):
     global _huge
     global _tiny
 
-    intersections = prior_intersections
+    intersect = prior_intersections
     x_max = min_max[0]
     y_max = min_max[1]
     x_min = min_max[2]
@@ -70,8 +70,9 @@ def ray_casting_alg(domain, p, prior_intersections, min_max):
                     m_blue = (p[1] - p_1[1]) / (float(p[0] - p_1[0]))
                 else:
                     m_blue = _huge
-                intersect = m_blue >= m_red
-            return intersect
+                if m_blue >= m_red:
+                    intersect += 1
+    return intersect
 
 
 

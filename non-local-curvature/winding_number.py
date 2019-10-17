@@ -52,27 +52,27 @@ class winder:
 
         #winding_number = self.angle_summation_method(point, True)
         for p in self.domain:
-            #intersections = inter.ray_casting_alg(tuple(p), point, intersections, tuple(self.bounds))
-            winding_number = inter.winding_num(point, tuple(p), winding_number, tuple(self.bounds))
+            intersections = inter.ray_casting_alg(tuple(p), point, intersections, tuple(self.bounds))
+            #winding_number = inter.winding_num(point, tuple(p), winding_number, tuple(self.bounds))
         #print(winding_number)
         #print(winding_number)
         intersections = math.floor(intersections/len(self.bounds))
-        if winding_number > .95:
-            winding_number = math.ceil(winding_number)
+        # if winding_number > .95:
+        #     winding_number = math.ceil(winding_number)
 
         #RAY CASTING CASES
-        # if intersections%2 == 1:
-        #     return True
-        # else:
-        #     return False
-        
-        #WINDING NUMBER CASES
-        if winding_number >= 1:
-            #self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
+        if intersections%2 == 1:
             return True
         else:
-            #self.debug_point(point,True, f'Winding Number Value:{winding_number} Point:{point} Less than one but inside cirlce')
             return False
+        
+        #WINDING NUMBER CASES
+        # if winding_number >= 1:
+        #     #self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
+        #     return True
+        # else:
+        #     #self.debug_point(point,True, f'Winding Number Value:{winding_number} Point:{point} Less than one but inside cirlce')
+        #     return False
 
         #FOR FIRST ALG    
         # if point[1] > start[1] and intersections%2 == 0:
