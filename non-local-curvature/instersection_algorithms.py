@@ -62,11 +62,11 @@ def ray_casting_alg(domain, p, prior_intersections, min_max):
             if p[0] < min(p_1[0], p_2[0]):
                 intersect += 1
             else:
-                if (p_1[0] - p_2[0]) > _tiny:
+                if abs(p_1[0] - p_2[0]) > _tiny:
                     m_red = (p_2[1] - p_1[1]) / (float(p_2[0] - p_1[0]))
                 else:
                     m_red = _huge
-                if (p_1[0] - p[0]) > _tiny:
+                if abs(p_1[0] - p[0]) > _tiny:
                     m_blue = (p[1] - p_1[1]) / (float(p[0] - p_1[0]))
                 else:
                     m_blue = _huge

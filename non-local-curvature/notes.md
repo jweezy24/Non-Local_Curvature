@@ -53,3 +53,20 @@ I found that using shapely has made the functions more accurate. We do lose some
 http://geomalgorithms.com/a03-_inclusion.html
 
 https://ieeexplore.ieee.org/document/4649051
+
+Old Code
+'''python
+#FOR FIRST ALG    
+        # if point[1] > start[1] and intersections%2 == 0:
+        #     #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} EVEN AND IS A POINT')
+        #     return False
+        # elif point[1] < start[1] and intersections%2 == 0 and intersections != 0:
+        #     #self.debug_point(point,True, f'Number of intersections:{intersections} Point:{point} EVEN AND IS NOT A POINT')
+        #     return True
+        # elif point[1] > start[1] and intersections%2 == 1:
+        #     #self.debug_point(point,True, f'Number of intersections:{intersections} Point:{point} ODD AND IS NOT A POINT')
+        #     return True
+        # elif point[1] <  start[1] and intersections%2 == 1:
+        #     #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} ODD AND IS A POINT')
+        #     return **False**
+'''

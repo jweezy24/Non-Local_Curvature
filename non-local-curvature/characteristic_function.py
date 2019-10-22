@@ -80,13 +80,15 @@ class chi:
         count = 0
         points = []
         for point in domain_sorted:
+            last_point = (point[0],point[1])
             points.append((point[0],point[1]))
             count+=1
-            if count >= 998:
+            if count >= 997:
                 domain2.append(points)
                 points = []
                 count = 0
-        
+                points.append(last_point)
+
         if len(points) > 0:
             domain2.append(points)
 
