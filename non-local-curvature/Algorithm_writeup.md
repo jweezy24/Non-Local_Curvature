@@ -3,7 +3,7 @@ The winding number algorithm was the original algorithm tested for loops.
 Where P is the point we are testing, C is the continuous closed curve, and n is the number of points on the boundry of C.
 We compute the winding number like:
 $$
-\forall V_i \in C, i <= n-1
+\forall V_i \in C, i \leq n-1
 $$
 $$
 wn(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}arccos(\frac{(V_i-P)*(V_{i+1}-P)}{|V_i-P| |V_{i+1}-P|})

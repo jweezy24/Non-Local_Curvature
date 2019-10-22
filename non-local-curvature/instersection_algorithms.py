@@ -146,16 +146,13 @@ def winding_num(p,domain,total, min_max):
         if pos < len(domain)-1:
             point_1 = domain[pos]
             point_2 = domain[pos+1]
-            vector_diff_1 = (p[0] - point_1[0], p[1]- point_1[1])
-            vector_diff_2 = (p[0] - point_2[0], p[1]- point_2[1])
+            vector_diff_1 = (point_1[0] - p[0], point_1[1]- p[1])
+            vector_diff_2 = ( point_2[0] - p[0], point_2[1]- p[1])
             dot_prod = vector_diff_1[0]*vector_diff_2[0] + vector_diff_1[1]*vector_diff_2[1]
-            vector_length_1 = math.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2)
-            vector_length_2 = math.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)
-            denom = vector_length_1*vector_length_2
-            value = float(dot_prod/denom)
-            calculation = np.arccos(value)
+            denom = math.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2) * math.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)
+            calculation = np.arccos(dot_prod/denom)
             total += calculation
-    return (1/(2*np.pi))*total
+    return total
 
     
 

@@ -1,5 +1,6 @@
 import math
 import time
+import random
 import sympy as sp
 import numpy as np
 import instersection_algorithms as inter
@@ -39,12 +40,15 @@ class winder:
 
         for p in self.domain:
             #intersections = inter.ray_casting_alg(tuple(p), point, intersections, tuple(self.bounds))
-            winding_number = inter.winding_num(point, tuple(p), winding_number, tuple(self.bounds))
+            holder = winding_number
+            winding_number = inter.winding_num(point, tuple(p), holder, tuple(self.bounds))
 
-        intersections = math.floor(intersections/len(self.bounds))
+        winding_number = (1/(2*np.pi))*winding_number
+
+        #intersections = math.floor(intersections/len(self.bounds))
 
         #return self.ray_casting_alg_check(intersections)
-        return self.winding_number_check(winding_number)
+        return self.winding_number_check(winding_number, point)
 
 
     def intersection_calculate(self, start, point):
@@ -148,13 +152,13 @@ class winder:
             self.debug_point(point,True, f'False. Intersection:{i} Point:{point} type:{str(type(i))} Geometry object not accounted for')
             return None
 
-    def winding_number_check(self, winding_number):
+    def winding_number_check(self, winding_number,point):
         #WINDING NUMBER CASES
-        if winding_number >= 1:
-            #self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
+        if winding_number >= .999999999999999:
+            self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
             return True
         else:
-            #self.debug_point(point,True, f'Winding Number Value:{winding_number} Point:{point} Less than one but inside cirlce')
+            self.debug_point(point,True, f'Winding Number Value:{winding_number} Point:{point} Less than one but inside cirlce')
             return False
 
     def ray_casting_alg_check(self, intersections):
@@ -171,7 +175,10 @@ class winder:
             statement = point[0]**2 + point[1]**2 > self.radius**2
 
         if statement:
-            print(log_message)
+            if random.random() > .9:
+                with open('./outside_points.txt', 'a') as f_1:
+                    f_1.write(f' {str(point).replace("(", "").replace(")", "")} \n')
+            #print(log_message)
 
 
 
