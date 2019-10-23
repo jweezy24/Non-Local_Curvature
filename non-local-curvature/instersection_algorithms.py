@@ -149,8 +149,7 @@ def winding_num(p,domain,total, min_max):
             vector_diff_1 = (point_1[0] - p[0], point_1[1]- p[1])
             vector_diff_2 = ( point_2[0] - p[0], point_2[1]- p[1])
             dot_prod = vector_diff_1[0]*vector_diff_2[0] + vector_diff_1[1]*vector_diff_2[1]
-            denom = math.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2) * math.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)
-            calculation = np.arccos(dot_prod/denom)
+            calculation = np.arccos(dot_prod/(np.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2) * np.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)))
             total += calculation
     return total
 

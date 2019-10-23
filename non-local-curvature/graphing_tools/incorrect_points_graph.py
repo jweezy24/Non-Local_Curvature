@@ -12,6 +12,6 @@ def main():
             points.append(point)
     for x,y in points:
         plt.scatter(x,y)
-    plt.show()
+    plt.savefig("./incorrect_points.pdf")
 
 main()

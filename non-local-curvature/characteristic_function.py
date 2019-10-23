@@ -3,6 +3,8 @@ import math
 import numpy as np
 import area_sets as area
 import random
+#For testing domain generation
+#import matplotlib.pyplot as plt
 
 class chi:
 
@@ -55,11 +57,15 @@ class chi:
                 self.min_max(point_holder)
                 domain.add(point_holder)
         else:
-            for angle in range(1,n+1):
-                p_1 = ((angle*2*np.pi)/n)
-                p_1_ref = p_1
-                if p_1_ref > 2*np.pi:
-                    p_1_ref = p_1/(2*np.pi)
+            for angle in range(0,n+1):
+                if n != 0:
+                    p_1 = ((angle*2*np.pi)/n)
+                    p_1_ref = p_1
+                    if p_1_ref > 2*np.pi:
+                        p_1_ref = p_1/(2*np.pi)
+                else:
+                    p_1 = 0
+                    p_1_ref = 0
                 point_holder = (x_eval(p_1),y_eval(p_1),p_1_ref)
                 self.min_max(point_holder)
                 domain.add(point_holder)
@@ -91,7 +97,7 @@ class chi:
 
         if len(points) > 0:
             domain2.append(points)
-
+        
         return domain2
 
     def min_max(self,gen_point):
