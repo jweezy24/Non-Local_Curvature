@@ -98,13 +98,15 @@ def bounding_box_algorithm(domain, p, prior_intersections, min_max):
         if pos < len(domain)-1:
             point_1 = domain[pos]
             point_2 = domain[pos+1]
-            
-            if point_1[1] > point_2[1]:
+
+            if point_2[1] < point_1[1]:
+                _y = point_1[1]
                 w_y = point_1[1]
                 w = point_1
                 v_y = point_2[1]
                 v = point_2
             else:
+                bigger_y = point_2[1]
                 w_y = point_2[1]
                 w = point_2
                 v_y = point_1[1]
@@ -114,9 +116,6 @@ def bounding_box_algorithm(domain, p, prior_intersections, min_max):
             p_v = (p[0]-v[0], p[1]-v[1])
             dot_prod = w_v[0] * p_v[0] + w_v[1]*p_v[1]
 
-            #print(p)
-            #print(dot_prod)
-            #print(intersections)
 
             if v[1] <= p[1] and p[1] < w[1] and dot_prod > 0:
                 intersections += 1
@@ -148,7 +147,8 @@ def winding_num(p,domain,total, min_max):
             vector_diff_2 = ( point_2[0] - p[0], point_2[1]- p[1])
             dot_prod = vector_diff_1[0]*vector_diff_2[0] + vector_diff_1[1]*vector_diff_2[1]
             calculation = np.arccos(dot_prod/(np.sqrt(vector_diff_1[0]**2 + vector_diff_1[1]**2) * np.sqrt(vector_diff_2[0]**2 + vector_diff_2[1]**2)))
-            total += calculation
+            if not math.isnan(calculation):
+                total += calculation         
     return total
 
     

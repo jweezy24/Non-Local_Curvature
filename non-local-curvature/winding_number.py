@@ -39,16 +39,16 @@ class winder:
         intersections = 0
 
         for p in self.domain:
-            holder = intersections
+            holder = winding_number
             #intersections = inter.ray_casting_alg(tuple(p), point, holder, tuple(self.bounds))
-            intersections = inter.bounding_box_algorithm(tuple(p), point, holder, tuple(self.bounds))
-            #winding_number = inter.winding_num(point, tuple(p), holder, tuple(self.bounds))
+            #intersections = inter.bounding_box_algorithm(tuple(p), point, holder, tuple(self.bounds))
+            winding_number = inter.winding_num(point, tuple(p), holder, tuple(self.bounds))
 
         #intersections = math.floor(intersections/len(self.bounds))
 
         #return self.ray_casting_alg_check(intersections)
-        return self.bounding_box_algorithm_check(intersections)
-        #return self.winding_number_check(winding_number, point)
+        #return self.bounding_box_algorithm_check(intersections)
+        return self.winding_number_check(winding_number, point)
 
 
     def intersection_calculate(self, start, point):
@@ -155,7 +155,7 @@ class winder:
     def winding_number_check(self, winding_number,point):
         winding_number = (1/(2*np.pi))*winding_number
         #WINDING NUMBER CASES
-        if winding_number >= .999999999999999:
+        if winding_number >= 1:
             #self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
             return True
         else:
@@ -181,10 +181,10 @@ class winder:
             statement = point[0]**2 + point[1]**2 > self.radius**2
 
         if statement:
-            if random.random() > .9:
-                with open('./outside_points.txt', 'a') as f_1:
-                    f_1.write(f' {str(point).replace("(", "").replace(")", "")} \n')
-            #print(log_message)
+            # if random.random() > .9:
+            #     with open('./outside_points.txt', 'a') as f_1:
+            #         f_1.write(f' {str(point).replace("(", "").replace(")", "")} \n')
+            print(log_message)
 
 
 
