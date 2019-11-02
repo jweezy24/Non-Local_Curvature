@@ -2,7 +2,6 @@ import ast
 import scipy.integrate as inte
 import scipy
 from sympy import *
-from autograd import elementwise_grad, grad, jacobian
 from numpy import sqrt, sin, cos, pi
 import numpy as np
 import sys
