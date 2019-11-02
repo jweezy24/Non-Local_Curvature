@@ -4,7 +4,7 @@ import numpy as np
 import area_sets as area
 import random
 #For testing domain generation
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 class chi:
 
