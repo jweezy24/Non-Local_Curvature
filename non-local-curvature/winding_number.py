@@ -153,7 +153,7 @@ class winder:
             return None
 
     def winding_number_check(self, winding_number,point):
-        winding_number = (1/(2*np.pi))*winding_number
+        #winding_number = (1/(2*np.pi))*winding_number
         #WINDING NUMBER CASES
         if winding_number >= .99:
             #self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')

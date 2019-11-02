@@ -4,7 +4,7 @@ import numpy as np
 import area_sets as area
 import random
 #For testing domain generation
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 class chi:
 
@@ -41,10 +41,10 @@ class chi:
         y_eval = lambda t: eval(self.func_y)
 
         domain = set()
-        domain.add((x_eval(0),y_eval(0),0))
-        domain.add((x_eval(np.pi),y_eval(np.pi), np.pi))
-        domain.add((x_eval(np.pi/2),y_eval(np.pi/2), np.pi/2))
-        domain.add((x_eval((3*np.pi)/2),y_eval((3*np.pi)/2), 3*np.pi/2))
+        # domain.add((x_eval(0),y_eval(0),0))
+        # domain.add((x_eval(np.pi),y_eval(np.pi), np.pi))
+        # domain.add((x_eval(np.pi/2),y_eval(np.pi/2), np.pi/2))
+        # domain.add((x_eval((3*np.pi)/2),y_eval((3*np.pi)/2), (3*np.pi/2)))
         domain2 = []
 
         if random_check:
@@ -58,20 +58,22 @@ class chi:
                 domain.add(point_holder)
         else:
             for angle in range(0,n+1):
-                if n != 0:
+                if angle != 0 and angle != n:
                     p_1 = ((angle*2*np.pi)/n)
-                    p_1_ref = p_1
-                    if p_1_ref > 2*np.pi:
-                        p_1_ref = p_1/(2*np.pi)
+                elif angle == n:
+                    p_1 = 2*np.pi
                 else:
                     p_1 = 0
                     p_1_ref = 0
-                point_holder = (x_eval(p_1),y_eval(p_1),p_1_ref)
+                
+                point_holder = (x_eval(p_1),y_eval(p_1),p_1)
                 self.min_max(point_holder)
                 domain.add(point_holder)
+                
     
     
         domain_sorted = sorted(domain, key=lambda tup: tup[2])
+        #print(domain_sorted)
         
         #Code to demonstrate domain creation
         # xs = []
@@ -90,6 +92,7 @@ class chi:
             points.append((point[0],point[1]))
             count+=1
             if count >= 997:
+                points_sorted = sorted(points, key=lambda tup: tup[2])
                 domain2.append(points)
                 points = []
                 count = 0
@@ -97,6 +100,18 @@ class chi:
 
         if len(points) > 0:
             domain2.append(points)
+        
+        domain2[-1].append((domain_sorted[0][0], domain_sorted[0][1]))
+        
+        #Code to demonstrate domain creation
+        # xs = []
+        # ys = []
+        # for point in domain_sorted:
+        #     xs.append(point[0])
+        #     ys.append(point[1])
+            
+        # plt.plot(xs,ys)
+        # plt.show()
         
         return domain2
 

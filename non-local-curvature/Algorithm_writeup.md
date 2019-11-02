@@ -35,8 +35,8 @@ def winding_num(p,domain,total, min_max):
             denom = vector_length_1*vector_length_2
             value = float(dot_prod/denom)
             calculation = np.arccos(value)
-            total += calculation
-    return (1/(2*np.pi))*total
+            total += (1/(2*np.pi))*calculation
+    return total
 ```
 If a point is inside the domain $C$ then the winding number has to be greater than or equal to 1.
 

@@ -9,7 +9,7 @@ import argparse
 def main(random=False):
     par = parser_yam.parser(file_path="../config.yaml")
     for i in range(1,100):
-        n = 100*i
+        n = 50*i
         if not random:
             char_func = chi.chi(par.args,n)
         else:
