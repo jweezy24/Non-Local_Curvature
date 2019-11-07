@@ -1,14 +1,11 @@
 ### Winding Number Algorithm
-The winding number algorithm was the original algorithm tested for loops.
-Where P is the point we are testing, C is the continuous closed curve, and n is the number of points on the boundry of C.
-We compute the winding number like:
+The winding number algorithm was the algorithm that we first built to test insideness.
+We define the winding number as a function $f$.
+A point $P = (x,y)$ where $x,y \in \mathbb{R}$  is inside the closed curve $C$, if for all $V_i$ in $C$ where $0 \leq i \leq n-1$:
 $$
-\forall V_i \in C, i \leq n-1
+f(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{\dot{(V_i-P)}{(V_{i+1}-P)}}{|V_i-P|\cdot |V_{i+1}-P|}}
 $$
-$$
-wn(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}arccos(\frac{(V_i-P)*(V_{i+1}-P)}{|V_i-P| |V_{i+1}-P|})
-$$
-#### Code
+### Code
 ```Python
 def winding_num(p,domain,total, min_max):
 
@@ -38,15 +35,23 @@ def winding_num(p,domain,total, min_max):
             total += (1/(2*np.pi))*calculation
     return total
 ```
-If a point is inside the domain $C$ then the winding number has to be greater than or equal to 1.
+If a point is inside the curve $C$ then the winding number has to be greater than or equal to 1.
 
 ### Ray Casting Algorithm
 
-This algorithm is the fastest algorithm out of the ones tested so far. Where $P$ is the point we are testing, $C$ is the continuous closed curve, and $n$ is the number of points on the boundry of $C$. Then,  $\forall V_i \in C, i <= n-1$ If we are going to assume $V_i$ has the bigger $y$ value. These are the cases where an intersection would occur. $P_x < \min{V_i.x}{V_{i+1}.x}$ If the statement before is false. Then the variable $\alpha$ is used to be a configurable small value and we look at, $|(V_i.x-V_{i+1}.x)| > \alpha$. If that's true we set $\Alpha=\frac{(V_{i+1}.y-V_i.y)}{(V_{i+1}.x-V_i.x)}$. If the statement prior is false then, $\Alpha=\beta$ where $\beta$ is an abirtrarly large number. The next step is to define $\Beta$, if $|V_i.x - P.x| > \alpha$ then $\Beta=\frac{P.y-V_i.y}{P.x-V_i.x}$. If $|V_i.x - P.x| < \alpha$ then, $\Beta=\beta$. After we define $\Alpha$ and $\Beta$, if $\Beta>=\Alpha$, then an intersection occurs.
+This algorithm is the fastest algorithm out of the ones tested so far.
+Where $P$ is the point we are testing, $C$ is the continuous closed curve, and $n$ is the number of points on the boundry of $C$.
+The ray casting algorithm takes the point $P$ and treats $P$ as the begining of a infinite ray going towards positive infinity on the x axis.
+To speed up the algorithm, we throw out all points outside a user defined bounding box $B$.
+So, if $P$ is inside $B$, we continue.
+Otherwise, we determine $P$ is outside the curve.
+Let, $V_i \in C, 0 \leq i \leq n-1$ be points inside the curve $C$.
+We treat $V_i$ and $V_{i+1}$ as a vector where $V_i$ is the inital point and $V_{i+1}$ is the end point.
+Let $V_i.y \leq V_{i+1}.y$, then if $P.x > \max{V_i.x}{V_{i+1}.x}$ or $P.y > \max{V_i.y}{V_{i+1}.y}$ or $P.y < \min{V_i.y}{V_{i+1}.y}$ then the extended vector of the point $P$ does not intersect the vector created from the $V_i$s.
+However, if the above statement is false then we do have an intersection.
 
-We take the steps above for each set of points within the domain $C$. Let $I$ represent the total amount of intersections. If $I\bmod2 = 1$, that tells us the point is within the circle. Otherwise, the point is outside the circle.
 
-#### Code
+### Code
 ```python
 def ray_casting_alg(domain, p, prior_intersections, min_max):
     global _eps

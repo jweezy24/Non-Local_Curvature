@@ -92,7 +92,6 @@ class chi:
             points.append((point[0],point[1]))
             count+=1
             if count >= 997:
-                points_sorted = sorted(points, key=lambda tup: tup[2])
                 domain2.append(points)
                 points = []
                 count = 0

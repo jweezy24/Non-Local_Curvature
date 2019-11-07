@@ -152,7 +152,7 @@ def winding_num(p,domain,total, min_max):
             value = float(dot_prod/denom)
             calculation = np.arccos(value)
             if not math.isnan(calculation):
-                total += (1/(2*np.pi))*calculation
+                total += calculation
 
     return total
 

@@ -1,0 +1,1 @@
+pandoc Algorithm_writeup.md --latex-engine=xelatex -o alg.pdf
