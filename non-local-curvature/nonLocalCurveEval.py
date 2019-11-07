@@ -16,7 +16,7 @@ class Eval:
         epsilon = 100
         for i in range(1,10):
             time1 = time.time()
-            epsilon = 10000
+            epsilon = 1000
             self.val = self.eval(epsilon)
             time2 = time.time()
             self.actual = -5.24411510858423962093
@@ -53,25 +53,24 @@ class Eval:
         #I_1 = scipy.integrate.dblquad(lambda x,y: self.holder(x,y), self.char_func.start[1]-epsilon, self.char_func.start[1]-float(1/epsilon),  self.char_func.start[0]-epsilon, self.char_func.start[0]-float(1/epsilon))[0]
         #I_2 = scipy.integrate.dblquad(lambda x,y: self.holder(x,y), self.char_func.start[1]+float(1/epsilon), self.char_func.start[1]+epsilon,  self.char_func.start[0]+float(1/epsilon), self.char_func.start[0]+epsilon)[0]
 
-        I_1 = scipy.integrate.dblquad(lambda r,theta: self.holder(r,theta), 0, (3*np.pi/2)-float(1/epsilon), lambda x: -np.inf, lambda y: -2-float(1/epsilon))[0]
-        I_2 = scipy.integrate.dblquad(lambda r,theta: self.holder(r,theta), (3*np.pi/2)+float(1/epsilon), 2*np.pi, lambda x: -2+float(1/epsilon), lambda y: np.inf)[0]
-        
-        print("Integral1 evals to: " + str(I_1))
-        print("Integral2 evals to: " + str(I_2))
-        print("Integral evals to: " + str(I_1 + I_2))
-        return I_1+I_2
+        I = scipy.integrate.dblquad(lambda r,theta: self.holder(r,theta), 0, 2*np.pi, float(1/epsilon), np.inf)[0]
+        print("Integral evals to: " + str(I))
+        return I
 
-    def holder(self, x, y):
+    def holder(self, r, theta):
         #print("point is " + str((r, theta)))
         #vector_x = self.char_func.start[0]-x
         #vector_y = self.char_func.start[1]-y
-        vector_x = self.char_func.start[0]-(x*cos(y))
-        vector_y = self.char_func.start[1]-(x*sin(y))
+        #    vector_x = self.char_func.start[0]-(x*cos(y))
+        #vector_y = self.char_func.start[1]-(x*sin(y))
 
-        x_1 = (x*cos(y))
-        y_1 = (x*sin(y))
+        x_2 = self.char_func.start[0]+(r*cos(theta))
+        y_2 = self.char_func.start[1]+(r*sin(theta))
 
-        norm = math.sqrt(vector_x**2 + vector_y**2)
+        #x_1 = (x*cos(y))
+        #y_1 = (x*sin(y))
+
+        #norm = math.sqrt(vector_x**2 + vector_y**2)
         #working code
-        return float(1/2)*(float(self.eval_char_func(self.char_func.start,(x_1, y_1))/norm**(1+float(1/2))))
+        return float(1/2)*(float(self.eval_char_func(self.char_func.start,(x_2, y_2))/r**(1+float(1/2))))
         #return float(1/2)*(self.eval_char_func((0,0),(r, theta))/r**(1+float(1/2)))
