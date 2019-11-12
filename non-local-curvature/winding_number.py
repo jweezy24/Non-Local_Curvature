@@ -39,16 +39,16 @@ class winder:
         intersections = 0
 
         for p in self.domain:
-            holder = winding_number
+            holder = intersections
             #intersections = inter.ray_casting_alg(tuple(p), point, holder, tuple(self.bounds))
-            #intersections = inter.bounding_box_algorithm(tuple(p), point, holder, tuple(self.bounds))
-            winding_number = inter.winding_num(point, tuple(p), holder, tuple(self.bounds))
+            intersections = inter.bounding_box_algorithm(tuple(p), point, holder, tuple(self.bounds))
+            #winding_number = inter.winding_num(point, tuple(p), holder, tuple(self.bounds))
 
         #intersections = math.floor(intersections/len(self.bounds))
 
-        #return self.ray_casting_alg_check(intersections)
-        #return self.bounding_box_algorithm_check(intersections)
-        return self.winding_number_check(winding_number, point)
+        #return self.ray_casting_alg_check(intersections, point)
+        return self.bounding_box_algorithm_check(intersections, point)
+        #return self.winding_number_check(winding_number, point)
 
 
     def intersection_calculate(self, start, point):
@@ -155,23 +155,28 @@ class winder:
     def winding_number_check(self, winding_number,point):
         winding_number = (1/(2*np.pi))*winding_number
         #WINDING NUMBER CASES
-        if winding_number >= .99:
-            #self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
+        if float(winding_number) >= .9985715:
+            self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
             return True
         else:
-            #self.debug_point(point,True, f'Winding Number Value:{winding_number} Point:{point} Less than one but inside cirlce')
+            self.debug_point(point,True, f'Winding Number Value:{winding_number} Point:{point} Less than one but inside cirlce')
             return False
 
-    def ray_casting_alg_check(self, intersections):
+    def ray_casting_alg_check(self, intersections,point):
          #RAY CASTING CASES
         if intersections%2 == 1:
+            #self.debug_point(point,False, f'Winding Number Value:{intersections} Point:{point} Greater than one but outside circle')
             return True
         else:
+            #self.debug_point(point,True, f'Winding Number Value:{intersections} Point:{point} Less than one but inside cirlce')
             return False
-    def bounding_box_algorithm_check(self, intersections):
-        if intersections != 0:
+
+    def bounding_box_algorithm_check(self, intersections,point):
+        if intersections == 0:
+            #self.debug_point(point,False, f'Winding Number Value:{intersections} Point:{point} Greater than one but outside circle')
             return True
         else:
+            #self.debug_point(point,True, f'Winding Number Value:{intersections} Point:{point} Less than one but inside cirlce')
             return False
 
     def debug_point(self, point, expected_bool, log_message):
