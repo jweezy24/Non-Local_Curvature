@@ -161,11 +161,11 @@ class winder:
     def winding_number_check(self, winding_number,point):
         winding_number = (1/(2*np.pi))*winding_number
         #WINDING NUMBER CASES
-        if winding_number >= .99:
-            #self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
+        if float(winding_number) >= .9985715:
+            self.debug_point(point,False, f'Winding Number Value:{winding_number} Point:{point} Greater than one but outside circle')
             return True
         else:
-            #self.debug_point(point,True, f'Winding Number Value:{winding_number} Point:{point} Less than one but inside cirlce')
+            self.debug_point(point,True, f'Winding Number Value:{winding_number} Point:{point} Less than one but inside cirlce')
             return False
 
     def ray_casting_alg_check(self, intersections,point):

@@ -23,7 +23,7 @@ def calculate_intersections(domain, p):
                 intersections += 1
     return intersections
 
-_eps = 0.00001
+_eps = 0.000001
 _huge = sys.float_info.max
 _tiny = sys.float_info.min
  
@@ -100,23 +100,29 @@ def bounding_box_algorithm(domain, p, prior_intersections, min_max):
             point_1 = domain[pos]
             point_2 = domain[pos+1]
 
-            if point_2[1] < point_1[1]:
-                _y = point_1[1]
-                w_y = point_1[1]
-                w = point_1
-                v_y = point_2[1]
-                v = point_2
-            else:
-                bigger_y = point_2[1]
-                w_y = point_2[1]
-                w = point_2
-                v_y = point_1[1]
-                v = point_1
+            w = point_1
+            v = point_2
         
             w_v = (w[0]-v[0], w[1]- v[1])
-            p_v = (p[0]-v[0], p[1]-v[1])
+            p_v = (v[0]-p[0], v[1]-p[1])
+            p_w = (w[0]-p[0], w[1]-p[1])
+            
             dot_prod = w_v[0] * p_v[0] + w_v[1]*p_v[1]
 
+            norm_1 = np.sqrt(p_w[0]**2 + p_w[1]**2)
+            norm_2 = np.sqrt(p_v[0]**2 + p_v[1]**2)
+
+            norm_prod = norm_1*norm_2
+
+
+            dot_prod_2 = p_w[0] * p_v[0] + p_w[1]*p_v[1]
+
+            angle_between = np.arccos(float(dot_prod_2/norm_prod))
+
+            not_rad = (angle_between*180)/(2*np.pi)
+
+            # if not_rad > 170 and dot_prod < 1 and dot_prod > -1:
+            #     continue
 
             if v[1] <= p[1] and p[1] < w[1] and dot_prod > 0:
                 intersections += 1
