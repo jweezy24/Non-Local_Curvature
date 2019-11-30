@@ -53,7 +53,7 @@ def ray_casting_alg(domain, p, prior_intersections, min_max):
                 p_1 = p_2
                 p_2 = p_1
             if p[1] == p_1[1] or p[1] == p_2[1]:
-                p = (p[0], p[1] + _eps)
+                p = (p[0], p[1])
 
         
             if (p[1] > p_1[1] or p[1] <  p_2[1]) or (p[0] > max(p_1[0], p_2[0])):
@@ -72,6 +72,7 @@ def ray_casting_alg(domain, p, prior_intersections, min_max):
                     m_blue = _huge
                 if m_blue >= m_red:
                     intersect += 1
+
     return intersect
 
 
@@ -89,10 +90,10 @@ def bounding_box_algorithm(domain, p, prior_intersections, min_max):
     y_tolerence = .00000001
 
     if p[0] < x_min or p[1] < y_min:
-        return 0
+        return None
             
     if p[0] > x_max or p[1] > y_max:
-        return 0
+        return None
 
     for pos in range(0,len(domain)):
         if pos < len(domain)-1:

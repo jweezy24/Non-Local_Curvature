@@ -39,16 +39,18 @@ If a point is inside the curve $C$ then the winding number has to be greater tha
 
 ### Ray Casting Algorithm
 
-This algorithm is the fastest algorithm out of the ones tested so far.
-Where $P$ is the point we are testing, $C$ is the continuous closed curve, and $n$ is the number of points on the boundry of $C$.
-The ray casting algorithm takes the point $P$ and treats $P$ as the begining of a infinite ray going towards positive infinity on the x axis.
-To speed up the algorithm, we throw out all points outside a user defined bounding box $B$.
-So, if $P$ is inside $B$, we continue.
-Otherwise, we determine $P$ is outside the curve.
-Let, $V_i \in C, 0 \leq i \leq n-1$ be points inside the curve $C$.
-We treat $V_i$ and $V_{i+1}$ as a vector where $V_i$ is the inital point and $V_{i+1}$ is the end point.
-Let $V_i.y \leq V_{i+1}.y$, then if $P.x > \max{V_i.x}{V_{i+1}.x}$ or $P.y > \max{V_i.y}{V_{i+1}.y}$ or $P.y < \min{V_i.y}{V_{i+1}.y}$ then the extended vector of the point $P$ does not intersect the vector created from the $V_i$s.
-However, if the above statement is false then we do have an intersection.
+The ray casting algorithm works by extening a given point $P$ to the right infinitly.
+Lets call that ray $Q$.
+The approach here is to think of one point as an infinite ray.
+If the point lies outside the polygon, that implies that it should intersect with a polygon a even amount of times.
+If it is inside the figure the amount of intersections should be odd.
+![Benjamin Bannekat](./Figures/RayCastingVis2.png)
+The figure illustrates the algorithm in pieces.
+The blue line shows once the vector is outside the shape it is even.
+The red vector illustrates the case where the points are inside and have an odd count of intersections.
+
+
+
 
 
 ### Code

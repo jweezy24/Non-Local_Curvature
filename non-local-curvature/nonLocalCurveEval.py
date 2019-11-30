@@ -14,9 +14,9 @@ class Eval:
 
         self.char_func = func
         epsilon = 100
-        for i in range(1,10):
+        for i in range(2,5):
             time1 = time.time()
-            epsilon = 1000
+            epsilon = math.pow(10,i)
             self.val = self.eval(epsilon)
             time2 = time.time()
             self.actual = -5.24411510858423962093
