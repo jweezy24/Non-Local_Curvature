@@ -1,14 +1,9 @@
-#work in progress regions defined with functions of different variables
-args:
-  function: 5*x**3*(cos(y**3))
-  with_respect: dx dy
-  functions: y= 2,x= 2*y**float(1/2)
-
 curv:
   func_x: 2*np.cos(t)
   func_y: 2*np.sin(t)
   start_point: [0,-2]
   origin: [0,0]
   radius: 2
-  circle: True
+  #Specifices what point in polygon algorithm the user would like to use
+  alg: winding_number
 

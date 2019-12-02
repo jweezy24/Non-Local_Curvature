@@ -1,7 +1,7 @@
 import scipy.constants
 import math
 import numpy as np
-import area_sets as area
+import intersection_calculations
 import random
 #For testing domain generation
 #import matplotlib.pyplot as plt
@@ -19,22 +19,16 @@ class chi:
         self.radius = args["curv"]["radius"]
         self.func_x = args["curv"]["func_x"]
         self.func_y = args["curv"]["func_y"]
-        self.is_circle = args["curv"]["circle"]
         self.start = args["curv"]["start_point"]
+        self.origin= args["curv"]["origin"]
+        self.alg = args["curv"]["alg"]
         self.domain_size = n
         self.domain = self.create_domain(n,random)
-
-        if self.is_circle:
-            self.origin = args["curv"]["origin"]
-        if self.is_circle:
-            self.area_sets = area.A(self.radius, self.func_x, self.func_y, self.origin, self.domain, self.bounds)
-        else:
-            return
+        self.area_sets = intersection_calculations.insideness(self.func_x, self.func_y, radius=self.radius, origin=self.origin, points=self.domain, bounds=self.bounds)
 
     def check(self, p1, p2):
         #print("Points given P1: " + str(p1) + "\t P2:" + str(p2))
-        if self.is_circle:
-            return self.area_sets.which_set_circle(p1, p2)
+        return self.area_sets.point_insideness(p1, p2, self.alg)
 
     def create_domain(self, n,random_check):
         x_eval = lambda t: eval(self.func_x)
