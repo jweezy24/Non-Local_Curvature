@@ -24,14 +24,14 @@ class Eval:
             error = abs(abs(self.actual - self.val)/self.actual)
             print('Error evaluate to, {:.2f}'.format(error*100))
             if random:
-                with open('./results_random.txt', 'a') as f:
+                with open(f'./results_random_{self.char_func.alg}.txt', 'a') as f:
                     f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
                 if error*100 < 1:
                     with open('./random_domains.txt', 'a') as f:
                         f.write(f'Domain: {str(self.char_func.domain)}')
                         f.write(f' Error for this domain: {error}\t Domain Size: {self.char_func.domain_size}\t Epsilon: {epsilon}')
             else:
-                with open('./results_without_random.txt', 'a') as f:
+                with open(f'./results_{self.char_func.alg}.txt', 'a') as f:
                     f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
 
 

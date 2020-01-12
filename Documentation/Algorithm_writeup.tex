@@ -6,18 +6,20 @@
 \begin{document}
 \section{Winding Number Algorithm}
 The winding number algorithm was the algorithm that we first built to test insideness.
-We define the winding number as a function $f$.
-A point $P = (x,y)$ where $x,y$ $\in$ $R$  is inside the closed curve $C$, if for all $V_i$ in $C$ where $0$ $\leq$ $i$ $\leq$ $n-1$:
+Let $C$ represent a polygon with $n$ number of vertices.
+Let $V_i$ be any vertice of $C$ where $0$ $\leq$ $i$ $\leq$ $n$.
+We define the winding number as a function $W$.
+A point $P = (x,y)$ where $x,y$ $\in$ $R$  is inside the polygon $C$, if for all $V_i$ on $C$:
 $$
-f(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{\dot{(V_i-P)}{(V_{i+1}-P)}}{|V_i-P|\cdot |V_{i+1}-P|}}
+W(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{(V_i-P)\cdot(V_{i+1}-P)}{|V_i-P|\cdot |V_{i+1}-P|}}
 $$
-If a point is inside the curve $C$ then the winding number has to be greater than or equal to 1.
+If a point is inside the curve $C$ then the winding number has to be a non-zero integer.
 
 \section{Ray Casting Algorithm}
 
-The ray casting algorithm works by extening a given point $Q$ to the right infinitly.
+The ray casting algorithm works by taking a given point $Q$ and converting that point to a ray in the positive $X$ direction.
 Lets call that ray $\overrightarrow{\rm Q}$.
-The approach here is to think of one point as an infinite ray.
+Let $C$ be a polygon with $n$ verticies 
 If the point lies outside the polygon, that implies that the sum of intersections that occured should add up to zero.
 If the intersection index is anything but zero, then the point is outside the polygon.
 A intersection index is defined as a counter which counts the intersections. 

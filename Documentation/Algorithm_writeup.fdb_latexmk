@@ -1,14 +1,14 @@
 # Fdb version 3
-["bibtex Algorithm_writeup"] 1575136771 "Algorithm_writeup.aux" "Algorithm_writeup.bbl" "Algorithm_writeup" 1575136771
+["bibtex Algorithm_writeup"] 1578156033 "Algorithm_writeup.aux" "Algorithm_writeup.bbl" "Algorithm_writeup" 1578156145
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/plain.bst" 1480098433 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "Algorithm_writeup.aux" 1575136771 501 5da9857cbc2b52425bde06c73a6135e3 ""
+  "Algorithm_writeup.aux" 1578156145 371 128c603a9403851a6b25c417e116bef9 ""
   "Algorithm_writeup.bcf" 0 -1 0 ""
   "Algorithm_writeup.bib" 1575134724 670 ff7c28c790ca1446ffed9e0525c6aec2 ""
   (generated)
   "Algorithm_writeup.blg"
   "Algorithm_writeup.bbl"
-["pdflatex"] 1575136771 "./Algorithm_writeup.tex" "Algorithm_writeup.pdf" "Algorithm_writeup" 1575136771
-  "./Algorithm_writeup.tex" 1575136374 3402 15fc549b464e9a17d263df6871d22023 ""
+["pdflatex"] 1578156145 "./Algorithm_writeup.tex" "Algorithm_writeup.pdf" "Algorithm_writeup" 1578156145
+  "./Algorithm_writeup.tex" 1578156134 3239 b5c03f5c159e6a7fc48ee9072ff7ff18 ""
   "/etc/texmf/web2c/texmf.cnf" 1544400471 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1480098701 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -49,11 +49,10 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1554757334 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1554757348 4127058 b0b6042157948775595dd10ad2aee9e3 ""
-  "Algorithm_writeup.aux" 1575136771 501 5da9857cbc2b52425bde06c73a6135e3 ""
-  "Algorithm_writeup.bbl" 1575136771 330 0ac51908da10717c33b3d042f94df6ac "bibtex Algorithm_writeup"
-  "Algorithm_writeup.tex" 1575136374 3402 15fc549b464e9a17d263df6871d22023 ""
-  "Figures/bbimplmentation.png" 1575136759 6648 e310002fef4f2b258d5e1da9e21dfd08 ""
+  "Algorithm_writeup.aux" 1578156145 371 128c603a9403851a6b25c417e116bef9 ""
+  "Algorithm_writeup.bbl" 1578156033 330 0ac51908da10717c33b3d042f94df6ac "bibtex Algorithm_writeup"
+  "Algorithm_writeup.tex" 1578156134 3239 b5c03f5c159e6a7fc48ee9072ff7ff18 ""
   (generated)
   "Algorithm_writeup.log"
-  "Algorithm_writeup.pdf"
   "Algorithm_writeup.aux"
+  "Algorithm_writeup.pdf"
