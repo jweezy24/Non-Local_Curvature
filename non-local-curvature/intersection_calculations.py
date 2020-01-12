@@ -3,7 +3,7 @@ import time
 import random
 import sympy as sp
 import numpy as np
-import instersection_algorithms as inter
+import intersection_algorithms as inter
 from shapely.geometry import LineString
 from shapely.geometry import Point
 from scipy.optimize import fsolve
