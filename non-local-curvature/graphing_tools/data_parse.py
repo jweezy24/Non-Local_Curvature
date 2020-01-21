@@ -51,11 +51,11 @@ def create_epsilon_error_charts(data):
                 epsilon_handler.get(val[1])[2].append(error_tmp)
     return epsilon_handler
 
-def plot_data(data):
+def plot_data(data, path):
     epsilon_handler = [
         '1/100.0',
         '1/1000.0',
-        '1/10000.0', 
+        '1/10000.0' 
         # '1/1000000', 
         # '1/10000000', 
         # '1/100000000', 
@@ -82,14 +82,24 @@ def plot_data(data):
                 continue
 
         fig.suptitle(f'Epsilon is {epsilon_handler[i]}')
-        plt.savefig(f'./plots/No_random/{i}.png')
+        if 'winding_number' in path:
+            plt.savefig(f'./plots/Winding_number/{i}.png')
+        if 'bounding_box' in path:
+            plt.savefig(f'./plots/Bounding_Box/{i}.png')
 
     
 
 def main():
-    parsed_data = parse_data('../results_without_random.txt')
+    path_winding = '../results_random_winding_number.txt'
+    path_bounding = '../results_random_bounding_box.txt'
+
+    parsed_data = parse_data(path_winding)
     chart_ready_data = create_epsilon_error_charts(parsed_data) 
-    plot_data(chart_ready_data)
+    plot_data(chart_ready_data, path_winding)
+
+    parsed_data = parse_data(path_bounding)
+    chart_ready_data = create_epsilon_error_charts(parsed_data) 
+    plot_data(chart_ready_data, path_bounding)
 
 
 main()
