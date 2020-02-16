@@ -22,6 +22,7 @@ class chi:
         self.start = args["curv"]["start_point"]
         self.origin= args["curv"]["origin"]
         self.alg = args["curv"]["alg"]
+        self.equ = args["curv"]["equation"]
         self.domain_size = n
         self.domain = self.create_domain(n,random)
         self.area_sets = intersection_calculations.insideness(self.func_x, self.func_y, radius=self.radius, origin=self.origin, points=self.domain, bounds=self.bounds)

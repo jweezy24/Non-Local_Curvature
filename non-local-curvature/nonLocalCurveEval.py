@@ -10,30 +10,39 @@ import time
 
 class Eval:
 
-    def __init__(self, func, random):
+    def __init__(self, func, random, default=True, iter=None):
 
-        self.char_func = func
-        epsilon = 100
-        for i in range(2,5):
+        if default:
+            self.char_func = func
+            epsilon = 100
+            for i in range(2,5):
+                time1 = time.time()
+                epsilon = math.pow(10,i)
+                self.val = self.eval(epsilon)
+                time2 = time.time()
+                self.actual = -5.24411510858423962093
+                print('Evaluation of Integral took {:.3f} minutes'.format( (time2-time1)/60))
+                error = abs(abs(self.actual - self.val)/self.actual)
+                print('Error evaluate to, {:.2f}'.format(error*100))
+                if random:
+                    with open(f'./results_random_{self.char_func.alg}.txt', 'a') as f:
+                        f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
+                    if error*100 < 1:
+                        with open('./random_domains.txt', 'a') as f:
+                            f.write(f'Domain: {str(self.char_func.domain)}')
+                            f.write(f' Error for this domain: {error}\t Domain Size: {self.char_func.domain_size}\t Epsilon: {epsilon}')
+                else:
+                    with open(f'./results_{self.char_func.alg}.txt', 'a') as f:
+                        f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
+
+        else:
+            self.char_func = func
+            epsilon = 1000
             time1 = time.time()
-            epsilon = math.pow(10,i)
             self.val = self.eval(epsilon)
             time2 = time.time()
-            self.actual = -5.24411510858423962093
-            print('Evaluation of Integral took {:.3f} minutes'.format( (time2-time1)/60))
-            error = abs(abs(self.actual - self.val)/self.actual)
-            print('Error evaluate to, {:.2f}'.format(error*100))
-            if random:
-                with open(f'./results_random_{self.char_func.alg}.txt', 'a') as f:
-                    f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
-                if error*100 < 1:
-                    with open('./random_domains.txt', 'a') as f:
-                        f.write(f'Domain: {str(self.char_func.domain)}')
-                        f.write(f' Error for this domain: {error}\t Domain Size: {self.char_func.domain_size}\t Epsilon: {epsilon}')
-            else:
-                with open(f'./results_{self.char_func.alg}.txt', 'a') as f:
-                    f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
-
+            with open(f'./results_{self.char_func.alg}_ellipse.txt', 'a') as f:
+                        f.write(f'Integration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\t EquationX: {self.char_func.func_x}\t EquationY: {self.char_func.func_y}\t iter: {iter}  \n')
 
         #self.weezy_integration = lambda func, range: jack_integral.integrate(func, range)
 

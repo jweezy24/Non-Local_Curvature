@@ -109,18 +109,6 @@ def bounding_box_algorithm(domain, p, prior_intersections, min_max):
             
             dot_prod = w_v[0] * p_v[0] + w_v[1]*p_v[1]
 
-            norm_1 = np.sqrt(p_w[0]**2 + p_w[1]**2)
-            norm_2 = np.sqrt(p_v[0]**2 + p_v[1]**2)
-
-            norm_prod = norm_1*norm_2
-
-
-            dot_prod_2 = p_w[0] * p_v[0] + p_w[1]*p_v[1]
-
-            angle_between = np.arccos(float(dot_prod_2/norm_prod))
-
-            not_rad = (angle_between*180)/(2*np.pi)
-
             # if not_rad > 170 and dot_prod < 1 and dot_prod > -1:
             #     continue
 

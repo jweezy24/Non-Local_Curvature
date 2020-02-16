@@ -9,41 +9,45 @@ The winding number algorithm was the algorithm that we first built to test insid
 Let $C$ represent a polygon with $n$ number of vertices.
 Let $V_i$ be any vertice of $C$ where $0$ $\leq$ $i$ $\leq$ $n$.
 We define the winding number as a function $W$.
-A point $P = (x,y)$ where $x,y$ $\in$ $R$  is inside the polygon $C$, if for all $V_i$ on $C$:
+A point $P = (x,y)$ is inside the polygon $C$, if for all $V_i$ on $C$:
 $$
-W(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{(V_i-P)\cdot(V_{i+1}-P)}{|V_i-P|\cdot |V_{i+1}-P|}}
+W(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{(V_i-P)\cdot (V_{i+1}-P)}{|V_i-P|\cdot |V_{i+1}-P|}}
 $$
-If a point is inside the curve $C$ then the winding number has to be a non-zero integer.
+If a point is inside the polygon $C$ then the winding number has to be a non-zero integer.
+We decieded to use this algorithm as a way to approximate a cicle by increasing the amout of vertices on the polygon.
 
 \section{Ray Casting Algorithm}
 
-The ray casting algorithm works by taking a given point $Q$ and converting that point to a ray in the positive $X$ direction.
+The ray casting algorithm at its core works by taking a given point $Q$ and extending that point in the positive $x$ direction.
 Lets call that ray $\overrightarrow{\rm Q}$.
-Let $C$ be a polygon with $n$ verticies 
-If the point lies outside the polygon, that implies that the sum of intersections that occured should add up to zero.
-If the intersection index is anything but zero, then the point is outside the polygon.
-A intersection index is defined as a counter which counts the intersections. 
-An intersection from the right adds one to the intersection index.
-An intersection from the left subtracts one from the sum.
-Therefore, the sum of the intersections of a point inside the polygon is 0.
-Whereas, the intersections are not zero of a point lying outside the circle.
-Thus, lets take two points from the curve $C$, lets call the points $P_1$ and $P_2$.
-$P_1$ has to be greater in some context.
-For example, if we have a parameterized circle with one variable $t$, and $P_1$ is defined at $t_1$ and $P_2$ is defined at $t_2$ then the algorithm requires that $t_1$ $>$ $t_2$.
-Thus, the line segment created from the points $P_1$ and $P_2$ is $\overline{\rm P_1P_2}$.
-So, lets say that the infinite ray $\overrightarrow{\rm Q}$ intersects the line segment $\overline{\rm P_1P_2}$, then if that is the only intersection, the point $Q$ is inside the curve $C$.
-However, if there exists a line segment, $\overline{\rm P_iP_j}$ where $\overrightarrow{\rm Q}$ intersects the curve $C$ again, then the point lies outside of the $C$.
+If $Q = (a,b)$ where a and b are constants, then $\overrightarrow{\rm Q} = <x, b>$ where $x \in R$.
+Let $C$ be a polygon with $n$ verticies, each each line segement formed by connecting vertices we consider to be "walls".
+If $Q$ lies outside the polygon, the $\overrightarrow{\rm Q}$ will either not intersect the polygon at all, or there will be at least two intersections which cancel each other out.
+To cancel each other out means that an intersection will occur when the ray enters the shape and there will be an exiting intersection.
+Where as, a point that is inside the shape could intersect the shape in multiple places, although there will only be one exiting intersection and no entry intersection.
+Thus, the algorithm thinks about this as a index.
+Let's call this index $I$, $I$ is an integer which will incremented by one on an entry and decremented when exiting the shape.
+$I$ if a point lies outside the shape $I$ will be zero.
+A point is inside the shape when $I$ is not zero.
 
-\subsection{Ray Casting Implementation: Bounding-Box Testing}
+\subsection{Bounding Box Implementation}
 
-Ray casting is powerful for a polygon with a small amount of edges.
-A circle is a infinitly edged shape, when trying to parameterize a circle in a finite environment the ray casting alogrithm has problems.
-Depending on the size of the finite domain, the ray casting algorithm's accuracy varies.
-A solution lies in a implementation\cite{bbox} which takes the ray casting algorithm and applies a faster intersection index.
-The intersection index is a number that counts how many intersections occured between the extended ray $\overrightarrow{\rm Q}$ and $\overline{\rm P_iP_j}$.
-This implementation differs by restricting the domain to a smaller size based on a user defined box.
-Now, the ray $\overrightarrow{\rm Q}$ will only check intersections within that bouding boxes.
-This implementation allows for us to be able to focus on a smaller area while increasing the points.
+The pure ray casting algorithm's issues arise when the amount of vertices becomes large.
+A large number of vertices slow down the algorithm too much.
+The Ray casting algorithm was designed for polygons of smaller amounts of vertices.
+We needed a scalable alrogithm like the winding number to compute insideness.
+Thus, we needed to adjust the ray-casting algorithm.
+Rather than extending the a point $Q$ only in the positive $x$ direction, we extend the point in both directions.
+An intersection from an extended point in the negative $x$ direction will subtract one from the intersection index.
+Where as an intersection from the positive $x$ direction adds one to the intersection index.
+Thus, a point lies within a polygon if the intersection index is zero.
+We also throw out all points that are greater than the maximums of the shape or lower than the minimums of the polygons.
+Throwing out those points creates a box around the shape.
+Points within that box will be the only points tested.
+
+
+
+
 
 
 \bibliography{Algorithm_writeup}{}

@@ -90,8 +90,8 @@ def plot_data(data, path):
     
 
 def main():
-    path_winding = '../results_random_winding_number.txt'
-    path_bounding = '../results_random_bounding_box.txt'
+    path_winding = '../results_winding_number.txt'
+    path_bounding = '../results_bounding_box.txt'
 
     parsed_data = parse_data(path_winding)
     chart_ready_data = create_epsilon_error_charts(parsed_data) 
