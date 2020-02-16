@@ -38,8 +38,8 @@ if __name__ == "__main__":
     parser.add_argument('--setting', help="Which type of test to run.")
     args = parser.parse_args()
     print(args.setting)
-    if not args.random and args.setting == 0:
+    if args.setting == 0:
         main()
-    elif not args.random and not args.setting == 1:
+    elif args.setting == 1:
         main_2()
     
