@@ -35,16 +35,11 @@ def main_2(random=False):
 
 if __name__ == "__main__": 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--random', help="Using random points or not.")
     parser.add_argument('--setting', help="Which type of test to run.")
     args = parser.parse_args()
     print(args.setting)
-    if args.random and args.setting == 0:
-        main(random=True)
-    elif not args.random and args.setting == 0:
+    if not args.random and args.setting == 0:
         main()
-    elif args.random and not args.setting == 1:
-        main_2(random=True)
     elif not args.random and not args.setting == 1:
         main_2()
     
