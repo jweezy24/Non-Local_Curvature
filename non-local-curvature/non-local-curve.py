@@ -19,7 +19,7 @@ def main(random=False):
 
 def main_2(random=False):
     par = parser_yam.parser(file_path="../config.yaml")
-    n = 100
+    n = 1000
     for i in range(0, 101):
         if not random:
             if i == 0:
