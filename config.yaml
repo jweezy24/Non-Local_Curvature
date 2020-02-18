@@ -1,6 +1,6 @@
 curv:
   equation: x^2/4 + y^2 = 4
-  func_x: (2*np.cos(t))/2
+  func_x: (4*np.cos(t))
   func_y: 2*np.sin(t)
   start_point: [0,-2]
   origin: [0,0]

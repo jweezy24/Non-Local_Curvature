@@ -25,9 +25,9 @@ def main_2(random=False):
             if i == 0:
                 char_func = chi.chi(par.args,n)
             else:
-                par.args["curv"]["func_x"] = par.args["curv"]["func_x"].replace("/2", f"/(2 - ({i}/100))")
+                par.args["curv"]["func_x"] = par.args["curv"]["func_x"].replace("4*", f"(4- ({i}/50))*")
                 char_func = chi.chi(par.args,n)
-                par.args["curv"]["func_x"] = par.args["curv"]["func_x"].replace(f"/(2 - ({i}/100))", f"/2")
+                par.args["curv"]["func_x"] = par.args["curv"]["func_x"].replace( f"(4- ({i}/50))*", "4*")
         else:
             char_func = chi.chi(par.args,n,random)
         eval.Eval(char_func,random, default=False, iter=f"({i}/100)")

@@ -104,3 +104,4 @@ venv.bak/
 .mypy_cache/
 non-local-curvature/results_bounding_box.txt
 non-local-curvature/results_winding_number.txt
+non-local-curvature/results_bounding_box_ellipse.txt

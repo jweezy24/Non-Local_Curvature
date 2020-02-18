@@ -44,7 +44,6 @@ def create_epsilon_error_charts(data):
                 time_tmp = float(val[1].strip())
             
         for val in line:
-            print(val)
             if 'Epsilon' in val[0]:
                 epsilon_handler.get(val[1])[0].append(domain_tmp)
                 epsilon_handler.get(val[1])[1].append(time_tmp)
@@ -87,11 +86,34 @@ def plot_data(data, path):
         if 'bounding_box' in path:
             plt.savefig(f'./plots/Bounding_Box/{i}.png')
 
+
+def parse_ellipse(data):
+
+    x_axis = []
+    y_axis = []
+    plt.clf()
+    for item in data:
+        for stuff in item:
+            if 'Integration' in stuff[0]:
+                y_axis.append(float(stuff[1]))
+            elif 'iter' in stuff[0]:
+                if '0/100' == stuff[1]:
+                    x_axis.append(float(0))
+                else:
+                    x_axis.append(float(eval(stuff[1])))
+    
+    plt.plot(x_axis,y_axis)
+    plt.ylabel('Integral Evaluation')
+    plt.xlabel('Iter')
+    plt.savefig(f'./plots/Ellipse/Week1.png')
+
+
     
 
 def main():
     path_winding = '../results_winding_number.txt'
     path_bounding = '../results_bounding_box.txt'
+    path_ellipse = '../results_bounding_box_ellipse.txt'
 
     parsed_data = parse_data(path_winding)
     chart_ready_data = create_epsilon_error_charts(parsed_data) 
@@ -100,6 +122,9 @@ def main():
     parsed_data = parse_data(path_bounding)
     chart_ready_data = create_epsilon_error_charts(parsed_data) 
     plot_data(chart_ready_data, path_bounding)
+
+    parsed_data = parse_data(path_ellipse)
+    parse_ellipse(parsed_data)
 
 
 main()
