@@ -1,10 +1,11 @@
 curv:
   equation: x^2/4 + y^2 = 4
-  func_x: (4*np.cos(t))
+  func_x: (2*np.cos(t))
   func_y: 2*np.sin(t)
-  start_point: [0,-2]
+  start_point: [0,2]
   origin: [0,0]
   radius: 2
   #Specifices what point in polygon algorithm the user would like to use
-  alg: winding_number
+  alg: bounding_box
+  is_hemisphere: True
 

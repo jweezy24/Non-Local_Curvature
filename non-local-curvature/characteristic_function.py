@@ -4,7 +4,7 @@ import numpy as np
 import intersection_calculations
 import random
 #For testing domain generation
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 class chi:
 
@@ -23,6 +23,7 @@ class chi:
         self.origin= args["curv"]["origin"]
         self.alg = args["curv"]["alg"]
         self.equ = args["curv"]["equation"]
+        self.isHem = args["curv"]["is_hemisphere"]
         self.domain_size = n
         self.domain = self.create_domain(n,random)
         self.area_sets = intersection_calculations.insideness(self.func_x, self.func_y, radius=self.radius, origin=self.origin, points=self.domain, bounds=self.bounds)
@@ -35,7 +36,7 @@ class chi:
         x_eval = lambda t: eval(self.func_x)
         y_eval = lambda t: eval(self.func_y)
 
-        domain = set()
+        domain = []
         # domain.add((x_eval(0),y_eval(0),0))
         # domain.add((x_eval(np.pi),y_eval(np.pi), np.pi))
         # domain.add((x_eval(np.pi/2),y_eval(np.pi/2), np.pi/2))
@@ -50,26 +51,55 @@ class chi:
                     p_1_ref = p_1/(2*np.pi)
                 point_holder = (x_eval(p_1),y_eval(p_1),p_1_ref)
                 self.min_max(point_holder)
-                domain.add(point_holder)
+                domain.append(point_holder)
         else:
-            for angle in range(0,n+1):
-                if angle != 0 and angle != n:
-                    p_1 = ((angle*2*np.pi)/n)
-                elif angle == n:
-                    p_1 = 2*np.pi
-                else:
-                    p_1 = 0
-                    p_1_ref = 0
+            if self.isHem:
+                for angle in range(0,int((n/2)+1)):
+                    if angle != 0 and angle != n:
+                        p_1 = ((angle*np.pi)/(n/2))
+                    elif angle == n:
+                        p_1 = np.pi
+                    else:
+                        p_1 = 0
+                        p_1_ref = 0
+                    point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+                    self.min_max(point_holder)
+                    domain.append(point_holder)
+                #print(domain)
+            
                 
-                point_holder = (x_eval(p_1),y_eval(p_1),p_1)
-                self.min_max(point_holder)
-                domain.add(point_holder)
+            else:
+                for angle in range(0,n+1):
+                    if angle != 0 and angle != n:
+                        p_1 = ((angle*2*np.pi)/n)
+                    elif angle == n:
+                        p_1 = 2*np.pi
+                    else:
+                        p_1 = 0
+                        p_1_ref = 0
                 
-    
+                    point_holder = (x_eval(p_1),y_eval(p_1),p_1)
+                    self.min_max(point_holder)
+                    domain.append(point_holder)
+                
     
         domain_sorted = sorted(domain, key=lambda tup: tup[2])
         #print(domain_sorted)
         
+        line1, line2 = self.grow_set(self.start, domain[0], domain[-1])
+        print(line1)
+        print(line2)
+        for p1 in range(int(domain_sorted[0][0]), int((domain_sorted[0][0]+(n/2)))):
+            front = (float(p1),eval(line1.replace('x',str(p1))),p1)
+            self.min_max(front)
+            domain_sorted.insert(0, front)
+        
+        for p2 in range(int(domain_sorted[-1][0]-(n/2)), int(domain_sorted[-1][0])):
+            back = (float(p2),eval(line2.replace('x',str(p2))),p2)
+            self.min_max(back)
+            domain_sorted.append(back)
+        print(domain_sorted)
+
         #Code to demonstrate domain creation
         # xs = []
         # ys = []
@@ -95,19 +125,27 @@ class chi:
         if len(points) > 0:
             domain2.append(points)
         
-        domain2[-1].append((domain_sorted[0][0], domain_sorted[0][1]))
+        if not self.isHem:
+            domain2[-1].append((domain_sorted[0][0], domain_sorted[0][1]))
         
         #Code to demonstrate domain creation
-        # xs = []
-        # ys = []
-        # for point in domain_sorted:
-        #     xs.append(point[0])
-        #     ys.append(point[1])
+        xs = []
+        ys = []
+        for point in domain_sorted:
+            xs.append(point[0])
+            ys.append(point[1])
             
-        # plt.plot(xs,ys)
-        # plt.show()
-        
+        plt.plot(xs,ys)
+        plt.show()  
         return domain2
+
+    def grow_set(self, start_point, end1, end2):
+        slope_l1 = (end1[1]-start_point[1])/(end1[0]-start_point[0])
+        slope_l2 = (end2[1]-start_point[1])/(end2[0]-start_point[0])
+        #Change this to be open ended
+        line_eq1 = f"{slope_l1}*x + 2"
+        line_eq2 = f"{slope_l2}*x + 2"
+        return (line_eq1, line_eq2)
 
     def min_max(self,gen_point):
         if type(self.bounds[0]) == type('t') or self.bounds[0] < gen_point[0]:

@@ -17,6 +17,15 @@ def main(random=False):
         print(random)
         eval.Eval(char_func,random)
 
+def main_3(random=False):
+    par = parser_yam.parser(file_path="../config.yaml")
+    n = 100000
+    if not random:
+        char_func = chi.chi(par.args,n)
+    else:
+        char_func = chi.chi(par.args,n,random)
+    eval.Eval(char_func,random)
+
 def main_2(random=False):
     par = parser_yam.parser(file_path="../config.yaml")
     n = 1000
@@ -37,9 +46,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--setting', help="Which type of test to run.")
     args = parser.parse_args()
-    print(args.setting)
-    if args.setting == 0:
+    print(type(args.setting))
+    if args.setting == '0':
         main()
-    elif args.setting == 1:
+    elif args.setting == '1':
         main_2()
+    elif args.setting == '2':
+        main_3()
     
