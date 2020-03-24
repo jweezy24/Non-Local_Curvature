@@ -6,6 +6,9 @@ import characteristic_function as chi
 import nonLocalCurveEval as eval
 import argparse
 
+''' 
+First experiment:
+    This Code was designed for testing the accuracy of the algorithms'''
 def main(random=False):
     par = parser_yam.parser(file_path="../config.yaml")
     for i in range(1,100):
@@ -16,7 +19,10 @@ def main(random=False):
             char_func = chi.chi(par.args,n,random)
         print(random)
         eval.Eval(char_func,random)
-
+'''
+Second Experiment:
+    This experiment was designed for testing the relation of the start point to the curvature of an ellipse
+'''
 def main_2(random=False):
     par = parser_yam.parser(file_path="../config.yaml")
     n = 1000
@@ -32,14 +38,29 @@ def main_2(random=False):
             char_func = chi.chi(par.args,n,random)
         eval.Eval(char_func,random, default=False, iter=f"({i}/100)")
 
+'''
+Third Experiment:
+    This experiement tests hemispheres  
+'''
+def main_3(random=False):
+    par = parser_yam.parser(file_path="../config.yaml")
+    n = 10000
+    if not random:
+        char_func = chi.chi(par.args,n)
+    else:
+        char_func = chi.chi(par.args,n,random)
+    eval.Eval(char_func,random)
+
 
 if __name__ == "__main__": 
     parser = argparse.ArgumentParser()
     parser.add_argument('--setting', help="Which type of test to run.")
     args = parser.parse_args()
-    print(args.setting)
-    if args.setting == 0:
+    print(type(args.setting))
+    if args.setting == '0':
         main()
-    elif args.setting == 1:
+    elif args.setting == '1':
         main_2()
+    elif args.setting == '2':
+        main_3()
     
