@@ -40,16 +40,17 @@ def main_2(random=False):
 
 '''
 Third Experiment:
-    This experiement tests hemispheres  
+    This experiement tests semicircle  
 '''
 def main_3(random=False):
     par = parser_yam.parser(file_path="../config.yaml")
-    n = 10000
-    if not random:
-        char_func = chi.chi(par.args,n)
-    else:
-        char_func = chi.chi(par.args,n,random)
-    eval.Eval(char_func,random)
+    n = 1000
+    for i in range(1, 100):
+        if not random:
+            char_func = chi.chi(par.args,n*i)
+        else:
+            char_func = chi.chi(par.args,n*i,random)
+        eval.Eval(char_func,random)
 
 
 if __name__ == "__main__": 

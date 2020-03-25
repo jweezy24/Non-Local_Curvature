@@ -4,7 +4,7 @@ import numpy as np
 import intersection_calculations
 import random
 #For testing domain generation
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 class chi:
 
@@ -54,9 +54,9 @@ class chi:
                 domain.append(point_holder)
         else:
             if self.isHem:
-                for angle in range(0,int((n/2)+1)):
+                for angle in range(0,n+1):
                     if angle != 0 and angle != n:
-                        p_1 = ((angle*np.pi)/(n/2))
+                        p_1 = ((angle*np.pi)/(n+1))
                     elif angle == n:
                         p_1 = np.pi
                     else:
@@ -89,15 +89,14 @@ class chi:
         line1, line2 = self.grow_set(self.start, domain[0], domain[-1])
         print(line1)
         print(line2)
-        for p1 in range(int(domain_sorted[0][0]), int((domain_sorted[0][0]+(n/2)))):
-            front = (float(p1),eval(line1.replace('x',str(p1))),p1)
-            self.min_max(front)
-            domain_sorted.insert(0, front)
         
-        for p2 in range(int(domain_sorted[-1][0]-(n/2)), int(domain_sorted[-1][0])):
-            back = (float(p2),eval(line2.replace('x',str(p2))),p2)
-            self.min_max(back)
-            domain_sorted.append(back)
+        front = (float(n+2),eval(line1.replace('x',str(n+2))),float(n+2))
+        self.min_max(front)
+        domain_sorted.insert(0, front)
+        
+        back = (float(-(n+2)),eval(line2.replace('x',str(-(n+2)))),float(-(n+2)))
+        self.min_max(back)
+        domain_sorted.append(back)
         print(domain_sorted)
 
         #Code to demonstrate domain creation
@@ -129,14 +128,15 @@ class chi:
             domain2[-1].append((domain_sorted[0][0], domain_sorted[0][1]))
         
         #Code to demonstrate domain creation
-        xs = []
-        ys = []
-        for point in domain_sorted:
-            xs.append(point[0])
-            ys.append(point[1])
+        # xs = []
+        # ys = []
+        # for point in domain_sorted:
+        #     xs.append(point[0])
+        #     ys.append(point[1])
             
-        plt.plot(xs,ys)
-        plt.show()  
+        # plt.plot(xs,ys)
+        # plt.show() 
+
         return domain2
 
     def grow_set(self, start_point, end1, end2):
@@ -151,13 +151,13 @@ class chi:
         if type(self.bounds[0]) == type('t') or self.bounds[0] < gen_point[0]:
             x_min = gen_point[0]
             self.bounds[0] = gen_point[0]
-        elif type(self.bounds[1]) == type('t') or self.bounds[1] < gen_point[1]:
+        if type(self.bounds[1]) == type('t') or self.bounds[1] < gen_point[1]:
             y_min = gen_point[1]
             self.bounds[1] = gen_point[1]
-        elif type(self.bounds[2]) == type('t') or self.bounds[2] > gen_point[0]:
+        if type(self.bounds[2]) == type('t') or self.bounds[2] > gen_point[0]:
             x_max = gen_point[0]
             self.bounds[2] = gen_point[0]
-        elif type(self.bounds[3]) == type('t') or self.bounds[3] > gen_point[1]:
+        if type(self.bounds[3]) == type('t') or self.bounds[3] > gen_point[1]:
             y_max = gen_point[1]
             self.bounds[3] = gen_point[1]
 
