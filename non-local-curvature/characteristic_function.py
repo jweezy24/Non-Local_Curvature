@@ -4,7 +4,7 @@ import numpy as np
 import intersection_calculations
 import random
 #For testing domain generation
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 class chi:
 
@@ -25,7 +25,7 @@ class chi:
         self.equ = args["curv"]["equation"]
         self.isHem = args["curv"]["is_hemisphere"]
         self.domain_size = n
-        self.domain = self.create_domain(n,random)
+        self.domain, self.domain_full = self.create_domain(n,random)
         self.area_sets = intersection_calculations.insideness(self.func_x, self.func_y, radius=self.radius, origin=self.origin, points=self.domain, bounds=self.bounds)
 
     def check(self, p1, p2):
@@ -87,16 +87,17 @@ class chi:
         #print(domain_sorted)
         
         line1, line2 = self.grow_set(self.start, domain[0], domain[-1])
-        print(line1)
-        print(line2)
+        front_start = domain[0][0]
+        back_start = domain[-1][0]
+        for i in range(1,n):
+            front = (float(front_start+i),eval(line1.replace('x',str(front_start+i))),float(front_start+i))
+            self.min_max(front)
+            domain_sorted.insert(0, front)
         
-        front = (float(n+2),eval(line1.replace('x',str(n+2))),float(n+2))
-        self.min_max(front)
-        domain_sorted.insert(0, front)
-        
-        back = (float(-(n+2)),eval(line2.replace('x',str(-(n+2)))),float(-(n+2)))
-        self.min_max(back)
-        domain_sorted.append(back)
+        for i in range(1, n):
+            back = (float((back_start-i)),eval(line2.replace('x',str((back_start-i)))),float((back_start-i)))
+            self.min_max(back)
+            domain_sorted.append(back)
         print(domain_sorted)
 
         #Code to demonstrate domain creation
@@ -127,7 +128,7 @@ class chi:
         if not self.isHem:
             domain2[-1].append((domain_sorted[0][0], domain_sorted[0][1]))
         
-        #Code to demonstrate domain creation
+        # #Code to demonstrate domain creation
         # xs = []
         # ys = []
         # for point in domain_sorted:
@@ -137,7 +138,7 @@ class chi:
         # plt.plot(xs,ys)
         # plt.show() 
 
-        return domain2
+        return domain2,domain_sorted
 
     def grow_set(self, start_point, end1, end2):
         slope_l1 = (end1[1]-start_point[1])/(end1[0]-start_point[0])

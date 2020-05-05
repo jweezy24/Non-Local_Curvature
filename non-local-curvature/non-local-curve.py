@@ -46,11 +46,8 @@ def main_3(random=False):
     par = parser_yam.parser(file_path="../config.yaml")
     n = 1000
     for i in range(1, 100):
-        if not random:
-            char_func = chi.chi(par.args,n*i)
-        else:
-            char_func = chi.chi(par.args,n*i,random)
-        eval.Eval(char_func,random)
+        char_func = chi.chi(par.args,n*i)
+        eval.Eval(char_func,random,default=False)
 
 
 if __name__ == "__main__": 

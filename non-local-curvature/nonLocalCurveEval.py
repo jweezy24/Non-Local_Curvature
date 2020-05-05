@@ -7,10 +7,15 @@ import numpy as np
 import sys
 import math
 import time
+import matplotlib.pyplot as plt
 
 class Eval:
 
     def __init__(self, func, random, default=True, iter=None):
+
+        self.inside_points = []
+        self.outside_points = []
+        self.point_count = 0
 
         if default:
             self.char_func = func
@@ -48,9 +53,24 @@ class Eval:
 
     def eval_char_func(self, p1, p2):
         val = self.char_func.check(p1,p2)
+        #self.point_count += 1
+        # if self.point_count >= 10000:
+        #     xs = []
+        #     ys = []
+        #     print(self.char_func.domain)
+        #     for point in self.char_func.domain_full:
+        #         xs.append(point[0])
+        #         ys.append(point[1])
+                
+        #     plt.plot(xs,ys)
+        #     plt.show() 
+        #     self.point_count = 0
+        #     plt.cfg()
         if val:
+            #plt.plot(p2[0],p2[1], 'bo')
             return 1
         else:
+            #plt.plot(p2[0],p2[1], 'rx')
             return -1
 
     def eval(self,epsilon):
@@ -76,6 +96,7 @@ class Eval:
         x_2 = self.char_func.start[0]+(r*cos(theta))
         y_2 = self.char_func.start[1]+(r*sin(theta))
 
+            
         #x_1 = (x*cos(y))
         #y_1 = (x*sin(y))
 
