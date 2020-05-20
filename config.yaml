@@ -6,6 +6,6 @@ curv:
   origin: [0,0]
   radius: 2
   #Specifices what point in polygon algorithm the user would like to use
-  alg: winding_number
+  alg: crossing_number
   is_hemisphere: False
 
