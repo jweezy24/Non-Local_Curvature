@@ -6,6 +6,6 @@ curv:
   origin: [0,0]
   radius: 2
   #Specifices what point in polygon algorithm the user would like to use
-  alg: bounding_box
-  is_hemisphere: True
+  alg: winding_number
+  is_hemisphere: False
 

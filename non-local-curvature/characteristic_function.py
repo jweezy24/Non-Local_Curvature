@@ -26,7 +26,9 @@ class chi:
         self.isHem = args["curv"]["is_hemisphere"]
         self.domain_size = n
         self.domain, self.domain_full = self.create_domain(n,random)
-        self.area_sets = intersection_calculations.insideness(self.func_x, self.func_y, radius=self.radius, origin=self.origin, points=self.domain, bounds=self.bounds)
+        #self.domain = [[(0,0), (0,1), (1,0), (0,0)]]
+        self.area_sets = intersection_calculations.insideness(self.func_x, self.func_y, radius=self.radius, origin=self.origin, 
+        points= self.domain, bounds=self.bounds)
 
     def check(self, p1, p2):
         #print("Points given P1: " + str(p1) + "\t P2:" + str(p2))
@@ -83,22 +85,33 @@ class chi:
                     domain.append(point_holder)
                 
     
-        domain_sorted = sorted(domain, key=lambda tup: tup[2])
+        domain_sorted = domain
         #print(domain_sorted)
         
-        line1, line2 = self.grow_set(self.start, domain[0], domain[-1])
-        front_start = domain[0][0]
-        back_start = domain[-1][0]
-        for i in range(1,n):
-            front = (float(front_start+i),eval(line1.replace('x',str(front_start+i))),float(front_start+i))
-            self.min_max(front)
-            domain_sorted.insert(0, front)
+        #****uniform spacing rectangular gird****
         
-        for i in range(1, n):
-            back = (float((back_start-i)),eval(line2.replace('x',str((back_start-i)))),float((back_start-i)))
-            self.min_max(back)
-            domain_sorted.append(back)
-        print(domain_sorted)
+        if self.isHem:
+            line1, line2 = self.grow_set(self.start, domain[0], domain[-1])
+            front_start = domain[0][0]
+            back_start = domain[-1][0]
+            for i in range(1,n, int(n/6)):
+                front = (float(front_start+i),eval(line1.replace('x',str(front_start+i))),float(front_start+i))
+                self.min_max(front)
+                domain_sorted.insert(0, front)
+            
+            for i in range(1, n, int(n/6)):
+                back = (float((back_start-i)),eval(line2.replace('x',str((back_start-i)))),float((back_start-i)))
+                self.min_max(back)
+                domain_sorted.append(back)
+            
+
+            # front = (float(domain[0][0]+n+2),eval(line1.replace('x',str(domain[0][0]+n+2))),float(domain[0][0]+n+2))
+            # self.min_max(front)
+            # domain_sorted.insert(0, front)
+            
+            # back = (float(-(n+2)),eval(line2.replace('x',str(-(n+2)))),float(-(n+2)))
+            # self.min_max(back)
+            # domain_sorted.append(back)
 
         #Code to demonstrate domain creation
         # xs = []

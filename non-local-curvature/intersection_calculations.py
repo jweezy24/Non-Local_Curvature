@@ -51,8 +51,18 @@ class insideness:
             for p in self.domain:
                 holder = winding_number
                 winding_number = inter.winding_num(point, tuple(p), holder, tuple(self.bounds))
-            
+
             return self.winding_number_check(winding_number, point)
+
+        elif alg == "crossing_number":
+            cn = 0
+            for p in self.domain:
+                cn = inter.crossing_number(tuple(p), point, cn)
+            
+            if cn%2 == 1:
+                return True
+            else:
+                return False
 
 
     def winding_number_check(self, winding_number,point):
@@ -82,6 +92,7 @@ class insideness:
         else:
             #self.debug_point(point,True, f'Intersections:{intersections} Point:{point} Should be inside')
             return False
+
 
     def debug_point(self, point, expected_bool, log_message):
         if expected_bool:

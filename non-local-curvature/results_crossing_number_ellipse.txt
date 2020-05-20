@@ -1,0 +1,6 @@
+Integration Evaluation: -3.7164733261878733	 Time: 7.983841093381246	 EquationX: (2*np.cos(t))	 EquationY: 2*np.sin(t)	 iter: None  
+Integration Evaluation: -3.6302254709208683	 Time: 14.761598209540049	 EquationX: (2*np.cos(t))	 EquationY: 2*np.sin(t)	 iter: None  
+Integration Evaluation: -3.6158875736169693	 Time: 21.74702017704646	 EquationX: (2*np.cos(t))	 EquationY: 2*np.sin(t)	 iter: None  
+Integration Evaluation: -3.6032257284699383	 Time: 28.937017397085825	 EquationX: (2*np.cos(t))	 EquationY: 2*np.sin(t)	 iter: None  
+Integration Evaluation: -3.5959606321652586	 Time: 36.3162229180336	 EquationX: (2*np.cos(t))	 EquationY: 2*np.sin(t)	 iter: None  
+Integration Evaluation: -3.595574740947926	 Time: 44.59315241972605	 EquationX: (2*np.cos(t))	 EquationY: 2*np.sin(t)	 iter: None  
