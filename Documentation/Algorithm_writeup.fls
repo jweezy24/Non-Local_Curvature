@@ -1,4 +1,4 @@
-PWD /home/jweezy/Drive2/Code/Non-Local_Curvature/Documentation
+PWD /home/jweezy/Drive2/Drive2/Code/Non-Local_Curvature/Documentation
 INPUT /usr/share/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
 INPUT ./Algorithm_writeup.tex
@@ -21,6 +21,18 @@ INPUT /usr/share/texmf-dist/tex/latex/graphics-def/pdftex.def
 INPUT /usr/share/texmf-dist/tex/latex/graphics-def/pdftex.def
 INPUT /usr/share/texmf-dist/tex/latex/cite/cite.sty
 INPUT /usr/share/texmf-dist/tex/latex/cite/cite.sty
+INPUT /usr/share/texmf-dist/tex/latex/listings/listings.sty
+INPUT /usr/share/texmf-dist/tex/latex/listings/listings.sty
+INPUT /usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
+INPUT /usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
+INPUT /usr/share/texmf-dist/tex/latex/listings/listings.cfg
+INPUT /usr/share/texmf-dist/tex/latex/listings/listings.cfg
+INPUT /usr/share/texmf-dist/tex/latex/graphics/color.sty
+INPUT /usr/share/texmf-dist/tex/latex/graphics/color.sty
+INPUT /usr/share/texmf-dist/tex/latex/graphics-cfg/color.cfg
+INPUT /usr/share/texmf-dist/tex/latex/graphics-cfg/color.cfg
+INPUT /usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+INPUT /usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 INPUT Algorithm_writeup.aux
 INPUT Algorithm_writeup.aux
 OUTPUT Algorithm_writeup.aux
@@ -55,10 +67,12 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT Algorithm_writeup.bbl
-INPUT Algorithm_writeup.bbl
 OUTPUT Algorithm_writeup.pdf
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmtt9.tfm
+INPUT Algorithm_writeup.bbl
+INPUT Algorithm_writeup.bbl
 INPUT Algorithm_writeup.aux
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
@@ -68,3 +82,4 @@ INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
+INPUT /usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb

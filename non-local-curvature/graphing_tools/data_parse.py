@@ -91,6 +91,8 @@ def plot_data(data, path, isclosed=True):
             plt.savefig(f'./plots/Winding_number/{i}.png')
         if 'bounding_box' in path:
             plt.savefig(f'./plots/Bounding_Box/{i}.png')
+        if 'crossing_number' in path:
+            plt.savefig(f'./plots/Crossing_number/{i}.png')
 
 
 def parse_ellipse(data):
@@ -154,6 +156,7 @@ def main():
     path_winding = '../results_winding_number.txt'
     path_bounding = '../results_bounding_box.txt'
     path_ellipse = '../results_bounding_box_ellipse.txt'
+    path_crossing = '../results_crossing_number.txt'
 
     parsed_data = parse_data(path_winding)
     chart_ready_data = create_epsilon_error_charts(parsed_data) 
@@ -169,6 +172,10 @@ def main():
 
     parsed_data = parse_data(path_ellipse)
     parse_ellipse(parsed_data)
+
+    parsed_data = parse_data(path_crossing)
+    chart_ready_data = create_epsilon_error_charts(parsed_data) 
+    plot_data(chart_ready_data, path_crossing)
 
 
 main()
