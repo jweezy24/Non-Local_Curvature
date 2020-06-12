@@ -11,8 +11,8 @@ First experiment:
     This Code was designed for testing the accuracy of the algorithms'''
 def main(random=False):
     par = parser_yam.parser(file_path="../config.yaml")
-    for i in range(1,100):
-        n = 10**i
+    for i in range(100,10001):
+        n = 100*i
         if not random:
             char_func = chi.chi(par.args,n)
         else:

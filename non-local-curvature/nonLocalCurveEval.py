@@ -20,9 +20,9 @@ class Eval:
         if default:
             self.char_func = func
             epsilon = 100
-            for i in range(2,5):
+            for i in range(5,10):
                 time1 = time.time()
-                epsilon = self.char_func.domain_size
+                epsilon = 10**i
                 self.val = self.eval(epsilon)
                 time2 = time.time()
                 self.actual = -5.24411510858423962093
