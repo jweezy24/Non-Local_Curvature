@@ -11,6 +11,7 @@ First experiment:
     This Code was designed for testing the accuracy of the algorithms'''
 def main(random=False):
     par = parser_yam.parser(file_path="../config.yaml")
+    
     for i in range(1,100):
         n = 100*i
         if not random:
