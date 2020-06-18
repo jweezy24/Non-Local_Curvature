@@ -2,6 +2,8 @@
 
 \usepackage{graphicx}
 \usepackage{cite}
+\usepackage{amssymb}
+\usepackage{amsmath}
 \usepackage{listings}
 \usepackage{color}
 
@@ -29,47 +31,72 @@
 \begin{document}
 \section{Winding Number Algorithm}
 The winding number algorithm was the algorithm that we first built to test insideness.
-Let $C$ represent a polygon with $n$ number of vertices.
-Let $V_i$ be any vertice of $C$ where $0$ $\leq$ $i$ $\leq$ $n$.
+Let $C$ represent a polygon with $n$ vertices.
+Let $V_i$ be any vertex of $C$ where $0$ $\leq$ $i$ $\leq$ $n$.
 We define the winding number as a function $W$.
-A point $P = (x,y)$ is inside the polygon $C$, if for all $V_i$ on $C$:
 $$
 W(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{(V_i-P)\cdot (V_{i+1}-P)}{|V_i-P|\cdot |V_{i+1}-P|}}
 $$
-If a point is inside the polygon $C$ then the winding number has to be a non-zero integer.
-We decieded to use this algorithm as a way to approximate a cicle by increasing the amout of vertices on the polygon.
+A point $P = (x,y)$ is inside the polygon $C$, if $W(P,C) = a$ and  if $a$ $!=$ $0$ then $P$ is inside the polygon $C$.
+The winding number has a simple implementation from a coding perspective and is very accurate for bounded polygons.
+When a polygon is unbounded, the winding number will not work without bounding the polygon in some artificial way.
 
 \section{Ray Casting Algorithm}
 
 The ray casting algorithm at its core works by taking a given point $Q$ and extending that point in the positive $x$ direction.
-Lets call that ray $\overrightarrow{\rm Q}$.
-If $Q = (a,b)$ where a and b are constants, then $\overrightarrow{\rm Q} = <x, b>$ where $x \in R$.
-Let $C$ be a polygon with $n$ verticies, each each line segement formed by connecting vertices we consider to be "walls".
+Let us refer  to that ray $\overrightarrow{\rm Q}$.
+If $Q = (a,b)$, then $\overrightarrow{\rm Q} = \{ a + x | x \geq 0, x \in \mathbb{R} \}$ where $x \in \mathbb{R}$.
+Let $C$ be a polygon with $n$ verticies, each each line segement formed by connecting vertices we consider to be ``walls".
 If $Q$ lies outside the polygon, the $\overrightarrow{\rm Q}$ will either not intersect the polygon at all, or there will be at least two intersections which cancel each other out.
 To cancel each other out means that an intersection will occur when the ray enters the shape and there will be an exiting intersection.
 Where as, a point that is inside the shape could intersect the shape in multiple places, although there will only be one exiting intersection and no entry intersection.
-Thus, the algorithm thinks about this as a index.
-Let's call this index $I$, $I$ is an integer which will incremented by one on an entry and decremented when exiting the shape.
-$I$ if a point lies outside the shape $I$ will be zero.
+Thus, the algorithm thinks about this as an index.
+Let us call this index $I$, $I$ is an integer which will incremented by one on an entry and decremented when exiting the shape.
+If a point lies outside the shape $I$ will be zero.
 A point is inside the shape when $I$ is not zero.
 
-\subsection{Bounding Box Implementation}
+\subsection{Crossing Number Implementation of Ray-Casting}
+The crossing number algorithm and all other ray-casting inspired algoirthms are considered applicable to all arbitrary polygons\cite{arb_polys}.
+The winding number depends on floating point numbers to preform the calculations\cite{arb_polys}.
+This could be considered a weakness as the variable typings are create more memory than they should.
+I will discuss this weakness of the winding number in the optimization section.
+For now, let's define the crossing number algorithm more mathematically.
 
-The pure ray casting algorithm's issues arise when the amount of vertices becomes large.
-A large number of vertices slow down the algorithm too much.
-The Ray casting algorithm was designed for polygons of smaller amounts of vertices.
-We needed a scalable alrogithm like the winding number to compute insideness.
-Thus, we needed to adjust the ray-casting algorithm.
-Rather than extending the a point $Q$ only in the positive $x$ direction, we extend the point in both directions.
-An intersection from an extended point in the negative $x$ direction will subtract one from the intersection index.
-Where as an intersection from the positive $x$ direction adds one to the intersection index.
-Thus, a point lies within a polygon if the intersection index is zero.
-We also throw out all points that are greater than the maximums of the shape or lower than the minimums of the polygons.
-Throwing out those points creates a box around the shape.
-Points within that box will be the only points tested.
+The first thing we are going to define is the mathematical significance of the crossing number.
+To begin, let us discuss the similarities between the Ray Casting Algorithm and the Crossing Number algorithm.
+They both use this idea of extending a point into a ray.
+Let $P=(a,b)$ and let $\overrightarrow{\rm Q} = \{ a + x | x \geq 0, x \in \mathbb{R} \}$ where $x \in \mathbb{R}$.
+Now let $C$ be a polygon and let $V_i$ be any vertex of $C$ where $0$ $\leq$ $i$ $\leq$ $n$.
+Let us now define a function $CN$ that takes a vertex of the curve $V_i$ and $P$ as inputs.
+$$
+    CN(V_i,P) =\left\{
+                \begin{array}{ll}
+                    -1 & \quad if\; P \; left \; of \; V_i\\
+                    1 & \quad if\; P \; right \; of \; V_i
+                \end{array}
+            \right.
+$$
+For each vertex of the arbitrary polygon $C$ the crossing number is computed for each vertex.
+If the polygon $C$ has $n$ edges, we can now talk about the intersection index determined by the crossing number.
+The insideness of the point is determined by the intersection index.
+The intersection index $I$ is also slightly different to the deffinition that ray-casting uses.
+$$
+    I = \sum_{i=1}^{n-1} CN(P,V_i) + CN(P, V_{i+1})
+$$
+$P$ is inside the polygon if $I$ is an odd number and is outside the polygon if $I$ is even.
+The idea of ray-casting stays the same amongst the crossing number.
+What I mean is, crossing number and ray-casting ``cancel'' out edges based on how $\overrightarrow{\rm Q}$ collides with $C$.
+We choose to calculate the collisons $\overrightarrow{\rm Q}$ makes with the polygon by incorporating a sense of direction of the ray.
+There are other implementations that sum $I$ differently depending on the circumstances of the polygon.
+
+Although, crossing number is not perfect.
+Unbounded polygons still do not work with the crossing number directly.
+Both with the crossing number and the winding number case, we need to be creative to implement these algorithms for unbounded polygons.
 
 
-\subsection{Optimized Bounding Box Implementation (Crossing Number)}
+
+
+\subsection{Optimization of the Crossing Number}
 We discussed earlier the bounding box implementation.
 To summerize, the bounding box implementation we discussed counts the amount of entries vs the amount exits and determines if the point is inside the space or not.
 If the number is an even number of crossings, the point is outside the polygon.

@@ -20,15 +20,15 @@ def create_epsilon_error_charts(data):
     epsilon_handler = {
         '1/100.0' : [[],[],[]],
         '1/1000.0' : [[],[],[]],
-        '1/10000.0' : [[],[],[]]
-        # '1/100000.0' : [[],[],[]],
-        # '1/1000000.0' : [[],[],[]],
-        # '1/10000000.0' : [[],[],[]],
-        # '1/100000000.0' : [[],[],[]],
-        # '1/1000000000.0' : [[],[],[]],
-        # '1/10000000000.0' : [[],[],[]],
-        # '1/100000000000.0' : [[],[],[]],
-        # '1/1000000000000.0' : [[],[],[]]
+        '1/10000.0' : [[],[],[]],
+        '1/100000.0' : [[],[],[]],
+        '1/1000000.0' : [[],[],[]],
+        '1/10000000.0' : [[],[],[]],
+        '1/100000000.0' : [[],[],[]],
+        '1/1000000000.0' : [[],[],[]],
+        '1/10000000000.0' : [[],[],[]],
+        '1/100000000000.0' : [[],[],[]],
+        '1/1000000000000.0' : [[],[],[]]
     }
     for line in data:
         
@@ -45,22 +45,26 @@ def create_epsilon_error_charts(data):
             
         for val in line:
             if 'Epsilon' in val[0]:
-                epsilon_handler.get(val[1])[0].append(domain_tmp)
-                epsilon_handler.get(val[1])[1].append(time_tmp)
-                epsilon_handler.get(val[1])[2].append(error_tmp)
+                print(line)
+                if(val[1] in epsilon_handler.keys()):
+                    epsilon_handler.get(val[1])[0].append(domain_tmp)
+                    epsilon_handler.get(val[1])[1].append(time_tmp)
+                    epsilon_handler.get(val[1])[2].append(error_tmp)
+                else:
+                    print("Epsilon not found")
     return epsilon_handler
 
 def plot_data(data, path, isclosed=True):
     epsilon_handler = [
         '1/100.0',
         '1/1000.0',
-        '1/10000.0' 
-        # '1/1000000', 
-        # '1/10000000', 
-        # '1/100000000', 
-        # '1/1000000000', 
-        # '1/10000000000', 
-        # '1/100000000000', 
+        '1/10000.0', 
+        '1/1000000.0', 
+        '1/10000000.0', 
+        '1/100000000.0',
+        '1/1000000000.0', 
+        '1/10000000000.0', 
+        '1/100000000000.0' 
     ]
     for i in range(0, len(epsilon_handler)):
         fig, (ax, bx) = plt.subplots(2)
@@ -89,11 +93,14 @@ def plot_data(data, path, isclosed=True):
         fig.suptitle(f'Epsilon is {epsilon_handler[i]}')
         if 'winding_number' in path:
             plt.savefig(f'./plots/Winding_number/{i}.png')
-        if 'bounding_box' in path:
+        elif 'bounding_box' in path:
             plt.savefig(f'./plots/Bounding_Box/{i}.png')
-        if 'crossing_number' in path:
+        elif 'crossing_number' in path and 'big' not in path:
             #plt.show()
             plt.savefig(f'./plots/Crossing_number/{i}.png')
+        elif 'crossing_number' in path and 'big' in path:
+            #plt.show()
+            plt.savefig(f'./plots/Crossing_Number_Big/{i}.png')
 
 
 def parse_ellipse(data):
@@ -121,15 +128,15 @@ def create_open_set_chart(data):
     epsilon_handler = {
         '1/100.0' : [[],[],[]],
         '1/1000.0' : [[],[],[]],
-        '1/10000.0' : [[],[],[]]
-        # '1/100000.0' : [[],[],[]],
-        # '1/1000000.0' : [[],[],[]],
-        # '1/10000000.0' : [[],[],[]],
-        # '1/100000000.0' : [[],[],[]],
-        # '1/1000000000.0' : [[],[],[]],
-        # '1/10000000000.0' : [[],[],[]],
-        # '1/100000000000.0' : [[],[],[]],
-        # '1/1000000000000.0' : [[],[],[]]
+        '1/10000.0' : [[],[],[]],
+        '1/100000.0' : [[],[],[]],
+        '1/1000000.0' : [[],[],[]],
+        '1/10000000.0' : [[],[],[]],
+        '1/100000000.0' : [[],[],[]],
+        '1/1000000000.0' : [[],[],[]],
+        '1/10000000000.0' : [[],[],[]],
+        '1/100000000000.0' : [[],[],[]],
+        '1/1000000000000.0' : [[],[],[]]
     }
     for line in data:
         
@@ -146,9 +153,13 @@ def create_open_set_chart(data):
             
         for val in line:
             if 'Epsilon' in val[0]:
-                epsilon_handler.get(val[1])[0].append(domain_tmp)
-                epsilon_handler.get(val[1])[1].append(time_tmp)
-                epsilon_handler.get(val[1])[2].append(error_tmp)
+                if(val[1] in epsilon_handler.keys()):
+                    epsilon_handler.get(val[1])[0].append(domain_tmp)
+                    epsilon_handler.get(val[1])[1].append(time_tmp)
+                    epsilon_handler.get(val[1])[2].append(error_tmp)
+                else:
+                    print(val[1])
+                    print("Epsilon not found")
     return epsilon_handler
 
     
@@ -158,6 +169,7 @@ def main():
     path_bounding = '../results_bounding_box.txt'
     path_ellipse = '../results_bounding_box_ellipse.txt'
     path_crossing = '../results_crossing_number.txt'
+    path_crossing_big = '../results_crossing_number_big.txt'
 
     # parsed_data = parse_data(path_winding)
     # chart_ready_data = create_epsilon_error_charts(parsed_data) 
@@ -177,6 +189,10 @@ def main():
     parsed_data = parse_data(path_crossing)
     chart_ready_data = create_epsilon_error_charts(parsed_data) 
     plot_data(chart_ready_data, path_crossing)
+
+    parsed_data = parse_data(path_crossing_big)
+    chart_ready_data = create_epsilon_error_charts(parsed_data) 
+    plot_data(chart_ready_data, path_crossing_big)
 
 
 main()

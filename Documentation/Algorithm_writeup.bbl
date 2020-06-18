@@ -1,3 +1,8 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{1}
+
+\bibitem{arb_polys}
+Kai Hormann and Alexander Agathos.
+\newblock The point in polygon problem for arbitrary polygons.
+\newblock {\em Computational Geometry}, 20(3):131 -- 144, 2001.
 
 \end{thebibliography}

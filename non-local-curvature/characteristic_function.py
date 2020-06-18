@@ -54,6 +54,7 @@ class chi:
                 point_holder = (x_eval(p_1),y_eval(p_1),p_1_ref)
                 self.min_max(point_holder)
                 domain.append(point_holder)
+                
         else:
             if self.isHem:
                 for angle in range(0,n+1):
@@ -83,12 +84,31 @@ class chi:
                     point_holder = (x_eval(p_1),y_eval(p_1),p_1)
                     self.min_max(point_holder)
                     domain.append(point_holder)
+
+
+                theta = np.arctan2(self.start[1], self.start[0])
+                for angle in range(0,n+1):
+                    if angle != 0 and angle != n:
+                        p_1 = ((angle*theta)/(100*n)) + theta 
+                    elif angle == n:
+                        p_1 = 2*theta
+                    else:
+                        p_1 = 0
+                        p_1_ref = 0
+                
+                    point_holder = (x_eval(p_1),y_eval(p_1),p_1, "NEW")
+                    self.min_max(point_holder)
+                    add = True
+                    for i in domain:
+                        if(i[2] == point_holder[2]):
+                            add = False
+                            break
+                    if add:
+                        domain.append(point_holder)
                 
     
-        domain_sorted = domain
-        #print(domain_sorted)
+        domain_sorted = sorted(domain, key=lambda x: x[2])
         
-        #****uniform spacing rectangular gird****
         
         if self.isHem:
             line1, line2 = self.grow_set(self.start, domain[0], domain[-1])

@@ -70,3 +70,5 @@ Old Code
         #     #self.debug_point(point,False, f' Number of intersections:{intersections} Point:{point} ODD AND IS A POINT')
         #     return **False**
 '''
+
+https://www.desmos.com/calculator/snbrwsr6c4

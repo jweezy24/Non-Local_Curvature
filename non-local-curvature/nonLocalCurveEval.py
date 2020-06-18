@@ -20,9 +20,9 @@ class Eval:
         if default:
             self.char_func = func
             epsilon = 100
-            for i in range(2,5):
+            for i in range(5,10):
                 time1 = time.time()
-                epsilon = self.char_func.domain_size
+                epsilon = 10**i
                 self.val = self.eval(epsilon)
                 time2 = time.time()
                 self.actual = -5.24411510858423962093
@@ -38,7 +38,7 @@ class Eval:
                             f.write(f' Error for this domain: {error}\t Domain Size: {self.char_func.domain_size}\t Epsilon: {epsilon}')
                 else:
                     with open(f'./results_{self.char_func.alg}.txt', 'a') as f:
-                        f.write(f'Error percent: {error}\tEpsilon:1/{epsilon}\tDomain Size: {self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
+                        f.write(f'Error percent: {error}\tEpsilon:1/{float(epsilon)}\tDomain Size: {2*self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
 
         else:
             self.char_func = func
