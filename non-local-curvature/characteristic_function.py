@@ -87,7 +87,7 @@ class chi:
 
 
                 theta = np.arctan2(self.start[1], self.start[0])
-                for angle in range(0,n+1):
+                for angle in range(-n,n+1):
                     if angle != 0 and angle != n:
                         p_1 = ((angle*theta)/(100*n)) + theta 
                     elif angle == n:
