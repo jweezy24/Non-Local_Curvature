@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{color}
+\usepackage[section]{placeins}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -31,67 +32,76 @@
 \begin{document}
 \section{Winding Number Algorithm}
 The winding number algorithm was the algorithm that we first built to test insideness.
-Let $C$ represent a polygon with $n$ vertices.
-Let $V_i$ be any vertex of $C$ where $0$ $\leq$ $i$ $\leq$ $n$.
+Let $C$ represent a polygon with $n+1$ vertices.
+Let $V_i$ be any vertex of $C$ where $0$ $\leq$ $i$ $\leq$ $n+1$.
+Also C has the condition that $V_0 = V_{n+1}$.
 We define the winding number as a function $W$.
 $$
-W(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{(V_i-P)\cdot (V_{i+1}-P)}{|V_i-P|\cdot |V_{i+1}-P|}}
+W(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{(V_i-P)\cdot (V_{i+1}-P)}{|V_i-P|\cdot |V_{i+1}-P|}}.
 $$
-A point $P = (x,y)$ is inside the polygon $C$, if $W(P,C) = a$ and  if $a$ $!=$ $0$ then $P$ is inside the polygon $C$.
-The winding number has a simple implementation from a coding perspective and is very accurate for bounded polygons.
-When a polygon is unbounded, the winding number will not work without bounding the polygon in some artificial way.
+A point $P = (x,y)$ is inside the polygon $C$, if $W(P,C) = a$ where $a \in \mathbb{Z}$ and  if $a \not= 0$ then $P$ is inside the polygon $C$.
+The winding number has a simple implementation from a coding perspective and is very accurate.
+Issues arise with speed, the winding number requires the use of $arccos$ which is computationaly expensive.
 
 \section{Ray Casting Algorithm}
 
 The ray casting algorithm at its core works by taking a given point $Q$ and extending that point in the positive $x$ direction.
 Let us refer  to that ray $\overrightarrow{\rm Q}$.
-If $Q = (a,b)$, then $\overrightarrow{\rm Q} = \{ a + x | x \geq 0, x \in \mathbb{R} \}$ where $x \in \mathbb{R}$.
-Let $C$ be a polygon with $n$ verticies, each each line segement formed by connecting vertices we consider to be ``walls".
-If $Q$ lies outside the polygon, the $\overrightarrow{\rm Q}$ will either not intersect the polygon at all, or there will be at least two intersections which cancel each other out.
-To cancel each other out means that an intersection will occur when the ray enters the shape and there will be an exiting intersection.
-Where as, a point that is inside the shape could intersect the shape in multiple places, although there will only be one exiting intersection and no entry intersection.
-Thus, the algorithm thinks about this as an index.
-Let us call this index $I$, $I$ is an integer which will incremented by one on an entry and decremented when exiting the shape.
-If a point lies outside the shape $I$ will be zero.
-A point is inside the shape when $I$ is not zero.
+If $Q = (a,b)$, then $\overrightarrow{\rm Q} = \{ a + x | \; x \geq 0, x \in \mathbb{R} \}$ where $x \in \mathbb{R}$.
+Let $C$ be a polygon with $n$ vertices, each line segement formed by connecting vertices we consider to be edges.
+If $Q$ lies outside the polygon, the $\overrightarrow{\rm Q}$ will either not intersect the polygon at all, or there will be at least two intersections.
+To keep track of how many times a point passes through a polygon we increment the intersection index.
+We define the intersection index $I$ as a iterator of how many times an extended ray $\overrightarrow{\rm Q}$ intersects the polygon $C$.
+\FloatBarrier
+\begin{figure}[!h]
+	\center{\includegraphics[width=0.5\textwidth]{Figures/bbimplmentation.png}}
+	  \vspace{0in}
+	  \caption{\label{fig:raycasting} Visualization of the crossings}
+\end{figure}
+\FloatBarrier
+If $I$ is even the point is outside the polygon.
+If $I$ is odd the point is inside the polygon.
+By example, $I$ is displayed in figure \ref{fig:raycasting}.
+
 
 \subsection{Crossing Number Implementation of Ray-Casting}
-The crossing number algorithm and all other ray-casting inspired algoirthms are considered applicable to all arbitrary polygons\cite{arb_polys}.
+The crossing number algorithm and all other ray-casting inspired algoirthms are considered applicable to all polygons\cite{arb_polys}.
 The winding number depends on floating point numbers to preform the calculations\cite{arb_polys}.
-This could be considered a weakness as the variable typings are create more memory than they should.
+This could be considered a weakness as the variable typings create more memory than they should.
 I will discuss this weakness of the winding number in the optimization section.
-For now, let's define the crossing number algorithm more mathematically.
+For now, let us define the crossing number algorithm.
 
 The first thing we are going to define is the mathematical significance of the crossing number.
 To begin, let us discuss the similarities between the Ray Casting Algorithm and the Crossing Number algorithm.
 They both use this idea of extending a point into a ray.
-Let $P=(a,b)$ and let $\overrightarrow{\rm Q} = \{ a + x | x \geq 0, x \in \mathbb{R} \}$ where $x \in \mathbb{R}$.
-Now let $C$ be a polygon and let $V_i$ be any vertex of $C$ where $0$ $\leq$ $i$ $\leq$ $n$.
-Let us now define a function $CN$ that takes a vertex of the curve $V_i$ and $P$ as inputs.
+Let $P=(a,b)$ be a point in euclidean space such that $a,b\in \mathbb{R}$.
+Let us now define a function $CN$ that takes an edge of the curve $E_i$ and $P$ as inputs.
+Let $E_i = (V_i, V_{i+1})$ where $V_i$ are vertices from the polygon $C$.
+We reference the points that define the edge like $E_i.V_2 \; \textrm{and} \; E_i.V_2$.
+Firstly, we check to see if $P.y$ or $P.x$ are within greater than the mins and less than the maxs.
+If that statement is true, we test to see if it crosses the particular edge,
 $$
-    CN(V_i,P) =\left\{
+    \textrm{Let d = $\frac{P.y-E_i.V_1.y}{E_{i}.V_2.y - E_i.V_1.y}$.}
+$$
+$$
+    CN(E_i,P) =\left\{
                 \begin{array}{ll}
-                    -1 & \quad if\; P \; left \; of \; V_i\\
-                    1 & \quad if\; P \; right \; of \; V_i
+                    0 & \quad  P.x \geq E_i.V_1.x + d*(E_i.V_2.x - E_i.V_1.x)\\
+                    1 & \quad P.x < E_i.V_1.x + d*(E_i.V_2.x - E_i.V_1.x)
                 \end{array}
             \right.
-$$
+$$.
 For each vertex of the arbitrary polygon $C$ the crossing number is computed for each vertex.
-If the polygon $C$ has $n$ edges, we can now talk about the intersection index determined by the crossing number.
 The insideness of the point is determined by the intersection index.
 The intersection index $I$ is also slightly different to the deffinition that ray-casting uses.
 $$
-    I = \sum_{i=1}^{n-1} CN(P,V_i) + CN(P, V_{i+1})
+    I = \sum_{i=1}^{n-1} CN(P,E_i) + CN(P, E_{i+1})
 $$
 $P$ is inside the polygon if $I$ is an odd number and is outside the polygon if $I$ is even.
 The idea of ray-casting stays the same amongst the crossing number.
 What I mean is, crossing number and ray-casting ``cancel'' out edges based on how $\overrightarrow{\rm Q}$ collides with $C$.
 We choose to calculate the collisons $\overrightarrow{\rm Q}$ makes with the polygon by incorporating a sense of direction of the ray.
 There are other implementations that sum $I$ differently depending on the circumstances of the polygon.
-
-Although, crossing number is not perfect.
-Unbounded polygons still do not work with the crossing number directly.
-Both with the crossing number and the winding number case, we need to be creative to implement these algorithms for unbounded polygons.
 
 
 
