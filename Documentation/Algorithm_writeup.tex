@@ -32,14 +32,13 @@
 \begin{document}
 \section{Winding Number Algorithm}
 The winding number algorithm was the algorithm that we first built to test insideness.
-Let $C$ represent a polygon with $n+1$ vertices.
-Let $V_i$ be any vertex of $C$ where $0$ $\leq$ $i$ $\leq$ $n+1$.
-Also C has the condition that $V_0 = V_{n+1}$.
-We define the winding number as a function $W$.
+Let $C$ represent a polygon with $n$ vertices.
+Let $V_i$ be a vertex of $C$ where $1$ $\leq$ $i$ $\leq$ $n$.
+We define the winding number as a function $W(P,C)$ where $P$ is a point and $C$ is a polygon.
 $$
-W(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{(V_i-P)\cdot (V_{i+1}-P)}{|V_i-P|\cdot |V_{i+1}-P|}}.
+W(P,C) = \frac{1}{2\pi}\sum_{i=1}^{n-1}\arccos{\frac{(V_i-P)\cdot (V_{i+1}-P)}{|V_i-P||V_{i+1}-P|}}.
 $$
-A point $P = (x,y)$ is inside the polygon $C$, if $W(P,C) = a$ where $a \in \mathbb{Z}$ and  if $a \not= 0$ then $P$ is inside the polygon $C$.
+A point $P$ is inside the polygon $C$, if $W(P,C) \not= 0$.
 The winding number has a simple implementation from a coding perspective and is very accurate.
 Issues arise with speed, the winding number requires the use of $arccos$ which is computationaly expensive.
 
