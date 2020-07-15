@@ -37,7 +37,7 @@ def main_2(random=False):
                 par.args["curv"]["func_x"] = par.args["curv"]["func_x"].replace( f"(4- ({i}/50))*", "4*")
         else:
             char_func = chi.chi(par.args,n,random)
-        eval.Eval(char_func,random, default=False, iter=f"({i}/100)")
+        eval.Eval(char_func,random, default=1, iter=f"({i}/100)")
 
 '''
 Third Experiment:
@@ -48,7 +48,18 @@ def main_3(random=False):
     n = 1000
     for i in range(1, 100):
         char_func = chi.chi(par.args,n*i)
-        eval.Eval(char_func,random,default=False)
+        eval.Eval(char_func,random,default=1)
+
+'''
+Third Experiment:
+    This experiment examines the computer limitations with epsilon
+'''
+def main_4(random=False):
+    par = parser_yam.parser(file_path="../config.yaml")
+    n = 1000
+    for i in range(1, 100):
+        char_func = chi.chi(par.args,n*i)
+        eval.Eval(char_func,random,default=2)
 
 
 if __name__ == "__main__": 
@@ -62,4 +73,5 @@ if __name__ == "__main__":
         main_2()
     elif args.setting == '2':
         main_3()
-    
+    elif args.setting == '3':
+        main_4()

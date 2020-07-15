@@ -37,7 +37,7 @@ def create_epsilon_error_charts(data):
         error_tmp = '' 
         for val in line:
             if 'Error' in val[0]:
-                error_tmp = float(val[1])*100
+                error_tmp = float(val[1])
             if 'Domain' in val[0]:
                 domain_tmp = float(val[1])
             if 'Time' in val[0]:
@@ -58,7 +58,8 @@ def plot_data(data, path, isclosed=True):
     epsilon_handler = [
         '1/100.0',
         '1/1000.0',
-        '1/10000.0', 
+        '1/10000.0',
+        '1/100000.0',  
         '1/1000000.0', 
         '1/10000000.0', 
         '1/100000000.0',
