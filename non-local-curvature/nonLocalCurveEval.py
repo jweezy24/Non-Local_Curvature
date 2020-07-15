@@ -35,12 +35,13 @@ class Eval:
 
         elif default == 1:
             self.char_func = func
-            epsilon = 1000
-            time1 = time.time()
-            self.val = self.eval(epsilon)
-            time2 = time.time()
-            with open(f'./results_{self.char_func.alg}_ellipse.txt', 'a') as f:
-                        f.write(f'Integration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\t EquationX: {self.char_func.func_x}\t EquationY: {self.char_func.func_y}\t iter: {iter}  \n')
+            for i in range(2, 5):
+                epsilon = 10**i
+                time1 = time.time()
+                self.val = self.eval(epsilon)
+                time2 = time.time()
+                with open(f'./results_{self.char_func.alg}_ellipse.txt', 'a') as f:
+                            f.write(f'Integration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\t EquationX: {self.char_func.func_x}\t EquationY: {self.char_func.func_y}\t iter: {iter}  \n')
         
         elif default == 2:
             self.char_func = func
