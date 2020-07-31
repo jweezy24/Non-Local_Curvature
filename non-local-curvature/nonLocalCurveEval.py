@@ -47,14 +47,14 @@ class Eval:
             self.char_func = func
             for i in range(0,100):
                 time1 = time.time()
-                epsilon = 10**(6) * (100-i)
+                epsilon = 10**(-6) * (100-i)
                 self.val = self.eval(epsilon)
                 time2 = time.time()
                 self.actual = -5.24411510858423962093
                 print('Evaluation of Integral took {:.3f} minutes'.format( (time2-time1)/60))
                 error = abs(abs(self.actual - self.val)/self.actual)
                 print('Error evaluate to, {:.2f}'.format(error*100))
-                with open(f'./results_{self.char_func.alg}.txt', 'a') as f:
+                with open(f'./results_{self.char_func.alg}_close_zoom.txt', 'a') as f:
                     f.write(f'Error percent: {error}\tEpsilon:1/{float(epsilon)}\tDomain Size: {2*self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
 
         #self.weezy_integration = lambda func, range: jack_integral.integrate(func, range)
@@ -89,8 +89,10 @@ class Eval:
         
         #I_1 = scipy.integrate.dblquad(lambda x,y: self.holder(x,y), self.char_func.start[1]-epsilon, self.char_func.start[1]-float(1/epsilon),  self.char_func.start[0]-epsilon, self.char_func.start[0]-float(1/epsilon))[0]
         #I_2 = scipy.integrate.dblquad(lambda x,y: self.holder(x,y), self.char_func.start[1]+float(1/epsilon), self.char_func.start[1]+epsilon,  self.char_func.start[0]+float(1/epsilon), self.char_func.start[0]+epsilon)[0]
-
-        I = scipy.integrate.dblquad(lambda r,theta: self.holder(r,theta), 0, 2*np.pi, float(1/epsilon), np.inf)[0]
+        if epsilon > 1:
+            I = scipy.integrate.dblquad(lambda r,theta: self.holder(r,theta), 0, 2*np.pi, float(1/epsilon), np.inf)[0]
+        else:
+            I = scipy.integrate.dblquad(lambda r,theta: self.holder(r,theta), 0, 2*np.pi, float(epsilon), np.inf)[0]
         print("Integral evals to: " + str(I))
         return I
 
