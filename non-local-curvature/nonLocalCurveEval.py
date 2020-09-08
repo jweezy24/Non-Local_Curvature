@@ -41,8 +41,10 @@ class Eval:
                 time1 = time.time()
                 self.val = self.eval(epsilon)
                 time2 = time.time()
+                self.actual = -1.92053
+                error = abs(abs(self.actual - self.val)/self.actual)
                 with open(f'./results_{self.char_func.alg}_ellipse.txt', 'a') as f:
-                            f.write(f'Integration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\t EquationX: {self.char_func.func_x}\t EquationY: {self.char_func.func_y}\t iter: {iter}  \n')
+                            f.write(f'Error percent: {error}\tEpsilon:1/{float(epsilon)}\tDomain Size: {2*self.char_func.domain_size} \tIntegration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\n')
                 self.char_func.growth = self.char_func.growth*10
                 self.char_func.create_domain(self.char_func.domain_size, False)
         
