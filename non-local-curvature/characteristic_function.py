@@ -1,21 +1,22 @@
 import scipy.constants
 import math
+import sys
 import numpy as np
 import intersection_calculations
 import random
 #For testing domain generation
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 class chi:
 
-    def __init__(self, args,n,random=False):
+    def __init__(self, args,n,random=False,growth=10):
 
         x_min = 't'
         y_min = 't'
         x_max = 't'
         y_max = 't'
         self.bounds = [x_min,y_min,x_max,y_max]
-
+        self.growth  = growth
         self.radius = args["curv"]["radius"]
         self.func_x = args["curv"]["func_x"]
         self.func_y = args["curv"]["func_y"]
@@ -114,12 +115,13 @@ class chi:
             line1, line2 = self.grow_set(self.start, domain[0], domain[-1])
             front_start = domain[0][0]
             back_start = domain[-1][0]
-            for i in range(1,n, int(n/6)):
+            max_x = self.growth
+            for i in range(1, max_x, int(max_x/6)):
                 front = (float(front_start+i),eval(line1.replace('x',str(front_start+i))),float(front_start+i))
                 self.min_max(front)
                 domain_sorted.insert(0, front)
             
-            for i in range(1, n, int(n/6)):
+            for i in range(1, max_x, int(max_x/6)):
                 back = (float((back_start-i)),eval(line2.replace('x',str((back_start-i)))),float((back_start-i)))
                 self.min_max(back)
                 domain_sorted.append(back)
@@ -161,7 +163,7 @@ class chi:
         if not self.isHem:
             domain2[-1].append((domain_sorted[0][0], domain_sorted[0][1]))
         
-        # #Code to demonstrate domain creation
+        #Code to demonstrate domain creation
         # xs = []
         # ys = []
         # for point in domain_sorted:
@@ -171,6 +173,7 @@ class chi:
         # plt.plot(xs,ys)
         # plt.show() 
 
+        #print(domain_sorted)
         return domain2,domain_sorted
 
     def grow_set(self, start_point, end1, end2):

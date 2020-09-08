@@ -120,17 +120,21 @@ def bounding_box_algorithm(domain, p, prior_intersections, min_max):
 
     return intersections
 
-@njit(parallel=True)
+@njit()
 def crossing_number(domain, p, cn):
 
     for i in range(0,len(domain)-1):
-        edge = (domain[i], domain[i+1])
+        x1 = float(domain[i][0])
+        y1 = float(domain[i][1])
+        x2 =  float(domain[i+1][0])
+        y2 =  float(domain[i+1][1])
+        edge = ( (x1,y1), (x2,y2))
         
         if (edge[0][1] <= p[1] and edge[1][1] > p[1]) or (edge[0][1] > p[1] and edge[1][1] <= p[1]):
-            vt = float(p[1] - edge[0][1]) / float(edge[1][1] - edge[0][1])
-            if p[0] < edge[0][0] + vt * (edge[1][0] - edge[0][0]): 
+            vt = (p[1] - edge[0][1])/(edge[1][1] - edge[0][1])
+            if p[0] < edge[0][0] + vt * (edge[1][0] - edge[0][0]):  
                 cn += 1
-
+    
     return cn
 
 @njit(parallel = True)

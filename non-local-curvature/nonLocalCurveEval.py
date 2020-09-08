@@ -7,7 +7,7 @@ import numpy as np
 import sys
 import math
 import time
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 class Eval:
 
@@ -35,6 +35,7 @@ class Eval:
 
         elif default == 1:
             self.char_func = func
+            self.char_func.growth = 100
             for i in range(2, 5):
                 epsilon = 10**i
                 time1 = time.time()
@@ -42,6 +43,8 @@ class Eval:
                 time2 = time.time()
                 with open(f'./results_{self.char_func.alg}_ellipse.txt', 'a') as f:
                             f.write(f'Integration Evaluation: {self.val}\t Time: {((time2-time1)/60)}\t EquationX: {self.char_func.func_x}\t EquationY: {self.char_func.func_y}\t iter: {iter}  \n')
+                self.char_func.growth = self.char_func.growth*10
+                self.char_func.create_domain(self.char_func.domain_size, False)
         
         elif default == 2:
             self.char_func = func
@@ -61,7 +64,7 @@ class Eval:
 
     def eval_char_func(self, p1, p2):
         val = self.char_func.check(p1,p2)
-        #self.point_count += 1
+        # self.point_count += 1
         # if self.point_count >= 10000:
         #     xs = []
         #     ys = []
@@ -73,12 +76,12 @@ class Eval:
         #     plt.plot(xs,ys)
         #     plt.show() 
         #     self.point_count = 0
-        #     plt.cfg()
+        #     plt.clf()
         if val:
-            #plt.plot(p2[0],p2[1], 'bo')
+            # plt.plot(p2[0],p2[1], 'bo')
             return 1
         else:
-            #plt.plot(p2[0],p2[1], 'rx')
+            # plt.plot(p2[0],p2[1], 'rx')
             return -1
 
     def eval(self,epsilon):
