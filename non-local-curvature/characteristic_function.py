@@ -5,7 +5,7 @@ import numpy as np
 import intersection_calculations
 import random
 #For testing domain generation
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 class chi:
 
